@@ -44,14 +44,17 @@ export async function POST(req: Request) {
       firstName: studentData.firstName,
       lastName: studentData.lastName,
       phoneNumber: studentData.phoneNumber,
-  
     });
 
-  
-
-    return NextResponse.json({ message: 'Student created successfully', student: newStudent }, { status: 201 });
+    return NextResponse.json(
+      { message: 'Student created successfully', student: newStudent },
+      { status: 201 }
+    );
   } catch (error: any) {
     console.error('Error creating student:', error);
-    return NextResponse.json({ message: 'Internal Server Error', error: error.message }, { status: 500 });
+    return NextResponse.json(
+      { message: 'Internal Server Error', error: error.message },
+      { status: 500 }
+    );
   }
 }

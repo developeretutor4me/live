@@ -1,33 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
+import React, { useEffect, useState } from 'react';
+import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 
-const months = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
+const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-const names = ["Total", "Daily", "Weekly", "Monthly", "Yearly"];
+const names = ['Total', 'Daily', 'Weekly', 'Monthly', 'Yearly'];
 
 function TotalPayouts() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentName, setCurrentName] = useState(names[0]);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [storedDates, setStoredDates] = useState([currentDate]); // To store all visited dates
-  const [startDate, setStartDate] = useState(new Date("2023-02-01")); // Initial start date
+  const [startDate, setStartDate] = useState(new Date('2023-02-01')); // Initial start date
   //   const [currentDateMonth, setCurrentDateMo] = useState(new Date()); // Track the current date
-  const [storedMonths, setStoredMonths] = useState([
-    months[new Date().getMonth()],
-  ]);
+  const [storedMonths, setStoredMonths] = useState([months[new Date().getMonth()]]);
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear()); // Track the current year
   const [storedYears, setStoredYears] = useState([new Date().getFullYear()]);
 
@@ -44,7 +29,7 @@ function TotalPayouts() {
 
   const updateYear = (newYear: any) => {
     setCurrentYear(newYear);
-    setStoredYears((prevYears) => {
+    setStoredYears(prevYears => {
       if (!prevYears.includes(newYear)) {
         return [...prevYears, newYear];
       }
@@ -68,7 +53,7 @@ function TotalPayouts() {
   const updateMonth = (newDate: any) => {
     setCurrentDate(newDate);
     const newMonthName = months[newDate.getMonth()];
-    setStoredMonths((prevMonths) => {
+    setStoredMonths(prevMonths => {
       if (!prevMonths.includes(newMonthName)) {
         return [...prevMonths, newMonthName];
       }
@@ -79,8 +64,8 @@ function TotalPayouts() {
   //   date by week--------------
   // Format a date as "dd/mm/yyyy"
   const formatDateWeek = (date: any) => {
-    const day = date.getDate().toString().padStart(2, "0");
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
   };
@@ -91,9 +76,7 @@ function TotalPayouts() {
     end.setDate(start.getDate() + 6); // 6 days after the start date
     return `${formatDateWeek(start)} - ${formatDateWeek(end)}`;
   };
-  const [storedWeeks, setStoredWeeks] = useState([
-    getFormattedWeek(new Date("2023-02-01")),
-  ]);
+  const [storedWeeks, setStoredWeeks] = useState([getFormattedWeek(new Date('2023-02-01'))]);
   const handlePreviousWeek = () => {
     const newStartDate = new Date(startDate);
     newStartDate.setDate(startDate.getDate() - 7); // Move back by 7 days
@@ -109,7 +92,7 @@ function TotalPayouts() {
   const updateWeek = (newStartDate: any) => {
     setStartDate(newStartDate);
     const formattedWeek = getFormattedWeek(newStartDate);
-    setStoredWeeks((prevWeeks) => {
+    setStoredWeeks(prevWeeks => {
       // Avoid duplicates in the stored weeks array
       if (!prevWeeks.includes(formattedWeek)) {
         return [...prevWeeks, formattedWeek];
@@ -120,11 +103,11 @@ function TotalPayouts() {
 
   // -----------------------------
   //   date by day---------------------
-  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
   const formatDate = (date: any) => {
-    const day = date.getDate().toString().padStart(2, "0");
-    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Months are 0-based
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-based
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
   };
@@ -143,13 +126,9 @@ function TotalPayouts() {
 
   const updateDate = (newDate: any) => {
     setCurrentDate(newDate);
-    setStoredDates((prevDates) => {
+    setStoredDates(prevDates => {
       // Avoid duplicates in the stored dates array
-      if (
-        !prevDates.some(
-          (date) => date.toDateString() === newDate.toDateString()
-        )
-      ) {
+      if (!prevDates.some(date => date.toDateString() === newDate.toDateString())) {
         return [...prevDates, newDate];
       }
       return prevDates;
@@ -158,15 +137,11 @@ function TotalPayouts() {
   // =----------------------
 
   const handlePrevious = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? names.length - 1 : prevIndex - 1
-    );
+    setCurrentIndex(prevIndex => (prevIndex === 0 ? names.length - 1 : prevIndex - 1));
   };
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === names.length - 1 ? 0 : prevIndex + 1
-    );
+    setCurrentIndex(prevIndex => (prevIndex === names.length - 1 ? 0 : prevIndex + 1));
   };
 
   // Update `currentName` whenever `currentIndex` changes
@@ -174,114 +149,113 @@ function TotalPayouts() {
     setCurrentName(names[currentIndex]);
   }, [currentIndex]);
   return (
-      <div className="grid grid-cols-2 h-full  rounded-md sm:rounded-xl  custom-lg:rounded-3xl       px-3 custom-xl:px-6 py-3 custom-xl:py-6  bg-[#ede8fa] ">
-        <div className="flex flex-col justify-between  h-full px-3 py-1.5">
-          <h1 className="text-xl sm:text-3xl custom-lg:text-[45px] leading-10 text-[#685aad] font-medium">
-            Total Payouts
-          </h1>
-          <h1 className="text-3xl md:text-4xl custom-lg:text-[65px]  mb-2 leading-none text-[#fa8284] font-medium py-2 custom-lg:py-6">
-            $45289.54
-          </h1>
-          <h1 className="text-base sm:text-lg custom-lg:text-2xl font-bold leading-none text-[#a398cf] flex items-center  gap-3">
-            {" "}
-            <ChevronDown className="font-extrabold  " /> 12.4%
-          </h1>
+    <div className="grid grid-cols-2 h-full  rounded-md sm:rounded-xl  custom-lg:rounded-3xl       px-3 custom-xl:px-6 py-3 custom-xl:py-6  bg-[#ede8fa] ">
+      <div className="flex flex-col justify-between  h-full px-3 py-1.5">
+        <h1 className="text-xl sm:text-3xl custom-lg:text-[45px] leading-10 text-[#685aad] font-medium">
+          Total Payouts
+        </h1>
+        <h1 className="text-3xl md:text-4xl custom-lg:text-[65px]  mb-2 leading-none text-[#fa8284] font-medium py-2 custom-lg:py-6">
+          $45289.54
+        </h1>
+        <h1 className="text-base sm:text-lg custom-lg:text-2xl font-bold leading-none text-[#a398cf] flex items-center  gap-3">
+          {' '}
+          <ChevronDown className="font-extrabold  " /> 12.4%
+        </h1>
+      </div>
+
+      <div className=" flex flex-col justify-between   pt-3">
+        <div className="flex items-center  flex-row-reverse text-[#7669b5]">
+          <div className=" flex items-center justify-center gap-1 sm:gap-2 custom-lg:gap-3">
+            <button onClick={handlePrevious}>
+              <ChevronLeft />
+            </button>
+
+            <span className="font-bold text-base sm:text-lg custom-lg:text-2xl  w-fit custom-lg:w-[5.6rem] text-center">
+              {currentName}
+            </span>
+
+            <button onClick={handleNext}>
+              <ChevronRight />
+            </button>
+          </div>
         </div>
 
-        <div className=" flex flex-col justify-between   pt-3">
+        {currentName === 'Daily' && (
           <div className="flex items-center  flex-row-reverse text-[#7669b5]">
             <div className=" flex items-center justify-center gap-1 sm:gap-2 custom-lg:gap-3">
-              <button onClick={handlePrevious}>
+              <button onClick={handlePreviousdate}>
                 <ChevronLeft />
               </button>
 
-              <span className="font-bold text-base sm:text-lg custom-lg:text-2xl  w-fit custom-lg:w-[5.6rem] text-center">
-                {currentName}
+              <span className="font-medium text-xl  custom-lg:w-[11.4rem] text-center   ">
+                {' '}
+                {days[currentDate.getDay()]} - {formatDate(currentDate)}
               </span>
 
-              <button onClick={handleNext}>
+              <button onClick={handleNextdate}>
                 <ChevronRight />
               </button>
             </div>
           </div>
+        )}
 
-          {currentName === "Daily" && (
-            <div className="flex items-center  flex-row-reverse text-[#7669b5]">
-              <div className=" flex items-center justify-center gap-1 sm:gap-2 custom-lg:gap-3">
-                <button onClick={handlePreviousdate}>
-                  <ChevronLeft />
-                </button>
+        {currentName === 'Weekly' && (
+          <div className="flex items-center  flex-row-reverse text-[#7669b5]">
+            <div className=" flex items-center justify-center gap-1 sm:gap-2 custom-lg:gap-3">
+              <button onClick={handlePreviousWeek}>
+                <ChevronLeft />
+              </button>
 
-                <span className="font-medium text-xl  custom-lg:w-[11.4rem] text-center   ">
-                  {" "}
-                  {days[currentDate.getDay()]} - {formatDate(currentDate)}
-                </span>
+              <span className="font-medium text-lg  custom-lg:w-[14.4rem] text-center  ">
+                {' '}
+                {getFormattedWeek(startDate)}
+              </span>
 
-                <button onClick={handleNextdate}>
-                  <ChevronRight />
-                </button>
-              </div>
+              <button onClick={handleNextWeek}>
+                <ChevronRight />
+              </button>
             </div>
-          )}
+          </div>
+        )}
 
-          {currentName === "Weekly" && (
-            <div className="flex items-center  flex-row-reverse text-[#7669b5]">
-              <div className=" flex items-center justify-center gap-1 sm:gap-2 custom-lg:gap-3">
-                <button onClick={handlePreviousWeek}>
-                  <ChevronLeft />
-                </button>
+        {currentName === 'Monthly' && (
+          <div className="flex items-center  flex-row-reverse text-[#7669b5]">
+            <div className=" flex items-center justify-center gap-1 sm:gap-2 custom-lg:gap-3">
+              <button onClick={handlePreviousMonth}>
+                <ChevronLeft />
+              </button>
 
-                <span className="font-medium text-lg  custom-lg:w-[14.4rem] text-center  ">
-                  {" "}
-                  {getFormattedWeek(startDate)}
-                </span>
+              <span className="font-bold text-xl  custom-lg:w-[6.3rem] text-center  ">
+                {' '}
+                {months[currentDate.getMonth()]}
+              </span>
 
-                <button onClick={handleNextWeek}>
-                  <ChevronRight />
-                </button>
-              </div>
+              <button onClick={handleNextMonth}>
+                <ChevronRight />
+              </button>
             </div>
-          )}
+          </div>
+        )}
+        {currentName === 'Yearly' && (
+          <div className="flex items-center  flex-row-reverse text-[#7669b5]">
+            <div className=" flex items-center justify-center gap-1 sm:gap-2 custom-lg:gap-3">
+              <button onClick={handlePreviousYear}>
+                <ChevronLeft />
+              </button>
 
-          {currentName === "Monthly" && (
-            <div className="flex items-center  flex-row-reverse text-[#7669b5]">
-              <div className=" flex items-center justify-center gap-1 sm:gap-2 custom-lg:gap-3">
-                <button onClick={handlePreviousMonth}>
-                  <ChevronLeft />
-                </button>
+              <span className="font-bold text-xl  custom-lg:w-[6.3rem] text-center  ">
+                {' '}
+                {currentYear}
+              </span>
 
-                <span className="font-bold text-xl  custom-lg:w-[6.3rem] text-center  ">
-                  {" "}
-                  {months[currentDate.getMonth()]}
-                </span>
-
-                <button onClick={handleNextMonth}>
-                  <ChevronRight />
-                </button>
-              </div>
+              <button onClick={handleNextYear}>
+                <ChevronRight />
+              </button>
             </div>
-          )}
-          {currentName === "Yearly" && (
-            <div className="flex items-center  flex-row-reverse text-[#7669b5]">
-              <div className=" flex items-center justify-center gap-1 sm:gap-2 custom-lg:gap-3">
-                <button onClick={handlePreviousYear}>
-                  <ChevronLeft />
-                </button>
-
-                <span className="font-bold text-xl  custom-lg:w-[6.3rem] text-center  ">
-                  {" "}
-                  {currentYear}
-                </span>
-
-                <button onClick={handleNextYear}>
-                  <ChevronRight />
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
-   
+    </div>
   );
 }
 

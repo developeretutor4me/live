@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server";
-import {connectMongoDB} from "../connection/connection";
-import PauseTutoringModel from "../models/PauseTutoring";
+import { NextResponse } from 'next/server';
+import { connectMongoDB } from '../connection/connection';
+import PauseTutoringModel from '../models/PauseTutoring';
 
 export async function POST(req: Request) {
   try {
@@ -18,7 +18,7 @@ export async function POST(req: Request) {
     // Validate required fields
     if (!userId || !teacherId || !reason || !lengthOfPause || !returnDate) {
       return NextResponse.json(
-        { success: false, message: "Missing required fields" },
+        { success: false, message: 'Missing required fields' },
         { status: 400 }
       );
     }
@@ -33,8 +33,8 @@ export async function POST(req: Request) {
       reason,
       lengthOfPause,
       returnDate: new Date(returnDate),
-      additionalComments: additionalComments || "",
-      suggestionsForImprovement: suggestionsForImprovement || "",
+      additionalComments: additionalComments || '',
+      suggestionsForImprovement: suggestionsForImprovement || '',
     });
 
     // Save the request to the database
@@ -43,12 +43,12 @@ export async function POST(req: Request) {
     return NextResponse.json({
       success: true,
       data: pauseRequest,
-      message: "Pause request submitted successfully.",
+      message: 'Pause request submitted successfully.',
     });
-  } catch (error:any) {
-    console.error("Error creating pause request:", error);
+  } catch (error: any) {
+    console.error('Error creating pause request:', error);
     return NextResponse.json(
-      { success: false, message: "Internal server error", error: error.message },
+      { success: false, message: 'Internal server error', error: error.message },
       { status: 500 }
     );
   }

@@ -14,7 +14,6 @@ export async function GET() {
       return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
     }
 
-
     // Connect to the database
     await connectMongoDB();
 
@@ -25,7 +24,7 @@ export async function GET() {
 
     // Iterate over the bookings to populate 'student' field conditionally
     const populatedBookings = await Promise.all(
-      bookings.map(async (booking) => {
+      bookings.map(async booking => {
         // Try to find the student in the Student model
         let studentData = await StudentModel.findOne({ user: booking.student }).lean();
 
@@ -42,7 +41,7 @@ export async function GET() {
     );
 
     return NextResponse.json({ success: true, data: populatedBookings }, { status: 200 });
-  } catch (error:any) {
+  } catch (error: any) {
     console.error('Error fetching bookings:', error);
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }

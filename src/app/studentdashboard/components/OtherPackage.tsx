@@ -1,15 +1,15 @@
 // components/OtherPackages.js
-import Link from "next/link";
+import Link from 'next/link';
 
 export default function OtherPackages({ onSelectPlan, data, priceData }: any) {
   return (
     <div className="pt-1 ">
       <h2 className="text-[#685AAD] text-sm sm:text-lg custom-lg:text-2xl custom-xl:text-[42px] custom-xl:leading-[2.5rem] font-bold mb-2 sm:mb-3  sm:py-3 ml-2 sm:ml-7">
-        Our other offers:{" "}
+        Our other offers:{' '}
       </h2>
       <div>
         <div className="grid grid-cols-1 custom-xl:grid-cols-2 gap-6 sm:gap-x-14 sm:gap-y-14 mb-6">
-          {data?.user?.planType?.type === "premium" && (
+          {data?.user?.planType?.type === 'premium' && (
             <>
               <Payasyougo />
               <PackageCard
@@ -18,20 +18,18 @@ export default function OtherPackages({ onSelectPlan, data, priceData }: any) {
                 price={priceData?.data?.standard
                   ?.filter(
                     (plan: any) =>
-                      plan.planType === "standard" &&
-                      plan.tutorLevel === "Junior" &&
-                      plan.month === "Monthly"
+                      plan.planType === 'standard' &&
+                      plan.tutorLevel === 'Junior' &&
+                      plan.month === 'Monthly'
                   )
-                  ?.map((plan: any) =>
-                    (Number(plan.priceAmount) / 100).toFixed(0)
-                  )}
+                  ?.map((plan: any) => (Number(plan.priceAmount) / 100).toFixed(0))}
                 duration={60}
-                onSelect={() => onSelectPlan("standard")}
+                onSelect={() => onSelectPlan('standard')}
               />
             </>
           )}
 
-          {data?.user?.planType?.type === "standard" && (
+          {data?.user?.planType?.type === 'standard' && (
             <>
               <Payasyougo />
               <PackageCard
@@ -40,58 +38,53 @@ export default function OtherPackages({ onSelectPlan, data, priceData }: any) {
                 price={priceData?.data?.premium
                   ?.filter(
                     (plan: any) =>
-                      plan.planType === "premium" &&
-                      plan.tutorLevel === "Junior" &&
-                      plan.month === "Monthly"
+                      plan.planType === 'premium' &&
+                      plan.tutorLevel === 'Junior' &&
+                      plan.month === 'Monthly'
                   )
-                  ?.map((plan: any) =>
-                    (Number(plan.priceAmount) / 100).toFixed(0)
-                  )}
+                  ?.map((plan: any) => (Number(plan.priceAmount) / 100).toFixed(0))}
                 duration={60}
-                onSelect={() => onSelectPlan("premium")}
+                onSelect={() => onSelectPlan('premium')}
               />
             </>
           )}
 
-          {data?.user?.planType?.type === "" || data?.user?.planType?.type === "no membership" && (
-            <>
-              <PackageCard
-                title="Premium"
-                sessions={8}
-                price={priceData?.data?.premium
-                  ?.filter(
-                    (plan: any) =>
-                      plan.planType === "premium" &&
-                      plan.tutorLevel === "Junior" &&
-                      plan.month === "Monthly"
-                  )
-                  ?.map((plan: any) =>
-                    (Number(plan.priceAmount) / 100).toFixed(0)
-                  )}
-                duration={60}
-                onSelect={() => onSelectPlan("premium")}
-              />
-              <PackageCard
-                title="Standard"
-                sessions={4}
-                price={priceData?.data?.standard
-                  ?.filter(
-                    (plan: any) =>
-                      plan.planType === "standard" &&
-                      plan.tutorLevel === "Junior" &&
-                      plan.month === "Monthly"
-                  )
-                  ?.map((plan: any) =>
-                    (Number(plan.priceAmount) / 100).toFixed(0)
-                  )}
-                duration={60}
-                onSelect={() => onSelectPlan("standard")}
-              />
-            </>
-          )}
+          {data?.user?.planType?.type === '' ||
+            (data?.user?.planType?.type === 'no membership' && (
+              <>
+                <PackageCard
+                  title="Premium"
+                  sessions={8}
+                  price={priceData?.data?.premium
+                    ?.filter(
+                      (plan: any) =>
+                        plan.planType === 'premium' &&
+                        plan.tutorLevel === 'Junior' &&
+                        plan.month === 'Monthly'
+                    )
+                    ?.map((plan: any) => (Number(plan.priceAmount) / 100).toFixed(0))}
+                  duration={60}
+                  onSelect={() => onSelectPlan('premium')}
+                />
+                <PackageCard
+                  title="Standard"
+                  sessions={4}
+                  price={priceData?.data?.standard
+                    ?.filter(
+                      (plan: any) =>
+                        plan.planType === 'standard' &&
+                        plan.tutorLevel === 'Junior' &&
+                        plan.month === 'Monthly'
+                    )
+                    ?.map((plan: any) => (Number(plan.priceAmount) / 100).toFixed(0))}
+                  duration={60}
+                  onSelect={() => onSelectPlan('standard')}
+                />
+              </>
+            ))}
 
           <div className="cusom-2xl:col-span-2">
-            <BundleCard onSelect={() => onSelectPlan("bundles")} />
+            <BundleCard onSelect={() => onSelectPlan('bundles')} />
           </div>
         </div>
       </div>
@@ -104,7 +97,7 @@ function PackageCard({ title, sessions, price, duration, onSelect }: any) {
     <div className="bg-white rounded-3xl custom-xl:rounded-[45px] overflow-hidden border border-black drop-shadow-[0px_5px_0px_#b0a9c4] sm:drop-shadow-[0px_15px_0px_#b0a9c4] custom-lg:drop-shadow-[0px_20px_0px_#b0a9c4]">
       <div
         className={`${
-          title === "Premium" ? "bg-[#5553C4]" : "bg-[#53497F]"
+          title === 'Premium' ? 'bg-[#5553C4]' : 'bg-[#53497F]'
         } text-white py-4 custom-xl:py-[30px] px-4 flex items-center justify-center text-sm sm:text-lg custom-lg:text-2xl custom-xl:text-[42px] custom-xl:leading-[2.5rem] font-bold`}
       >
         {title}
@@ -115,9 +108,9 @@ function PackageCard({ title, sessions, price, duration, onSelect }: any) {
             <div className="text-[#9C78F9] text-sm custom-lg:text-xl custom-xl:text-[30.98px] custom-xl:leading-[2.25rem] font-medium sm:mb-4 pl-0 md:pl-3">
               <span className="font-extrabold">
                 <span className="text-sm sm:text-lg custom-lg:text-2xl custom-xl:text-[43.1px] custom-xl:leading-[2.5rem]">
-                  {sessions}{" "}
+                  {sessions}{' '}
                 </span>
-                Sessions{" "}
+                Sessions{' '}
               </span>
               <span className="text-xs sm:text-base custom-lg:text-xl custom-xl:!text-[26.94px] leading-[2rem] font-medium">
                 / month
@@ -128,7 +121,7 @@ function PackageCard({ title, sessions, price, duration, onSelect }: any) {
                 <span className="text-[#8653ff]">${price}</span>
               </span>
               <span className="text-xs sm:text-base custom-lg:text-2xl custom-xl:text-[41.6px] custom-xl:leading-[1]">
-                {" "}
+                {' '}
                 / month
               </span>
             </div>
@@ -136,8 +129,7 @@ function PackageCard({ title, sessions, price, duration, onSelect }: any) {
 
           <div className="p-2 md:px-4 md:py-7 mt-0.5">
             <div className="text-[#53497F] text-xs sm:text-lg custom-xl:text-xl mb-5">
-              <span className="font-bold">Session duration:</span> {duration}{" "}
-              minutes
+              <span className="font-bold">Session duration:</span> {duration} minutes
             </div>
             <div className="text-[#53497F] text-xs sm:text-lg custom-xl:text-xl mb-4">
               <span className="font-bold">Membership duration:</span> Flexible
@@ -176,11 +168,11 @@ function BundleCard({ onSelect }: any) {
           </h3>
 
           <p className="text-[#53497F] font-medium text-xs sm:text-sm custom-lg:text-xl custom-xl:text-[34px]  custom-xl:leading-[2.5rem] max-w-[64rem]  text-center mb-5">
-            Purchase session bundles upfront and use them whenever you need.
-            Perfect for test prep, flexible schedules, or quick reviews.
+            Purchase session bundles upfront and use them whenever you need. Perfect for test prep,
+            flexible schedules, or quick reviews.
           </p>
           <p className="text-[#9C78F9] text-xs sm:text-lg custom-xl:text-[27px] custom-xl:leading-[2rem] font-bold text-center">
-            Ideal for upcoming exams and quick revisions.{" "}
+            Ideal for upcoming exams and quick revisions.{' '}
           </p>
         </div>
         <div className="  sm:mb-2 max-w-[411.08px] w-full mx-auto flex items-center justify-center ">
@@ -211,12 +203,11 @@ function Payasyougo() {
         </h3>
         <div className="border border-[#e0d4ff] w-full max-w-[28rem] mx-auto mb-4"></div>
         <p className="text-[#53497F]  text-xs sm:text-sm custom-lg:text-xl custom-xl:text-[26px]   custom-xl:leading-tight max-w-[28rem] text-center mb-10">
-          Book an eTutor at any time, paying only the fees listed for each
-          session. No upfront costs or subscription fees
+          Book an eTutor at any time, paying only the fees listed for each session. No upfront costs
+          or subscription fees
         </p>
         <p className="text-[#aba4c8] text-xs sm:text-lg custom-xl:text-xl text-center max-w-[27rem]">
-          You can return to this membership plan if you cancel your current
-          membership
+          You can return to this membership plan if you cancel your current membership
         </p>
       </div>
     </div>

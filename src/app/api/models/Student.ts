@@ -1,9 +1,9 @@
 import mongoose, { Document, Schema } from 'mongoose';
 export interface IStudent extends Document {
-  user: mongoose.Types.ObjectId; 
+  user: mongoose.Types.ObjectId;
   levelOfStudy: string;
   grade: string;
-  subjects: string[]; 
+  subjects: string[];
   personalInformation: {
     country: string;
     city: string;
@@ -19,11 +19,6 @@ export interface IStudent extends Document {
   phoneNumber: string;
 }
 
-
-
-
-
-
 const StudentSchema: Schema = new Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   levelOfStudy: { type: String },
@@ -35,22 +30,14 @@ const StudentSchema: Schema = new Schema({
     streetName: { type: String },
     zipcode: { type: String },
     institution: { type: String },
-    age: { type: Number }
+    age: { type: Number },
   },
   additionalInformation: { type: String },
   availability: { type: String },
   firstName: { type: String },
   lastName: { type: String },
   phoneNumber: { type: String },
-
 });
-
-
-
-
-
-
-
 
 const StudentModel = mongoose.models.Student || mongoose.model<IStudent>('Student', StudentSchema);
 export default StudentModel;

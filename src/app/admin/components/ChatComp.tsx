@@ -270,8 +270,9 @@ const ChatMessage = ({ message, isUser }: any) => {
   return (
     <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} mb-2 custom-2xl:mb-4`}>
       <div
-        className={`max-w-[70%] rounded-lg custom-2xl:rounded-2xl px-2 py-1 custom-2xl:p-3 ${isUser ? 'bg-[#685AAD] text-white' : 'bg-white text-[#473171]'
-          }`}
+        className={`max-w-[70%] rounded-lg custom-2xl:rounded-2xl px-2 py-1 custom-2xl:p-3 ${
+          isUser ? 'bg-[#685AAD] text-white' : 'bg-white text-[#473171]'
+        }`}
       >
         {!isUser && (
           <p className="text-sm sm:text-base custom-2xl:text-xl font-bold transition-all text-[#685aad]">
@@ -282,8 +283,9 @@ const ChatMessage = ({ message, isUser }: any) => {
           {message.message}
         </p>
         <span
-          className={`text-xs custom-2xl:text-base opacity-70 custom-2xl:mt-1 block ${isUser ? 'text-white float-right' : 'text-[#9B85C8]'
-            }`}
+          className={`text-xs custom-2xl:text-base opacity-70 custom-2xl:mt-1 block ${
+            isUser ? 'text-white float-right' : 'text-[#9B85C8]'
+          }`}
         >
           {new Date(message.createdAt).toLocaleTimeString([], {
             hour: '2-digit',

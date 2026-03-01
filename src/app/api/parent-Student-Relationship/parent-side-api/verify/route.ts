@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import User from '@/app/api/models/User';
 import Student from '@/app/api/models/Student';
-import {connectMongoDB} from '@/app/api/connection/connection'; // Ensure your DB connection utility is correctly configured
+import { connectMongoDB } from '@/app/api/connection/connection'; // Ensure your DB connection utility is correctly configured
 
 export async function POST(req: NextRequest) {
   try {
@@ -25,10 +25,7 @@ export async function POST(req: NextRequest) {
 
     // Check if the verification code matches
     if (user.verification_token !== verificationCode) {
-      return NextResponse.json(
-        { error: 'Invalid verification code.' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Invalid verification code.' }, { status: 400 });
     }
 
     //@ts-ignore
@@ -36,13 +33,10 @@ export async function POST(req: NextRequest) {
     await user.save();
 
     // Find the corresponding student details
-    const student = await Student.findOne({ user: user._id })
+    const student = await Student.findOne({ user: user._id });
 
     if (!student) {
-      return NextResponse.json(
-        { error: 'Student details not found.' },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: 'Student details not found.' }, { status: 404 });
     }
 
     // Return the student details in the response
@@ -52,9 +46,6 @@ export async function POST(req: NextRequest) {
     });
   } catch (error) {
     console.error('Error in verification API:', error);
-    return NextResponse.json(
-      { error: 'Internal Server Error.' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Internal Server Error.' }, { status: 500 });
   }
 }

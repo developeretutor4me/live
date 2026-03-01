@@ -13,11 +13,10 @@ export const useResignation = () => {
     revalidateOnFocus: true, // Re-fetch on window focus
   });
 
- 
   return {
     resignTutoring: data?.data,
-    resignLoading:isLoading,
-    resignError:error,
+    resignLoading: isLoading,
+    resignError: error,
     mutate, // Can be used to manually revalidate the data
   };
 };

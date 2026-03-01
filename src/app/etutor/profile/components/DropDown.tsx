@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import React, { useMemo, useState } from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import React, { useMemo, useState } from 'react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 
 interface DropdownOption {
   label: string;
@@ -20,8 +20,8 @@ const DropDown: React.FC<DropDownProps> = ({
   options,
   selected,
   onSelect,
-  placeholder = "Sort by",
-  className = "",
+  placeholder = 'Sort by',
+  className = '',
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -32,12 +32,12 @@ const DropDown: React.FC<DropDownProps> = ({
   };
 
   const selectedLabel = useMemo(() => {
-    const found = options.find((opt) => opt.value === selected);
+    const found = options.find(opt => opt.value === selected);
     return found?.label ?? placeholder;
   }, [selected, options, placeholder]);
 
   const renderedOptions = useMemo(() => {
-    return options.map((option) => (
+    return options.map(option => (
       <div
         key={option.value}
         role="option"
@@ -46,10 +46,7 @@ const DropDown: React.FC<DropDownProps> = ({
         onClick={() => handleClick(option.value)}
       >
         <div className="border-b border-white py-2 group-last:border-b-0 flex gap-4 w-full px-4 max-w-[80%] truncate">
-          <span
-            title={option.label}
-            className="ml-2 text-xl text-white truncate"
-          >
+          <span title={option.label} className="ml-2 text-xl text-white truncate">
             {option.label}
           </span>
         </div>
@@ -58,18 +55,16 @@ const DropDown: React.FC<DropDownProps> = ({
   }, [options]);
 
   return (
-    <div
-      className={`min-w-[15rem] custom-xl:min-w-[20rem] 2xl:min-w-[26.7rem] ${className}`}
-    >
+    <div className={`min-w-[15rem] custom-xl:min-w-[20rem] 2xl:min-w-[26.7rem] ${className}`}>
       <div className="relative select-none w-full">
         <div
           role="button"
           aria-haspopup="listbox"
           aria-expanded={isOpen}
           tabIndex={0}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") toggleDropdown();
-            if (e.key === "Escape") setIsOpen(false);
+          onKeyDown={e => {
+            if (e.key === 'Enter') toggleDropdown();
+            if (e.key === 'Escape') setIsOpen(false);
           }}
           onClick={toggleDropdown}
           className="w-full bg-[#B4A5D7] text-white font-normal text-sm custom-lg:text-xl pr-8 pl-5 py-[7px] custom-2xl:py-2.5 rounded-lg cursor-pointer flex justify-between items-center"

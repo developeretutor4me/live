@@ -1,8 +1,8 @@
-import Image from "next/image";
-import React, { useState } from "react";
-import Foldericon from "../../../../../public/folder icon with profile badge.svg";
-import downloadicon from "../../../../../public/Download_icon_file.svg";
-import { TutorDocument, TutorFile } from "./Data";
+import Image from 'next/image';
+import React, { useState } from 'react';
+import Foldericon from '../../../../../public/folder icon with profile badge.svg';
+import downloadicon from '../../../../../public/Download_icon_file.svg';
+import { TutorDocument, TutorFile } from './Data';
 
 interface IFileItemTemp {
   file: TutorFile;
@@ -11,14 +11,11 @@ interface IFileItemTemp {
 function FileItemTemp({ file, doc }: IFileItemTemp) {
   const [isExpanded, setisExpanded] = useState(false);
 
-  const downloadFromS3 = async (
-    s3Url: string,
-    customFileName?: string
-  ): Promise<void> => {
+  const downloadFromS3 = async (s3Url: string, customFileName?: string): Promise<void> => {
     try {
       const response = await fetch(s3Url, {
-        method: "GET",
-        headers: { "Cache-Control": "no-cache" },
+        method: 'GET',
+        headers: { 'Cache-Control': 'no-cache' },
       });
 
       if (!response.ok) {
@@ -28,11 +25,9 @@ function FileItemTemp({ file, doc }: IFileItemTemp) {
       const blob = await response.blob();
       const downloadUrl = URL.createObjectURL(blob);
 
-      const fileName =
-        customFileName ||
-        decodeURIComponent(s3Url.split("/").pop() || "download");
+      const fileName = customFileName || decodeURIComponent(s3Url.split('/').pop() || 'download');
 
-      const link = document.createElement("a");
+      const link = document.createElement('a');
       link.href = downloadUrl;
       link.download = fileName;
 
@@ -42,19 +37,17 @@ function FileItemTemp({ file, doc }: IFileItemTemp) {
 
       URL.revokeObjectURL(downloadUrl);
     } catch (error) {
-      console.error("S3 download failed:", error);
+      console.error('S3 download failed:', error);
 
       // Fallback: Force download using window.open with blob
       try {
         const response = await fetch(s3Url);
         const blob = await response.blob();
-        const fileName =
-          customFileName ||
-          decodeURIComponent(s3Url.split("/").pop() || "download");
+        const fileName = customFileName || decodeURIComponent(s3Url.split('/').pop() || 'download');
 
         const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.style.display = "none";
+        const a = document.createElement('a');
+        a.style.display = 'none';
         a.href = url;
         a.download = fileName;
 
@@ -66,23 +59,22 @@ function FileItemTemp({ file, doc }: IFileItemTemp) {
           URL.revokeObjectURL(url);
         }, 100);
       } catch (fallbackError) {
-        throw new Error("Download failed: CORS policy or network issue");
+        throw new Error('Download failed: CORS policy or network issue');
       }
     }
   };
   const getReadableFileType = (mimeType: string): string => {
     const mimeMap: Record<string, string> = {
-      "application/pdf": "PDF",
-      "application/msword": "DOC",
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
-        "DOCX",
-      "text/plain": "TXT",
-      "image/jpeg": "JPEG",
-      "image/png": "PNG",
-      "image/gif": "GIF",
+      'application/pdf': 'PDF',
+      'application/msword': 'DOC',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'DOCX',
+      'text/plain': 'TXT',
+      'image/jpeg': 'JPEG',
+      'image/png': 'PNG',
+      'image/gif': 'GIF',
     };
 
-    return mimeMap[mimeType] || "UNKNOWN";
+    return mimeMap[mimeType] || 'UNKNOWN';
   };
 
   const formatFileSize = (bytes: number): string => {
@@ -99,8 +91,8 @@ function FileItemTemp({ file, doc }: IFileItemTemp) {
     <div
       className={`w-full max-w-[1284px] bg-[#EDE8FA] rounded-lg custom-2xl:rounded-[15px] custom-2xl:pl-6 h-full ${
         isExpanded
-          ? "h-auto custom-2xl:h-[100px] transition-all duration-300 ease-out"
-          : "h-auto custom-2xl:h-20 transition-all duration-300 ease-out"
+          ? 'h-auto custom-2xl:h-[100px] transition-all duration-300 ease-out'
+          : 'h-auto custom-2xl:h-20 transition-all duration-300 ease-out'
       } overflow-hidden cursor-pointer`}
       onMouseEnter={() => setisExpanded(true)}
       onMouseLeave={() => setisExpanded(false)}
@@ -122,33 +114,29 @@ function FileItemTemp({ file, doc }: IFileItemTemp) {
                   {file?.fileName}
                 </div>
                 <div className="flex items-center gap-2 text-[#685aad] text-sm opacity-75">
-                  <span>{getReadableFileType(file?.fileType || "")}</span>
+                  <span>{getReadableFileType(file?.fileType || '')}</span>
                   <span>•</span>
                   <div className="flex items-center gap-1">
                     <div
                       className={`min-h-3 min-w-3 ${
-                        doc?.status === "Approved"
-                          ? "bg-[#00DAE5]"
-                          : "bg-[#FC7777]"
+                        doc?.status === 'Approved' ? 'bg-[#00DAE5]' : 'bg-[#FC7777]'
                       }  rounded-sm`}
                     ></div>
-                    <span>
-                      {doc?.status === "Approved" ? "Completed" : "Pending"}
-                    </span>
+                    <span>{doc?.status === 'Approved' ? 'Completed' : 'Pending'}</span>
                   </div>
                 </div>
               </div>
 
               <button
                 className="ml-4 p-2 text-[#685aad] hover:bg-white/20 rounded-lg transition-colors duration-200"
-                onClick={(e) => {
+                onClick={e => {
                   e.stopPropagation();
                   setisExpanded(!isExpanded);
                 }}
               >
                 <svg
                   className={`w-5 h-5 transition-transform duration-300 ${
-                    isExpanded ? "rotate-180" : ""
+                    isExpanded ? 'rotate-180' : ''
                   }`}
                   fill="none"
                   stroke="currentColor"
@@ -168,74 +156,52 @@ function FileItemTemp({ file, doc }: IFileItemTemp) {
             <div
               className={`grid grid-cols-1 sm:grid-cols-2 gap-4 transition-all duration-300 ease-in-out ${
                 isExpanded
-                  ? "mt-4  opacity-100 max-h-96 overflow-visible"
-                  : "opacity-0 max-h-0 overflow-hidden"
+                  ? 'mt-4  opacity-100 max-h-96 overflow-visible'
+                  : 'opacity-0 max-h-0 overflow-hidden'
               }`}
             >
               <div className="flex flex-col">
-                <span className="text-[#685aad] text-sm mb-1 opacity-75">
-                  Subject and level
-                </span>
-                <span className="text-[#685aad] text-base font-medium">
-                  {file?.fileName}
-                </span>
+                <span className="text-[#685aad] text-sm mb-1 opacity-75">Subject and level</span>
+                <span className="text-[#685aad] text-base font-medium">{file?.fileName}</span>
               </div>
 
               <div className="flex flex-col">
-                <span className="text-[#685aad] text-sm mb-1 opacity-75">
-                  Size
-                </span>
+                <span className="text-[#685aad] text-sm mb-1 opacity-75">Size</span>
                 <span className="text-[#685aad] text-base font-medium">
                   {formatFileSize(Number(file?.fileSize))}
                 </span>
               </div>
 
               <div className="flex flex-col">
-                <span className="text-[#685aad] text-sm mb-1 opacity-75">
-                  Type
-                </span>
+                <span className="text-[#685aad] text-sm mb-1 opacity-75">Type</span>
                 <span className="text-[#685aad] text-base font-medium">
-                  {getReadableFileType(file?.fileType || "")}
+                  {getReadableFileType(file?.fileType || '')}
                 </span>
               </div>
 
               <div className="flex flex-col">
-                <span className="text-[#685aad] text-sm mb-1 opacity-75">
-                  Date and Time
-                </span>
+                <span className="text-[#685aad] text-sm mb-1 opacity-75">Date and Time</span>
                 <span className="text-[#685aad] text-base font-medium">
-                  {new Date(doc?.updatedAt).toLocaleDateString("en-GB")}
+                  {new Date(doc?.updatedAt).toLocaleDateString('en-GB')}
                 </span>
               </div>
 
               <div className="flex flex-col sm:col-span-2">
-                <span className="text-[#685aad] text-sm mb-1 opacity-75">
-                  Status
-                </span>
+                <span className="text-[#685aad] text-sm mb-1 opacity-75">Status</span>
                 <div className="flex gap-3 items-center">
                   <div
                     className={`min-h-5 min-w-5 ${
-                      doc?.status === "Approved"
-                        ? "bg-[#00DAE5]"
-                        : "bg-[#FC7777]"
+                      doc?.status === 'Approved' ? 'bg-[#00DAE5]' : 'bg-[#FC7777]'
                     }  rounded-md`}
                   ></div>
-                  <span className={`text-[#685aad] text-base font-medium`}>
-                    {doc?.status}
-                  </span>
+                  <span className={`text-[#685aad] text-base font-medium`}>{doc?.status}</span>
                 </div>
               </div>
 
               <div className="flex flex-col sm:col-span-2">
-                <span className="text-[#685aad] text-sm mb-1 opacity-75">
-                  Download
-                </span>
+                <span className="text-[#685aad] text-sm mb-1 opacity-75">Download</span>
                 <button className="flex items-start">
-                  <Image
-                    src={downloadicon}
-                    alt="Download"
-                    className="w-6 h-6"
-                  />
+                  <Image src={downloadicon} alt="Download" className="w-6 h-6" />
                 </button>
               </div>
             </div>
@@ -262,54 +228,46 @@ function FileItemTemp({ file, doc }: IFileItemTemp) {
             </div>
 
             <div className="flex flex-col custom-2xl:block custom-2xl:pt-2 custom-2xl:pl-14">
-              <span className="text-[#685aad] text-sm custom-2xl:hidden mb-1">
-                Size
-              </span>
+              <span className="text-[#685aad] text-sm custom-2xl:hidden mb-1">Size</span>
               <span className="text-[#685aad] text-base sm:text-[21.77px] font-medium custom-2xl:pl-[30px]">
                 {formatFileSize(Number(file?.fileSize))}
               </span>
             </div>
 
             <div className="flex flex-col custom-2xl:block custom-2xl:pt-2 custom-2xl:pl-12">
-              <span className="text-[#685aad] text-sm custom-2xl:hidden mb-1">
-                Type
-              </span>
+              <span className="text-[#685aad] text-sm custom-2xl:hidden mb-1">Type</span>
               <span className="text-[#685aad] text-base sm:text-[21.77px] font-medium">
-                {getReadableFileType(file?.fileType || "")}
+                {getReadableFileType(file?.fileType || '')}
               </span>
             </div>
 
             <div className="flex flex-col custom-2xl:block custom-2xl:pt-2 custom-2xl:pl-5">
-              <span className="text-[#685aad] text-sm custom-2xl:hidden mb-1">
-                Date and Time
-              </span>
+              <span className="text-[#685aad] text-sm custom-2xl:hidden mb-1">Date and Time</span>
               <span className="text-[#685aad] text-base sm:text-[21.77px] font-medium">
-                {new Date(doc?.updatedAt).toLocaleDateString("en-GB")}
+                {new Date(doc?.updatedAt).toLocaleDateString('en-GB')}
               </span>
               <div
                 className={`text-base sm:text-[21.77px] font-medium text-[#685aad] ${
                   isExpanded
-                    ? "opacity-100 block transition-all duration-300 ease-in-out"
-                    : "opacity-0 hidden transition-all duration-300 ease-in-out"
+                    ? 'opacity-100 block transition-all duration-300 ease-in-out'
+                    : 'opacity-0 hidden transition-all duration-300 ease-in-out'
                 }`}
               >
-                {new Date(doc?.updatedAt).toLocaleString("en-GB", {
-                  weekday: "short",
-                  hour: "2-digit",
-                  minute: "2-digit",
+                {new Date(doc?.updatedAt).toLocaleString('en-GB', {
+                  weekday: 'short',
+                  hour: '2-digit',
+                  minute: '2-digit',
                   hour12: false,
                 })}
               </div>
             </div>
 
             <div className="flex flex-col custom-2xl:block custom-2xl:pt-2 custom-2xl:pl-12">
-              <span className="text-[#685aad] text-sm custom-2xl:hidden mb-1">
-                status
-              </span>
+              <span className="text-[#685aad] text-sm custom-2xl:hidden mb-1">status</span>
               <div className="flex gap-5 items-center custom-2xl:justify-center">
                 <div
                   className={`h-5 min-w-5 transition-all duration-300 ease-in-out ${
-                    doc?.status === "Approved" ? "bg-[#00DAE5]" : "bg-[#FC7777]"
+                    doc?.status === 'Approved' ? 'bg-[#00DAE5]' : 'bg-[#FC7777]'
                   }  rounded-md`}
                 >
                   &nbsp;
@@ -319,11 +277,11 @@ function FileItemTemp({ file, doc }: IFileItemTemp) {
                   <div
                     className={`text-base sm:text-[21.77px] font-medium text-[#685aad] ${
                       isExpanded
-                        ? "opacity-100 block transition-all duration-300 ease-in-out"
-                        : "opacity-0 hidden transition-all duration-300 ease-in-out"
+                        ? 'opacity-100 block transition-all duration-300 ease-in-out'
+                        : 'opacity-0 hidden transition-all duration-300 ease-in-out'
                     }`}
                   >
-                    {new Date(doc?.updatedAt).toLocaleDateString("en-GB")}
+                    {new Date(doc?.updatedAt).toLocaleDateString('en-GB')}
                   </div>
                 </span>
               </div>

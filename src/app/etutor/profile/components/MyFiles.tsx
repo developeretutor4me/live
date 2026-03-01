@@ -1,27 +1,27 @@
-"use client";
-import { Search } from "lucide-react";
-import React, { useMemo, useState } from "react";
-import FileItemTemp from "./FIleItemTemp";
-import DropDown from "./DropDown";
-import { useQualificationTutorDoc } from "@/app/admin/hooks/useQualificationTutorDoc";
-import { TutorDocument, TutorFile } from "./Data";
-import notavailable from "../../../../../public/tutordocsnotavailable.svg";
-import Image from "next/image";
+'use client';
+import { Search } from 'lucide-react';
+import React, { useMemo, useState } from 'react';
+import FileItemTemp from './FIleItemTemp';
+import DropDown from './DropDown';
+import { useQualificationTutorDoc } from '@/app/admin/hooks/useQualificationTutorDoc';
+import { TutorDocument, TutorFile } from './Data';
+import notavailable from '../../../../../public/tutordocsnotavailable.svg';
+import Image from 'next/image';
 interface SortOption {
   value: string;
   label: string;
 }
 const SortOptions: SortOption[] = [
-  { value: "name-asc", label: "Name (A-Z)" },
-  { value: "name-desc", label: "Name (Z-A)" },
-  { value: "size-largest", label: "Size (Largest)" },
-  { value: "size-smallest", label: "Size (Smallest)" },
+  { value: 'name-asc', label: 'Name (A-Z)' },
+  { value: 'name-desc', label: 'Name (Z-A)' },
+  { value: 'size-largest', label: 'Size (Largest)' },
+  { value: 'size-smallest', label: 'Size (Smallest)' },
 ];
 
 function MyFiles() {
   const { isLoading, docs, error, mutate } = useQualificationTutorDoc();
-  const [selectedOption, setSelectedOption] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedOption, setSelectedOption] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const handleSortOptionSelect = (option: string) => {
     setSelectedOption(option);
@@ -46,32 +46,26 @@ function MyFiles() {
       const query = searchQuery.toLowerCase().trim();
       filtered = allFiles.filter(
         ({ file }: { file: TutorFile }) =>
-          typeof file?.fileName === "string" &&
-          file.fileName.toLowerCase().includes(query)
+          typeof file?.fileName === 'string' && file.fileName.toLowerCase().includes(query)
       );
     }
 
     // Apply sorting
     if (selectedOption) {
-      filtered.sort(
-        (
-          { file: a }: { file: TutorFile },
-          { file: b }: { file: TutorFile }
-        ) => {
-          switch (selectedOption) {
-            case "name-asc":
-              return a.fileName.localeCompare(b.fileName);
-            case "name-desc":
-              return b.fileName.localeCompare(a.fileName);
-            case "size-largest":
-              return (Number(b.fileSize) || 0) - (Number(a.fileSize) || 0);
-            case "size-smallest":
-              return (Number(a.fileSize) || 0) - (Number(b.fileSize) || 0);
-            default:
-              return 0;
-          }
+      filtered.sort(({ file: a }: { file: TutorFile }, { file: b }: { file: TutorFile }) => {
+        switch (selectedOption) {
+          case 'name-asc':
+            return a.fileName.localeCompare(b.fileName);
+          case 'name-desc':
+            return b.fileName.localeCompare(a.fileName);
+          case 'size-largest':
+            return (Number(b.fileSize) || 0) - (Number(a.fileSize) || 0);
+          case 'size-smallest':
+            return (Number(a.fileSize) || 0) - (Number(b.fileSize) || 0);
+          default:
+            return 0;
         }
-      );
+      });
     }
 
     return filtered;
@@ -153,7 +147,7 @@ function MyFiles() {
               className="h-[100%]  overflow-y-auto first:space-y-0 flex flex-col gap-4  space-y-2 sm:space-y-4 pr-3 sm:pr-7 custom-xl:pr-[34px]"
             >
               {isLoading
-                ? "Loading"
+                ? 'Loading'
                 : docs?.flatMap((doc: TutorDocument) =>
                     doc.files.map((file: TutorFile) => (
                       <div key={file._id}>

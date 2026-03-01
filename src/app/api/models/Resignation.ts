@@ -1,15 +1,15 @@
-import mongoose, { Schema, model, models } from "mongoose";
+import mongoose, { Schema, model, models } from 'mongoose';
 
 const ResignationSchema = new Schema(
   {
     user: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true,
     },
     teacher: {
       type: Schema.Types.ObjectId,
-      ref: "Teacher",
+      ref: 'Teacher',
       required: true,
     },
     reason: {
@@ -35,8 +35,8 @@ const ResignationSchema = new Schema(
     },
     status: {
       type: String,
-      enum: ["pending", "approved", "declined"],
-      default: "pending",
+      enum: ['pending', 'approved', 'declined'],
+      default: 'pending',
     },
     adminComments: {
       type: String,
@@ -48,6 +48,6 @@ const ResignationSchema = new Schema(
   }
 );
 
-const ResignationModel = models.Resignation || model("Resignation", ResignationSchema);
+const ResignationModel = models.Resignation || model('Resignation', ResignationSchema);
 
 export default ResignationModel;

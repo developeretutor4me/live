@@ -1,11 +1,8 @@
-
-'use client'
+'use client';
 import { useSession } from 'next-auth/react';
 
 function MyComponent() {
   const { data: session } = useSession();
-
- 
 
   return (
     <div>

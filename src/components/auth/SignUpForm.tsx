@@ -29,8 +29,6 @@ interface SignUpFormProps {
   setselectedCountryForPhone: (code: CountryData) => void;
 }
 
-
-
 const SignUpForm = ({
   handleGoogleSignIn,
   signUpFormSubmitHandler,
@@ -130,9 +128,7 @@ const SignUpForm = ({
 
     if (name === 'phoneNumber') {
       // Auto-detect country code
-      const matchedCountry = countryData.find((country) =>
-        value.startsWith(country.dial_code)
-      );
+      const matchedCountry = countryData.find(country => value.startsWith(country.dial_code));
 
       if (matchedCountry) {
         setselectedCountryForPhone(matchedCountry);
@@ -298,8 +294,9 @@ const SignUpForm = ({
         <button
           type="submit"
           disabled={loading}
-          className={`bg-[#8358F7] text-white px-16 py-2 rounded-full text-[20px] lg:text-[24px] xl:text-[30px] 2xl:text-[36px] font-semibold transition-all duration-300 shadow-lg hover:shadow-xl mt-10 w-full flex items-center justify-center gap-2 ${loading ? 'opacity-75 cursor-not-allowed' : 'hover:bg-[#6B46C1]'
-            }`}
+          className={`bg-[#8358F7] text-white px-16 py-2 rounded-full text-[20px] lg:text-[24px] xl:text-[30px] 2xl:text-[36px] font-semibold transition-all duration-300 shadow-lg hover:shadow-xl mt-10 w-full flex items-center justify-center gap-2 ${
+            loading ? 'opacity-75 cursor-not-allowed' : 'hover:bg-[#6B46C1]'
+          }`}
         >
           {loading && (
             <svg

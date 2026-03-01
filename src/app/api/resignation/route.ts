@@ -1,8 +1,8 @@
-import { NextResponse } from "next/server";
-import {connectMongoDB} from "../connection/connection";
-import ResignationModel from "../models/Resignation";
+import { NextResponse } from 'next/server';
+import { connectMongoDB } from '../connection/connection';
+import ResignationModel from '../models/Resignation';
 
-import { ObjectId } from "mongodb";
+import { ObjectId } from 'mongodb';
 
 export async function POST(req: Request) {
   try {
@@ -17,15 +17,9 @@ export async function POST(req: Request) {
     } = await req.json();
 
     // Validate the input fields
-    if (
-      !userId ||
-      !teacherId ||
-      !reason ||
-      !finalDateOfAvailability ||
-      !feedbackOnExperience
-    ) {
+    if (!userId || !teacherId || !reason || !finalDateOfAvailability || !feedbackOnExperience) {
       return NextResponse.json(
-        { success: false, message: "Missing required fields." },
+        { success: false, message: 'Missing required fields.' },
         { status: 400 }
       );
     }
@@ -42,7 +36,7 @@ export async function POST(req: Request) {
       additionalComments,
       feedbackOnExperience,
       additionalDetails,
-      status: "pending", // Set the default status to "pending"
+      status: 'pending', // Set the default status to "pending"
     });
 
     // Save the resignation request
@@ -50,13 +44,13 @@ export async function POST(req: Request) {
 
     return NextResponse.json({
       success: true,
-      message: "Resignation request submitted successfully.",
+      message: 'Resignation request submitted successfully.',
       data: resignationRequest,
     });
-  } catch (error:any) {
-    console.error("Error submitting resignation request:", error);
+  } catch (error: any) {
+    console.error('Error submitting resignation request:', error);
     return NextResponse.json(
-      { success: false, message: "Internal server error", error: error.message },
+      { success: false, message: 'Internal server error', error: error.message },
       { status: 500 }
     );
   }

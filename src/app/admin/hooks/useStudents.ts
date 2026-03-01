@@ -13,7 +13,6 @@ export const useStudents = () => {
     revalidateOnFocus: true, // Re-fetch on window focus
   });
 
- 
   return {
     students: data?.data,
     isLoading,

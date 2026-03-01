@@ -26,20 +26,27 @@ export async function POST(req: Request) {
     }
 
     // Step 2: Find the parent-student relationship using the student ID
-    const relationship = await ParentStudentRelationship.findOne({ student: student._id }).populate('parent');
+    const relationship = await ParentStudentRelationship.findOne({ student: student._id }).populate(
+      'parent'
+    );
     if (!relationship || !relationship.parent) {
-      return NextResponse.json({ success: false, message: 'Parent relationship not found' }, { status: 404 });
+      return NextResponse.json(
+        { success: false, message: 'Parent relationship not found' },
+        { status: 404 }
+      );
     }
 
     // Step 3: Find the user details of the parent
     const parentUser = await User.findById(relationship.parent.user).select('_id email');
     if (!parentUser) {
-      return NextResponse.json({ success: false, message: 'Parent user not found' }, { status: 404 });
+      return NextResponse.json(
+        { success: false, message: 'Parent user not found' },
+        { status: 404 }
+      );
     }
 
     // Step 4: Return the parent user email and ID
     return NextResponse.json({ success: true, user: parentUser }, { status: 200 });
-
   } catch (error) {
     console.error('Error fetching parent:', error);
     return NextResponse.json({ success: false, message: 'Internal server error' }, { status: 500 });

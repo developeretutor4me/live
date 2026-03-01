@@ -1,4 +1,4 @@
-import { Schema, model, models } from "mongoose";
+import { Schema, model, models } from 'mongoose';
 
 const TotalIncomeSchema = new Schema(
   {
@@ -10,6 +10,6 @@ const TotalIncomeSchema = new Schema(
 );
 
 // Check if model already exists to avoid OverwriteModelError
-const TotalIncome = models.TotalIncome || model("TotalIncome", TotalIncomeSchema);
+const TotalIncome = models.TotalIncome || model('TotalIncome', TotalIncomeSchema);
 
 export default TotalIncome;

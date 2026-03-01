@@ -1,6 +1,6 @@
 export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
-import {connectMongoDB} from '@/app/api/connection/connection'; // Ensure this connects to your MongoDB instance
+import { connectMongoDB } from '@/app/api/connection/connection'; // Ensure this connects to your MongoDB instance
 import StudentModel from '@/app/api/models/Student'; // Ensure this points to your Student schema
 import UserModel from '@/app/api/models/User'; // Ensure this points to your User schema
 import { authOptions } from '@/app/auth/auth';
@@ -23,7 +23,7 @@ export async function GET() {
     });
 
     return NextResponse.json({ success: true, data: students }, { status: 200 });
-  } catch (error:any) {
+  } catch (error: any) {
     console.error('Error fetching students:', error);
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }

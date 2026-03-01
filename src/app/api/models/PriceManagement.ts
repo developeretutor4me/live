@@ -1,15 +1,15 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 export interface IMembershipPlan extends Document {
-  planType: "standard" | "premium" | "payasyougo" | "bundles";
-  tutorLevel: "Junior" | "Senior" | "Expert";
+  planType: 'standard' | 'premium' | 'payasyougo' | 'bundles';
+  tutorLevel: 'Junior' | 'Senior' | 'Expert';
   priceId: string;
   priceAmount: number;
   currency: string;
   description: string;
   bundles_session: string;
   discount: {
-    type: "percentage" | "fixed";
+    type: 'percentage' | 'fixed';
     value: number;
     couponId: string;
   };
@@ -20,12 +20,12 @@ const MembershipPlanSchema = new mongoose.Schema(
   {
     planType: {
       type: String,
-      enum: ["standard", "premium", "payasyougo", "bundles"],
+      enum: ['standard', 'premium', 'payasyougo', 'bundles'],
       required: true,
     },
     tutorLevel: {
       type: String,
-      enum: ["Junior", "Senior", "Expert"], // Tutor levels
+      enum: ['Junior', 'Senior', 'Expert'], // Tutor levels
       required: true,
     },
     month: {
@@ -33,7 +33,7 @@ const MembershipPlanSchema = new mongoose.Schema(
     },
     bundles_session: {
       type: String,
-      default:null
+      default: null,
     },
     priceId: {
       type: String, // Stripe Price ID
@@ -48,12 +48,12 @@ const MembershipPlanSchema = new mongoose.Schema(
     },
     currency: {
       type: String,
-      default: "usd",
+      default: 'usd',
     },
     discount: {
       type: {
         type: String,
-        enum: ["percentage", "fixed"], // Discount type: Percentage or Fixed Amount
+        enum: ['percentage', 'fixed'], // Discount type: Percentage or Fixed Amount
       },
       value: Number, // Discount value (e.g., 10% or $5)
       couponId: String, // Stripe Coupon ID (optional)
@@ -68,7 +68,5 @@ const MembershipPlanSchema = new mongoose.Schema(
 
 const MembershipPlan =
   mongoose.models.MembershipPlan ||
-  mongoose.model<IMembershipPlan>("MembershipPlan", MembershipPlanSchema);
+  mongoose.model<IMembershipPlan>('MembershipPlan', MembershipPlanSchema);
 export default MembershipPlan;
-
-

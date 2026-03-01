@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
 function BankDetails() {
   return (
     <div className="mt-36 pt-2.5 ">
       <div className=" w-full bg-[#EDE8FA] h-full px-6 sm:px-12 py-10 custom-xl:py-[68px] rounded-3xl">
         <h1 className="text-lg sm:text-xl custom-xl:text-5xl text-[#685AAD] font-bold sm:pl-11">
-          Payout information{" "}
+          Payout information{' '}
         </h1>
 
         <div className="mt-6 sm:mt-12 custom-xl:mt-[75px] px-4 sm:px-16 custom-xl:px-32 py-5 sm:py-10 custom-xl:py-20 bg-[#B4A5D7] rounded-3xl space-y-16">

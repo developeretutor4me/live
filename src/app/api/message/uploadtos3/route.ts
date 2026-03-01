@@ -3,7 +3,6 @@ import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { authOptions } from '@/app/auth/auth';
 import { getServerSession } from 'next-auth';
 
-
 // Initialize the S3 client
 const s3 = new S3Client({
   region: process.env.AWS_REGION,
@@ -20,20 +19,21 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
     }
 
-    
     // Parse the incoming form data
     const timestamp = Date.now();
     const formData = await req.formData();
     const file = formData.get('file');
 
     if (!file || !(file instanceof File)) {
-      return NextResponse.json({ success: false, error: 'No file provided or invalid file type' }, { status: 400 });
+      return NextResponse.json(
+        { success: false, error: 'No file provided or invalid file type' },
+        { status: 400 }
+      );
     }
 
     // const buffer = Buffer.from(await file.arrayBuffer());
-    
-    const buffer = Buffer.from(await file.arrayBuffer());
 
+    const buffer = Buffer.from(await file.arrayBuffer());
 
     const fileName = `${timestamp}-${file.name}`;
 

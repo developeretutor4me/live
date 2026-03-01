@@ -1,10 +1,6 @@
 {
   "compilerOptions": {
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -22,9 +18,7 @@
       }
     ],
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     }
   },
   "include": [
@@ -32,10 +26,9 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-     "types/next-auth.d.ts",
-    "src/components/Navbar/Navbar.tsx"
-, "src/app/api/booking"  ],
-  "exclude": [
-    "node_modules"
-  ]
+    "types/next-auth.d.ts",
+    "src/components/Navbar/Navbar.tsx",
+    "src/app/api/booking"
+  ],
+  "exclude": ["node_modules"]
 }

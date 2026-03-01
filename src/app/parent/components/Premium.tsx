@@ -1,4 +1,3 @@
-
 // pages/premium.js
 import Head from 'next/head';
 import Link from 'next/link';
@@ -6,7 +5,6 @@ import Link from 'next/link';
 export default function Premium() {
   return (
     <div className="min-h-screen bg-[#EDE8FA] py-8 px-4 sm:px-6 lg:px-8">
-      
       <main className="max-w-2xl mx-auto bg-white rounded-lg shadow-md overflow-hidden border-2 border-red-700">
         <div className="bg-[#5553C4] text-white py-4 px-6 flex items-center">
           <Link href="/">
@@ -30,7 +28,7 @@ export default function Premium() {
           <div className="mb-6">
             <h3 className="text-[#53497F] font-semibold mb-2">Package duration</h3>
             <div className="flex space-x-2">
-              {['3 months', '6 months', '12 months'].map((duration) => (
+              {['3 months', '6 months', '12 months'].map(duration => (
                 <button
                   key={duration}
                   className="bg-[#EDE8FA] text-[#53497F] py-2 px-4 rounded-full text-sm font-semibold"
@@ -47,7 +45,7 @@ export default function Premium() {
                 { name: 'Junior', level: 'Level 1-3' },
                 { name: 'Senior', level: 'Level 4-7' },
                 { name: 'Expert', level: 'Level 8-10' },
-              ].map((tutor) => (
+              ].map(tutor => (
                 <button
                   key={tutor.name}
                   className="bg-[#EDE8FA] text-[#53497F] py-2 px-4 rounded-full text-sm font-semibold"

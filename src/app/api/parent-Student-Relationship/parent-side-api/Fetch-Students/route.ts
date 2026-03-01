@@ -1,15 +1,14 @@
-
 import { NextRequest, NextResponse } from 'next/server';
 import { connectMongoDB } from '../../../connection/connection';
 import Student from '../../../models/Student';
 import ParentStudentRelationship from '../../../models/ParentStudentRelation';
 import Parent from '../../../models/Parent';
 
-export const GET = async (req: NextRequest, context: { params: any, searchParams: any }) => {
+export const GET = async (req: NextRequest, { params }: { params: any }) => {
   try {
-    const { searchParams } = context;
+    const searchParams = req.nextUrl.searchParams;
 
-    const userId= searchParams.get('userId');// Extract the userId from query string
+    const userId = searchParams.get('userId'); // Extract the userId from query string
 
     if (!userId) {
       return NextResponse.json({ message: 'User ID is required' }, { status: 400 });
@@ -35,11 +34,13 @@ export const GET = async (req: NextRequest, context: { params: any, searchParams
     const parentStudentRelationships = await ParentStudentRelationship.find({ parent: parentId });
 
     // Get the list of students that this parent has already sent requests to
-    const studentsInRelationship = parentStudentRelationships.map((relationship) => relationship.student.toString());
+    const studentsInRelationship = parentStudentRelationships.map(relationship =>
+      relationship.student.toString()
+    );
 
     // Filter out the students who are already in a parent-student relationship
     const filteredStudents = students.filter(
-      (student) => !studentsInRelationship.includes(student._id.toString())
+      student => !studentsInRelationship.includes(student._id.toString())
     );
 
     return NextResponse.json({ students: filteredStudents }, { status: 200 });

@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server";
-import {connectMongoDB} from "../../connection/connection";
-import PauseTutoringModel from "../../models/PauseTutoring";
+import { NextResponse } from 'next/server';
+import { connectMongoDB } from '../../connection/connection';
+import PauseTutoringModel from '../../models/PauseTutoring';
 
 export async function DELETE(req: Request) {
   try {
@@ -10,7 +10,7 @@ export async function DELETE(req: Request) {
     // Validate ID
     if (!id) {
       return NextResponse.json(
-        { success: false, message: "Request ID is required." },
+        { success: false, message: 'Request ID is required.' },
         { status: 400 }
       );
     }
@@ -23,19 +23,19 @@ export async function DELETE(req: Request) {
 
     if (!deletedRequest) {
       return NextResponse.json(
-        { success: false, message: "Pause request not found." },
+        { success: false, message: 'Pause request not found.' },
         { status: 404 }
       );
     }
 
     return NextResponse.json({
       success: true,
-      message: "Pause request deleted successfully.",
+      message: 'Pause request deleted successfully.',
     });
-  } catch (error:any) {
-    console.error("Error deleting pause request:", error);
+  } catch (error: any) {
+    console.error('Error deleting pause request:', error);
     return NextResponse.json(
-      { success: false, message: "Internal server error", error: error.message },
+      { success: false, message: 'Internal server error', error: error.message },
       { status: 500 }
     );
   }

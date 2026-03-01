@@ -1,29 +1,35 @@
+import Image from 'next/image';
+import React, { useEffect, useState } from 'react';
+import downloadReport from '../../../../public/downloadReport.svg';
+import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useTotalIncome } from '../hooks/useTotalIncome';
 
-
-
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
-import downloadReport from "../../../../public/downloadReport.svg";
-import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
-import { useTotalIncome } from "../hooks/useTotalIncome";
-
-const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-const names = ["Total", "Weekly", "Monthly", "Yearly"];
+const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const names = ['Total', 'Weekly', 'Monthly', 'Yearly'];
 
 // Sample data structure for fallback
 const defaultData = {
-  daily: [["Day", "Income"], ["Mon", 0], ["Tue", 0], ["Wed", 0], ["Thu", 0], ["Fri", 0], ["Sat", 0], ["Sun", 0]],
+  daily: [
+    ['Day', 'Income'],
+    ['Mon', 0],
+    ['Tue', 0],
+    ['Wed', 0],
+    ['Thu', 0],
+    ['Fri', 0],
+    ['Sat', 0],
+    ['Sun', 0],
+  ],
 };
 
 function TotalIncomeChart() {
   const { income, isLoading, error } = useTotalIncome();
-  
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentName, setCurrentName] = useState(names[0]);
   const [currentDate] = useState(new Date());
   const [chartLoaded, setChartLoaded] = useState(false);
   const [googleChartError, setGoogleChartError] = useState<string | null>(null);
-  const [container, setcontainer] = useState<any>(null)
+  const [container, setcontainer] = useState<any>(null);
   const processIncomeData = (incomeData: any[], currentName: string) => {
     if (!incomeData || !Array.isArray(incomeData) || incomeData.length === 0) {
       // Return default data structure with zeros if no data
@@ -39,7 +45,7 @@ function TotalIncomeChart() {
       // Process each income entry
       incomeData.forEach(entry => {
         if (!entry?.createdAt || !entry?.income) return; // Skip invalid entries
-        
+
         const date = new Date(entry.createdAt);
         const dayOfWeek = date.getDay();
         const month = date.getMonth();
@@ -55,39 +61,36 @@ function TotalIncomeChart() {
 
       // Format data based on currentName
       switch (currentName) {
-        case "Total":
+        case 'Total':
           return [
-            ["Day", "Income"],
-            ["Sun", dailyData[0]],
-            ["Mon", dailyData[1]],
-            ["Tue", dailyData[2]],
-            ["Wed", dailyData[3]],
-            ["Thu", dailyData[4]],
-            ["Fri", dailyData[5]],
-            ["Sat", dailyData[6]]
+            ['Day', 'Income'],
+            ['Sun', dailyData[0]],
+            ['Mon', dailyData[1]],
+            ['Tue', dailyData[2]],
+            ['Wed', dailyData[3]],
+            ['Thu', dailyData[4]],
+            ['Fri', dailyData[5]],
+            ['Sat', dailyData[6]],
           ];
-        
-        case "Weekly":
+
+        case 'Weekly':
           return [
-            ["Week", "Income"],
-            ["Week 1", weeklyData[0]],
-            ["Week 2", weeklyData[1]],
-            ["Week 3", weeklyData[2]],
-            ["Week 4", weeklyData[3]]
+            ['Week', 'Income'],
+            ['Week 1', weeklyData[0]],
+            ['Week 2', weeklyData[1]],
+            ['Week 3', weeklyData[2]],
+            ['Week 4', weeklyData[3]],
           ];
-        
-        case "Monthly":
+
+        case 'Monthly':
           return [
-            ["Month", "Income"],
-            ...months.map((month, index) => [month, monthlyData[index]])
+            ['Month', 'Income'],
+            ...months.map((month, index) => [month, monthlyData[index]]),
           ];
-        
-        case "Yearly":
+
+        case 'Yearly':
           const years = Object.keys(yearlyData).sort();
-          return [
-            ["Year", "Income"],
-            ...years.map(year => [year.toString(), yearlyData[year]])
-          ];
+          return [['Year', 'Income'], ...years.map(year => [year.toString(), yearlyData[year]])];
 
         default:
           return defaultData.daily;
@@ -143,7 +146,7 @@ function TotalIncomeChart() {
       }
 
       const chartContainer = document.getElementById('chart_div');
-      setcontainer(chartContainer)
+      setcontainer(chartContainer);
       if (!chartContainer) {
         throw new Error('Chart container not found');
       }
@@ -160,15 +163,15 @@ function TotalIncomeChart() {
           gridlines: { color: '#b1a8d7', count: 9 },
           minValue: 0,
           format: '#',
-          textStyle: { 
+          textStyle: {
             color: '#7669b5',
             fontSize: 14,
             bold: true,
             fontWeight: '600',
-          }
+          },
         },
         hAxis: {
-          textStyle: { 
+          textStyle: {
             color: '#7669b5',
             fontSize: 14,
             bold: true,
@@ -183,7 +186,7 @@ function TotalIncomeChart() {
           baselineWidth: 5,
         },
         bar: { groupWidth: '50%' },
-        chartArea: { width: '90%', height: '80%' }
+        chartArea: { width: '90%', height: '80%' },
       };
 
       const chart = new window.google.visualization.ColumnChart(chartContainer);
@@ -211,14 +214,14 @@ function TotalIncomeChart() {
     if (chartLoaded && !googleChartError) {
       drawChart();
     }
-  }, [chartLoaded, currentName, income, (container ===null)]);
+  }, [chartLoaded, currentName, income, container === null]);
 
   const handlePrevious = () => {
-    setCurrentIndex(prevIndex => prevIndex === 0 ? names.length - 1 : prevIndex - 1);
+    setCurrentIndex(prevIndex => (prevIndex === 0 ? names.length - 1 : prevIndex - 1));
   };
 
   const handleNext = () => {
-    setCurrentIndex(prevIndex => prevIndex === names.length - 1 ? 0 : prevIndex + 1);
+    setCurrentIndex(prevIndex => (prevIndex === names.length - 1 ? 0 : prevIndex + 1));
   };
 
   useEffect(() => {

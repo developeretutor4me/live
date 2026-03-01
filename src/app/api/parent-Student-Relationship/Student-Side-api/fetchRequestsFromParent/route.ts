@@ -1,15 +1,11 @@
-
-
 import { NextRequest, NextResponse } from 'next/server';
 import { connectMongoDB } from '../../../connection/connection';
 import Student from '../../../models/Student';
 import ParentStudentRelationship from '../../../models/ParentStudentRelation';
 
-export const GET =async (req: NextRequest, context: { params: any, searchParams: any }) => {
+export const GET = async (req: NextRequest, { params }: { params: any }) => {
   try {
-    const { searchParams } = context;
-    // Get the student userId from the query params
-  
+    const searchParams = req.nextUrl.searchParams;
     const studentUserId = searchParams.get('studentUserId'); // Extract student userId from query params
 
     if (!studentUserId) {
@@ -30,7 +26,9 @@ export const GET =async (req: NextRequest, context: { params: any, searchParams:
     const studentId = student._id;
 
     // Fetch all ParentStudentRelationship where the student is the given studentId
-    const requests = await ParentStudentRelationship.find({ student: studentId }).populate('parent');
+    const requests = await ParentStudentRelationship.find({ student: studentId }).populate(
+      'parent'
+    );
 
     // If no requests found
     if (!requests.length) {
@@ -38,7 +36,7 @@ export const GET =async (req: NextRequest, context: { params: any, searchParams:
     }
 
     // Extract parent details and status for each request
-    const detailedRequests = requests.map((request) => {
+    const detailedRequests = requests.map(request => {
       const parent = request.parent;
       return {
         requestId: request._id,

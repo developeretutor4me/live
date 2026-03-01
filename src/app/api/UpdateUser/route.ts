@@ -13,23 +13,27 @@ export async function PUT(req: Request) {
     await connectMongoDB();
 
     // Validate that the user exists
-    const user:any = await User.findById(userId);
+    const user: any = await User.findById(userId);
     if (!user) {
       return NextResponse.json({ message: 'User not found' }, { status: 404 });
     }
 
     // Only update the fields provided in the userUpdates object
-    const updatedFields:any = Object.keys(userUpdates);
-    updatedFields.forEach((field:any) => {
-      if (userUpdates[field] !== undefined) {user[field] = userUpdates[field]; // Update specific fields
+    const updatedFields: any = Object.keys(userUpdates);
+    updatedFields.forEach((field: any) => {
+      if (userUpdates[field] !== undefined) {
+        user[field] = userUpdates[field]; // Update specific fields
       }
     });
 
     await user.save();
 
     return NextResponse.json({ message: 'User updated successfully', user }, { status: 200 });
-  } catch (error:any) {
+  } catch (error: any) {
     console.error('Error updating user:', error);
-    return NextResponse.json({ message: 'Internal Server Error', error: error.message }, { status: 500 });
+    return NextResponse.json(
+      { message: 'Internal Server Error', error: error.message },
+      { status: 500 }
+    );
   }
 }

@@ -1,15 +1,15 @@
-import { Schema, model, models } from "mongoose";
+import { Schema, model, models } from 'mongoose';
 
 const TutorDocumentSchema = new Schema(
   {
     user: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true,
     },
     teacher: {
       type: Schema.Types.ObjectId,
-      ref: "Teacher",
+      ref: 'Teacher',
       required: true,
     },
     subject: {
@@ -40,12 +40,12 @@ const TutorDocumentSchema = new Schema(
     ],
     status: {
       type: String,
-      enum: ["Pending", "Approved", "Declined"],
-      default: "Pending",
+      enum: ['Pending', 'Approved', 'Declined'],
+      default: 'Pending',
     },
     adminRemarks: {
       type: String,
-      default: "",
+      default: '',
     },
   },
   {
@@ -53,7 +53,6 @@ const TutorDocumentSchema = new Schema(
   }
 );
 
-const TutorDocument =
-  models.TutorDocument || model("TutorDocument", TutorDocumentSchema);
+const TutorDocument = models.TutorDocument || model('TutorDocument', TutorDocumentSchema);
 
 export default TutorDocument;

@@ -1,24 +1,20 @@
-import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import BookingModel from "../models/Booking";
-import { connectMongoDB } from "../connection/connection";
-import { authOptions } from "@/app/auth/auth";
-import TeacherModel from "@/app/api/models/Teacher";
-import nodemailer from "nodemailer";
-import UserModel from "../models/User";
+import { NextRequest, NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth';
+import BookingModel from '../models/Booking';
+import { connectMongoDB } from '../connection/connection';
+import { authOptions } from '@/app/auth/auth';
+import TeacherModel from '@/app/api/models/Teacher';
+import nodemailer from 'nodemailer';
+import UserModel from '../models/User';
 
-import ical from "ical-generator";
-import { sendEmail } from "../utils/emailsender";
+import ical from 'ical-generator';
+import { sendEmail } from '../utils/emailsender';
 
-function createCalendarEvent(
-  booking: any,
-  participantEmail: string,
-  isTeacher: boolean
-) {
-  const calendar = ical({ name: "Teaching Session" });
+function createCalendarEvent(booking: any, participantEmail: string, isTeacher: boolean) {
+  const calendar = ical({ name: 'Teaching Session' });
 
   // Parse date and time
-  const [hours, minutes] = booking.time.split(":");
+  const [hours, minutes] = booking.time.split(':');
   const meetingDate = new Date(booking.date);
   meetingDate.setHours(parseInt(hours), parseInt(minutes));
 
@@ -31,9 +27,9 @@ function createCalendarEvent(
   calendar.createEvent({
     start: meetingDate,
     end: endTime,
-    summary: `Teaching Session - ${booking.subjects.join(", ")}`,
+    summary: `Teaching Session - ${booking.subjects.join(', ')}`,
     description: `
-              Subjects: ${booking.subjects.join(", ")}
+              Subjects: ${booking.subjects.join(', ')}
               Level: ${booking.level}
               Duration: ${booking.duration}
               
@@ -45,20 +41,20 @@ function createCalendarEvent(
           `,
     url: isTeacher ? booking.startLink : booking.joinLink,
     organizer: {
-      name: "eTutor4me",
-      email: process.env.MAIL_FROM_ADDRESS || "noreply@teachingplatform.com",
+      name: 'eTutor4me',
+      email: process.env.MAIL_FROM_ADDRESS || 'noreply@teachingplatform.com',
     },
     attendees: [
       {
         email: participantEmail,
         //@ts-ignore
-        role: isTeacher ? "CHAIR" : "REQ-PARTICIPANT",
+        role: isTeacher ? 'CHAIR' : 'REQ-PARTICIPANT',
       },
     ],
     alarms: [
       {
         //@ts-ignore
-        type: "display",
+        type: 'display',
         trigger: 600, // 10 minutes before
       },
     ],
@@ -82,12 +78,12 @@ async function sendEmailNotification(
     const calendarContent = calendar.toString();
 
     // Convert calendar string to base64
-    const base64Content = Buffer.from(calendarContent).toString("base64");
+    const base64Content = Buffer.from(calendarContent).toString('base64');
 
     attachments.push({
-      name: "teaching-session.ics",
+      name: 'teaching-session.ics',
       content: base64Content,
-      contentType: "text/calendar",
+      contentType: 'text/calendar',
     });
   }
 
@@ -102,32 +98,28 @@ async function sendEmailNotification(
     });
 
     if (!result.success) {
-      throw new Error(result.error || "Failed to send email");
+      throw new Error(result.error || 'Failed to send email');
     }
   } catch (error) {
-    console.error("Error sending email:", error);
-    throw new Error("Could not send email notification");
+    console.error('Error sending email:', error);
+    throw new Error('Could not send email notification');
   }
 }
 
 async function formatDateTime(date: Date, time: string) {
   const bookingDate = new Date(date);
-  const formattedDate = bookingDate.toLocaleDateString("en-US", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
+  const formattedDate = bookingDate.toLocaleDateString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
   });
   return `${formattedDate} at ${time}`;
 }
 
-async function sendBookingNotifications(
-  booking: any,
-  teacherEmail: string,
-  studentEmail: string
-) {
+async function sendBookingNotifications(booking: any, teacherEmail: string, studentEmail: string) {
   const dateTimeStr = await formatDateTime(booking.date, booking.time);
-  const subjectsList = booking.subjects.join(", ");
+  const subjectsList = booking.subjects.join(', ');
 
   // Teacher email content
   const teacherHtmlContent = `
@@ -191,7 +183,7 @@ async function sendBookingNotifications(
                   </ul>
               </div>
               `
-                  : ""
+                  : ''
               }
               <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #eee;">
                   <p style="color: #666;">Best regards,</p>
@@ -204,14 +196,14 @@ async function sendBookingNotifications(
   await Promise.all([
     sendEmailNotification(
       teacherEmail,
-      "New Session Booking Confirmed - Host Link",
+      'New Session Booking Confirmed - Host Link',
       teacherHtmlContent,
       booking,
       true // isTeacher = true
     ),
     sendEmailNotification(
       studentEmail,
-      "Session Booking Confirmed - Join Link",
+      'Session Booking Confirmed - Join Link',
       studentHtmlContent,
       booking,
       false // isTeacher = false
@@ -224,17 +216,14 @@ export async function POST(req: NextRequest) {
     // 1. Authentication check
     const session = await getServerSession(authOptions);
     if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     // 2. Get teacher
     const userId = session.user.id;
-    const teacher = await TeacherModel.findOne({ user: userId }).populate(
-      "user",
-      "email"
-    );
+    const teacher = await TeacherModel.findOne({ user: userId }).populate('user', 'email');
     if (!teacher) {
-      return NextResponse.json({ error: "Teacher not found" }, { status: 404 });
+      return NextResponse.json({ error: 'Teacher not found' }, { status: 404 });
     }
 
     // 3. Parse request body
@@ -246,18 +235,15 @@ export async function POST(req: NextRequest) {
     if (!bookingId || !newStatus) {
       return NextResponse.json(
         {
-          error: "Booking ID and new status are required",
+          error: 'Booking ID and new status are required',
         },
         { status: 400 }
       );
     }
 
-    const validStatuses = ["pending", "accepted", "rejected"];
+    const validStatuses = ['pending', 'accepted', 'rejected'];
     if (!validStatuses.includes(newStatus)) {
-      return NextResponse.json(
-        { error: "Invalid status value" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Invalid status value' }, { status: 400 });
     }
 
     // 5. Connect to MongoDB
@@ -269,11 +255,11 @@ export async function POST(req: NextRequest) {
       updatedAt: new Date(),
     };
 
-    if (newStatus === "accepted") {
+    if (newStatus === 'accepted') {
       if (!startLink || !joinLink || !zoomMeetingData) {
         return NextResponse.json(
           {
-            error: "Meeting links and data are required for accepted status",
+            error: 'Meeting links and data are required for accepted status',
           },
           { status: 400 }
         );
@@ -300,21 +286,21 @@ export async function POST(req: NextRequest) {
         runValidators: true,
       }
     ).populate({
-      path: "student",
-      select: "email hasCompletedFirstSession",
+      path: 'student',
+      select: 'email hasCompletedFirstSession',
     });
 
     if (!updatedBooking) {
       return NextResponse.json(
         {
-          error: "Booking not found or not associated with this teacher",
+          error: 'Booking not found or not associated with this teacher',
         },
         { status: 404 }
       );
     }
 
     // 8. Send email notifications if status is accepted
-    if (newStatus === "accepted") {
+    if (newStatus === 'accepted') {
       try {
         await sendBookingNotifications(
           updatedBooking,
@@ -323,7 +309,7 @@ export async function POST(req: NextRequest) {
           updatedBooking.student.email
         );
       } catch (emailError) {
-        console.error("Error sending notification emails:", emailError);
+        console.error('Error sending notification emails:', emailError);
         // Continue with the response even if email sending fails
       }
     }
@@ -332,22 +318,21 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       {
         success: true,
-        message: "Booking status updated successfully",
+        message: 'Booking status updated successfully',
         booking: updatedBooking,
       },
       { status: 200 }
     );
   } catch (error) {
     // 10. Error handling
-    console.error("Error in update-booking-status:", error);
+    console.error('Error in update-booking-status:', error);
 
     if (error instanceof Error) {
       return NextResponse.json(
         {
-          error: "Internal server error",
+          error: 'Internal server error',
           details: error.message,
-          stack:
-            process.env.NODE_ENV === "development" ? error.stack : undefined,
+          stack: process.env.NODE_ENV === 'development' ? error.stack : undefined,
         },
         { status: 500 }
       );
@@ -355,7 +340,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(
       {
-        error: "An unknown error occurred",
+        error: 'An unknown error occurred',
       },
       { status: 500 }
     );

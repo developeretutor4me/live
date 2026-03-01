@@ -1,12 +1,12 @@
-"use client";
-import React, { useState, useRef, useEffect } from "react";
-import Image from "next/image";
-import ChatComponent from "./ChatComponent"; // Make sure to create this file
-import tier from "../../../../public/tier.svg";
-import messageicon from "../../../../public/chatChaticonLightPurple.svg";
-import folder from "../../../../public/chatfoldericonLightpurple.svg";
-import profile from "../../../../public/etutorprofile.svg";
-import sample from "../../../../public/assets/heroimg.png";
+'use client';
+import React, { useState, useRef, useEffect } from 'react';
+import Image from 'next/image';
+import ChatComponent from './ChatComponent'; // Make sure to create this file
+import tier from '../../../../public/tier.svg';
+import messageicon from '../../../../public/chatChaticonLightPurple.svg';
+import folder from '../../../../public/chatfoldericonLightpurple.svg';
+import profile from '../../../../public/etutorprofile.svg';
+import sample from '../../../../public/assets/heroimg.png';
 
 import {
   Send,
@@ -16,22 +16,22 @@ import {
   PaperclipIcon,
   ChevronUp,
   ChevronDown,
-} from "lucide-react";
-import chaticon from "../../../../public/chaticon (2).svg";
-import sendicon from "../../../../public/sendicon.svg";
-import purplechaticon from "../../../../public/messagelight.svg";
-import foldericonpurple from "../../../../public/folderlight.svg";
-import profileicon from "../../../../public/profilelight.svg";
-import sampleimg from "../../../../public/assets/heroimg.png";
-import plusicon from "../../../../public/plusicon.svg";
-import pdficon from "../../../../public/pdf icon.svg";
-import { useSession } from "next-auth/react";
-import useSWR from "swr";
-import { io } from "socket.io-client";
-import { useToast } from "@/hooks/use-toast";
-import { getRelativeTime } from "./getRelativeTime";
+} from 'lucide-react';
+import chaticon from '../../../../public/chaticon (2).svg';
+import sendicon from '../../../../public/sendicon.svg';
+import purplechaticon from '../../../../public/messagelight.svg';
+import foldericonpurple from '../../../../public/folderlight.svg';
+import profileicon from '../../../../public/profilelight.svg';
+import sampleimg from '../../../../public/assets/heroimg.png';
+import plusicon from '../../../../public/plusicon.svg';
+import pdficon from '../../../../public/pdf icon.svg';
+import { useSession } from 'next-auth/react';
+import useSWR from 'swr';
+import { io } from 'socket.io-client';
+import { useToast } from '@/hooks/use-toast';
+import { getRelativeTime } from './getRelativeTime';
 
-const SOCKET_URL = "https://etutor4me.com:5000"; // Backend URL
+const SOCKET_URL = 'https://etutor4me.com:5000'; // Backend URL
 const socket = io(SOCKET_URL, {
   withCredentials: true,
 });
@@ -55,8 +55,9 @@ const TutorListItem = ({
       />
       <div className="flex-grow">
         <p
-          className={`font-semibold text-base  custom-xl:text-[21.38px] custom-xl:leading-[2rem]   truncate  max-w-[7.5rem]  ${isActive ? "text-white" : "text-white"
-            }`}
+          className={`font-semibold text-base  custom-xl:text-[21.38px] custom-xl:leading-[2rem]   truncate  max-w-[7.5rem]  ${
+            isActive ? 'text-white' : 'text-white'
+          }`}
         >
           {tutor.firstName?.slice(0, 7)}
         </p>
@@ -98,21 +99,23 @@ const ChatMessage = ({ message, isUser }: any) => {
   if (!message || !message.content) return null;
 
   return (
-    <div className={`flex ${isUser ? "justify-end" : "justify-start"} mb-4`}>
+    <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} mb-4`}>
       <div
-        className={` w-full rounded-lg custom-xl:rounded-2xl p-2 custom-xl:p-[18px] ${isUser ? "bg-[#8170B1] text-white max-w-[70%] custom-xl:max-w-[586.11px]" : "bg-white text-[#473171] max-w-[70%] custom-xl:max-w-[512.24px]"
-          }`}
+        className={` w-full rounded-lg custom-xl:rounded-2xl p-2 custom-xl:p-[18px] ${
+          isUser
+            ? 'bg-[#8170B1] text-white max-w-[70%] custom-xl:max-w-[586.11px]'
+            : 'bg-white text-[#473171] max-w-[70%] custom-xl:max-w-[512.24px]'
+        }`}
       >
         <p className="text-sm sm:text-md custom-xl:text-[25.27px] custom-xl:leading-[1.75rem] font-medium break-words  custom-xl:mb-3">
           {message.content}
         </p>
         <span
-          className={`text-xs sm:text-sm custom-xl:text-[20.41px] custom-xl:leading-[1.5rem] opacity-70 custom-xl:mt-1 block ${isUser ? "text-white float-right" : "text-[#9B85C8]"
-            }`}
+          className={`text-xs sm:text-sm custom-xl:text-[20.41px] custom-xl:leading-[1.5rem] opacity-70 custom-xl:mt-1 block ${
+            isUser ? 'text-white float-right' : 'text-[#9B85C8]'
+          }`}
         >
-          {message.timestamp
-            ? getRelativeTime(message.timestamp)
-            : "Timestamp not available"}
+          {message.timestamp ? getRelativeTime(message.timestamp) : 'Timestamp not available'}
         </span>
       </div>
     </div>
@@ -125,32 +128,28 @@ const FileMessage = ({ message, isUser }: any) => {
   return (
     <div
       onClick={() => {
-        const link = document.createElement("a");
+        const link = document.createElement('a');
         link.href = message.fileUrl;
-        link.target = "_blank"; // Open in a new tab
-        link.download = message.fileUrl.split("/").pop(); // Download the file with its original name
+        link.target = '_blank'; // Open in a new tab
+        link.download = message.fileUrl.split('/').pop(); // Download the file with its original name
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
         // window.open(message.fileUrl, '_blank');
       }}
-      className={`bg-[#8170B1] max-w-[34rem] flex items-center p-6 rounded-xl my-3 hover:cursor-pointer ${isUser ? "ml-auto" : "mr-auto" // Conditional alignment based on isUser
-        }`}
+      className={`bg-[#8170B1] max-w-[34rem] flex items-center p-6 rounded-xl my-3 hover:cursor-pointer ${
+        isUser ? 'ml-auto' : 'mr-auto' // Conditional alignment based on isUser
+      }`}
     >
-      <Image
-        loading="lazy"
-        src={pdficon}
-        alt="PDF Icon"
-        className="w-12 h-12"
-      />
+      <Image loading="lazy" src={pdficon} alt="PDF Icon" className="w-12 h-12" />
       <div className="ml-3 flex items-center justify-between w-full">
         <span className="max-w-[10rem] text-2xl overflow-hidden text-nowrap font-medium">
-          {message.fileName.slice(0, 4) + "..." + message.fileName.slice(-4)}
+          {message.fileName.slice(0, 4) + '...' + message.fileName.slice(-4)}
         </span>
         <span className="text-xs text-gray-300">
           {new Date(message.timestamp).toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
+            hour: '2-digit',
+            minute: '2-digit',
           })}
         </span>
       </div>
@@ -179,13 +178,13 @@ function MyEtutor({ tutor, showchatvalue }: MyEtutorprops) {
   const [showChat, setShowChat] = useState(false || showchatvalue);
 
   const [activeTutor, setActiveTutor] = useState(0);
-  const [activeView, setActiveView] = useState("chat");
+  const [activeView, setActiveView] = useState('chat');
   const [tutors, setTutors] = useState();
   const [conversationId, setConversationId] = useState<string | null>(null);
 
   const fileInputRef = useRef(null);
   const [messages, setMessages] = useState([]); // State to hold messages
-  const [newMessage, setNewMessage] = useState(""); // State for the input message
+  const [newMessage, setNewMessage] = useState(''); // State for the input message
   const messagesEndRef = useRef(null); // Reference to scroll to the bottom
   const [recievedmessages, setRecievedmessages] = useState([]);
   const [userId, setUserId] = useState(null);
@@ -195,22 +194,20 @@ function MyEtutor({ tutor, showchatvalue }: MyEtutorprops) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedFile, setselectedFile] = useState(null);
   const [file, setFile] = useState(null);
-  const [fileName, setFileName] = useState("");
+  const [fileName, setFileName] = useState('');
   const { toast } = useToast();
   useEffect(() => {
     if (socket && userId) {
       // Join the socket room based on userId (either student or teacher)
-      socket.emit("join", userId);
+      socket.emit('join', userId);
 
       // Listen for incoming chat messages
-      socket.on("chatMessage", (msg) => {
+      socket.on('chatMessage', msg => {
         setMessages((prevMessages: any) => {
           // Avoid adding duplicate messages based on content and senderId
           if (
             !prevMessages.some(
-              (message: any) =>
-                message.content === msg.content &&
-                message.senderId === msg.senderId
+              (message: any) => message.content === msg.content && message.senderId === msg.senderId
             )
           ) {
             return [...prevMessages, msg];
@@ -223,10 +220,10 @@ function MyEtutor({ tutor, showchatvalue }: MyEtutorprops) {
     return () => {
       if (socket && userId) {
         // Leave the socket room when the component unmounts
-        socket.emit("leave", userId);
+        socket.emit('leave', userId);
 
         // Cleanup the listener to avoid memory leaks and duplicate listeners
-        socket.off("chatMessage");
+        socket.off('chatMessage');
       }
     };
   }, [socket, userId]); // Run this effect when `socket` or `userId` changes
@@ -246,13 +243,13 @@ function MyEtutor({ tutor, showchatvalue }: MyEtutorprops) {
       };
 
       // Emit message to the server
-      socket.emit("chatMessage", chatMessage);
+      socket.emit('chatMessage', chatMessage);
 
       // Update UI optimistically
       // @ts-ignore
-      setMessages((prev) => [...prev, chatMessage]);
+      setMessages(prev => [...prev, chatMessage]);
 
-      setNewMessage(""); // Clear input field
+      setNewMessage(''); // Clear input field
       await savingmessages(null, null, null);
     }
   };
@@ -261,9 +258,9 @@ function MyEtutor({ tutor, showchatvalue }: MyEtutorprops) {
     // if (!newMessage.trim() || !fileUrl) return; // Prevent sending empty messages
 
     try {
-      const response = await fetch("/api/message", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const response = await fetch('/api/message', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           senderId: userId,
           //@ts-ignore
@@ -283,10 +280,10 @@ function MyEtutor({ tutor, showchatvalue }: MyEtutorprops) {
       // If there was no conversationId previously, set it now
       setConversationId(newConversationId);
 
-      setNewMessage(""); // Clear the message input field
+      setNewMessage(''); // Clear the message input field
       scrollToBottom(); // Scroll to the bottom of the chat
     } catch (error) {
-      console.error("Error sending message:", error);
+      console.error('Error sending message:', error);
     }
   }
 
@@ -295,31 +292,31 @@ function MyEtutor({ tutor, showchatvalue }: MyEtutorprops) {
     await session;
     if (!file) {
       toast({
-        title: "",
+        title: '',
 
-        description: "please select a file first",
-        variant: "default",
+        description: 'please select a file first',
+        variant: 'default',
       });
       return;
     }
 
     const formData = new FormData();
-    formData.append("file", file);
-    formData.append("senderId", session?.user.id);
+    formData.append('file', file);
+    formData.append('senderId', session?.user.id);
     // @ts-ignore
-    formData.append("recipientId", showmessages?.user?._id);
+    formData.append('recipientId', showmessages?.user?._id);
 
     try {
       // Call API to upload the file
-      const response = await fetch("/api/message/uploadtos3", {
-        method: "POST",
+      const response = await fetch('/api/message/uploadtos3', {
+        method: 'POST',
         body: formData,
       });
       const result = await response.json();
 
       if (result.success) {
       } else {
-        console.error("File upload failed:", result.error);
+        console.error('File upload failed:', result.error);
       }
 
       if (result.success) {
@@ -336,27 +333,23 @@ function MyEtutor({ tutor, showchatvalue }: MyEtutorprops) {
           fileName: file.name,
         };
 
-        await savingmessages(
-          chatMessage.fileUrl,
-          chatMessage.fileType,
-          chatMessage.fileName
-        );
+        await savingmessages(chatMessage.fileUrl, chatMessage.fileType, chatMessage.fileName);
         // Emit the message to the server
-        socket.emit("chatMessage", chatMessage);
+        socket.emit('chatMessage', chatMessage);
         setFile(null);
-        setFileName("");
+        setFileName('');
         setselectedFile(null);
         // Optimistically update the UI
         // @ts-ignore
-        setMessages((prev) => [...prev, chatMessage]);
+        setMessages(prev => [...prev, chatMessage]);
         setIsLoading(false);
       } else {
         setIsLoading(false);
-        console.error("File upload failed:", result.error);
+        console.error('File upload failed:', result.error);
       }
     } catch (error) {
       setIsLoading(false);
-      console.error("Error sending file:", error);
+      console.error('Error sending file:', error);
     }
   };
 
@@ -375,16 +368,14 @@ function MyEtutor({ tutor, showchatvalue }: MyEtutorprops) {
   async function fetchSenders() {
     try {
       setIsLoading(true);
-      const response = await fetch(
-        `/api/recipient/messages?recipientId=${userId}`
-      );
+      const response = await fetch(`/api/recipient/messages?recipientId=${userId}`);
       if (!response.ok) {
-        throw new Error("Failed to fetch senders");
+        throw new Error('Failed to fetch senders');
       }
       const senders = await response.json();
       setRecievedmessages(senders);
     } catch (error) {
-      console.error("Error fetching senders:", error);
+      console.error('Error fetching senders:', error);
     } finally {
       setIsLoading(false);
     }
@@ -396,14 +387,14 @@ function MyEtutor({ tutor, showchatvalue }: MyEtutorprops) {
 
   const fetcher = async (url: string) => {
     const response = await fetch(url, {
-      method: "GET",
+      method: 'GET',
     });
     const data = await response.json();
 
     // Handle the specific response cases
     if (
-      data.message === "No conversation found between these users" ||
-      data.message === "No messages found for this conversation"
+      data.message === 'No conversation found between these users' ||
+      data.message === 'No messages found for this conversation'
     ) {
       return { messages: [], data: [] };
     }
@@ -415,13 +406,13 @@ function MyEtutor({ tutor, showchatvalue }: MyEtutorprops) {
   const { data: messageData } = useSWR(
     session
       ? //@ts-ignore
-      `/api/message/conversation?userId=${userId}&recipientId=${showmessages.user?._id}`
+        `/api/message/conversation?userId=${userId}&recipientId=${showmessages.user?._id}`
       : null,
     fetcher,
     {
       revalidateOnFocus: true,
       revalidateOnReconnect: true,
-      onSuccess: (data) => {
+      onSuccess: data => {
         setMessages(data.messages || []); // Set messages or empty array if no messages
 
         // Set the conversationId if it's not already set
@@ -429,8 +420,8 @@ function MyEtutor({ tutor, showchatvalue }: MyEtutorprops) {
           setConversationId(data[0].conversationId);
         }
       },
-      onError: (error) => {
-        console.error("Error fetching messages:", error);
+      onError: error => {
+        console.error('Error fetching messages:', error);
         setMessages([]); // Set empty array on error
       },
     }
@@ -441,7 +432,7 @@ function MyEtutor({ tutor, showchatvalue }: MyEtutorprops) {
   // Scroll to the latest message
   const scrollToBottom = () => {
     //@ts-ignore
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   useEffect(() => {
@@ -450,7 +441,7 @@ function MyEtutor({ tutor, showchatvalue }: MyEtutorprops) {
 
   useEffect(() => {
     // @ts-ignore
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [tutors]);
 
   if (showChat) {
@@ -472,14 +463,14 @@ function MyEtutor({ tutor, showchatvalue }: MyEtutorprops) {
                     isActive={activeTutor === message}
                     onClick={() => setshowmessages(message.details)}
                     onChatClick={() => {
-                      setActiveView("chat");
+                      setActiveView('chat');
                       setshowmessages(message.details);
                     }}
                     onFolderClick={() => {
-                      setActiveView("folder");
+                      setActiveView('folder');
                       setshowmessages(message.details);
                     }}
-                    onProfileClick={() => { }} // Placeholder for profile functionality
+                    onProfileClick={() => {}} // Placeholder for profile functionality
                   />
                 ))}
             </div>
@@ -504,22 +495,22 @@ function MyEtutor({ tutor, showchatvalue }: MyEtutorprops) {
               </h2>
             </div>
 
-            {activeView === "chat" && (
+            {activeView === 'chat' && (
               <>
                 {/* Messages */}
                 <div className="flex-grow p-1 custom-xl:px-3 custom-xl:py-6 bg-[#B4A5D7] border-t border-[#8b55ff51] mx-4 overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[#685aad40] scrollbar-thumb-rounded-3xl">
                   {Array.isArray(messages) && messages.length > 0
                     ? messages.map((msg, index) => (
-                      <>
-                        <ChatMessage
-                          key={index}
-                          message={msg}
-                          // @ts-ignore
-                          isUser={msg.senderId === userId}
-                        />
-                      </>
-                    ))
-                    : ""}
+                        <>
+                          <ChatMessage
+                            key={index}
+                            message={msg}
+                            // @ts-ignore
+                            isUser={msg.senderId === userId}
+                          />
+                        </>
+                      ))
+                    : ''}
 
                   <div ref={messagesEndRef} />
                 </div>
@@ -533,7 +524,7 @@ function MyEtutor({ tutor, showchatvalue }: MyEtutorprops) {
                     <input
                       type="text"
                       value={newMessage}
-                      onChange={(e) => setNewMessage(e.target.value)}
+                      onChange={e => setNewMessage(e.target.value)}
                       placeholder="send a message"
                       className="flex-grow py-1 sm:py-2 custom-xl:py-4 pl-8 custom-xl:pl-16 pr-8 custom-xl:pr-16  bg-transparent text-white placeholder-[#b0a9d2] text-sm sm:text-base custom-xl:text-[25.27px] custom-xl:leading-[1.75rem] focus:outline-none"
                     />
@@ -550,7 +541,7 @@ function MyEtutor({ tutor, showchatvalue }: MyEtutorprops) {
               </>
             )}
 
-            {activeView === "folder" && (
+            {activeView === 'folder' && (
               <>
                 <div className="flex-grow p-1 custom-xl:p-3 bg-[#B4A5D7] border-t border-[#8b55ff51]   mx-4 overflow-y-scroll scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[#685aad40] scrollbar-thumb-rounded-3xl">
                   {Array.isArray(messages) &&
@@ -575,14 +566,14 @@ function MyEtutor({ tutor, showchatvalue }: MyEtutorprops) {
                       {selectedFile && (
                         <div className="mt-2 flex items-center gap-4">
                           <p className="text-sm text-white">
-                            {fileName.slice(0, 8) + "..." + fileName.slice(-4)}
+                            {fileName.slice(0, 8) + '...' + fileName.slice(-4)}
                           </p>
                           <button
                             className="text-sm text-[#af0000] hover:text-red-700"
                             onClick={() => {
                               setselectedFile(null);
                               setFile(null);
-                              setFileName("");
+                              setFileName('');
                             }}
                           >
                             Remove
@@ -593,7 +584,7 @@ function MyEtutor({ tutor, showchatvalue }: MyEtutorprops) {
                         onClick={sendFile}
                         className="w-full sm:w-auto py-1 px-9 text-base custom-xl:text-base rounded-sm bg-[#8358F7] hover:bg-[#4a3683] capitalize hover:bg-opacity-90 transition-colors"
                       >
-                        {isLoading ? "wait..." : "send"}
+                        {isLoading ? 'wait...' : 'send'}
                       </button>
                     </div>
                   ) : (
@@ -610,9 +601,7 @@ function MyEtutor({ tutor, showchatvalue }: MyEtutorprops) {
                           }
                         }}
                       />
-                      <span className="text-2xl text-[#DBD8EF] font-medium">
-                        Add attachment
-                      </span>
+                      <span className="text-2xl text-[#DBD8EF] font-medium">Add attachment</span>
                       <Image
                         loading="lazy"
                         src={plusicon}
@@ -650,8 +639,7 @@ function MyEtutor({ tutor, showchatvalue }: MyEtutorprops) {
                     <img
                       src={
                         //@ts-ignore
-                        message?.details?.user?.profilePicture ||
-                        "/api/placeholder/64/64"
+                        message?.details?.user?.profilePicture || '/api/placeholder/64/64'
                       }
                       alt="Profile"
                       className="w-full h-full"
@@ -663,7 +651,7 @@ function MyEtutor({ tutor, showchatvalue }: MyEtutorprops) {
                     <h2 className="font-bold text-base sm:text-lg custom-xl:text-[37.6px] custom-xl:leading-none ">
                       {
                         //@ts-ignore
-                        message?.details?.firstName || ""
+                        message?.details?.firstName || ''
                       }
                     </h2>
 
@@ -707,8 +695,6 @@ function MyEtutor({ tutor, showchatvalue }: MyEtutorprops) {
                       </ul>
                     </div>
                   </div>
-
-
                 </div>
 
                 <div className="flex gap-3 sm:gap-6 custom-xl:gap-14">
@@ -730,7 +716,7 @@ function MyEtutor({ tutor, showchatvalue }: MyEtutorprops) {
                     className="w-5 sm:w-6 custom-xl:w-[38.81px] hover:cursor-pointer"
                     onClick={() => {
                       setShowChat(true);
-                      setActiveView("folder");
+                      setActiveView('folder');
                       //@ts-ignore
                       setshowmessages(message.details);
                     }}

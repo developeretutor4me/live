@@ -5,7 +5,7 @@ const ResultsPage = () => {
   return (
     <div className="bg-[#f3eeff] min-h-screen p-6">
       <h1 className="text-[#6949ff] text-2xl font-bold mb-4">Search Results</h1>
-      
+
       <div className="space-y-4">
         {/* Example result item */}
         <div className="bg-white p-4 rounded-lg shadow">
@@ -16,10 +16,10 @@ const ResultsPage = () => {
             Book Session
           </button>
         </div>
-        
+
         {/* Add more result items as needed */}
       </div>
-      
+
       <Link href="/" className="block mt-6 text-[#6949ff] hover:underline">
         Back to Search
       </Link>

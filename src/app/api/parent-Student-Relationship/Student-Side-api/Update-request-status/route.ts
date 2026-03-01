@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import {connectMongoDB} from '../../../connection/connection';
+import { connectMongoDB } from '../../../connection/connection';
 import ParentStudentRelationship from '../../../models/ParentStudentRelation';
 
 export const POST = async (req: Request) => {

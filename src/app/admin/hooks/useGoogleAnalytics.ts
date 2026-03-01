@@ -13,7 +13,6 @@ export const useGoogleAnalytics = () => {
     revalidateOnFocus: true, // Re-fetch on window focus
   });
 
- 
   return {
     googleAnalytics: data,
     isLoading,

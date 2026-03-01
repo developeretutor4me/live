@@ -1,12 +1,12 @@
-"use client";
-import { useState } from "react";
+'use client';
+import { useState } from 'react';
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
-import downloadReport from "../../../../public/downloadReport.svg";
-import Image from "next/image";
-import SalaryBarChart from "./SalaryBarChart";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import downloadReport from '../../../../public/downloadReport.svg';
+import Image from 'next/image';
+import SalaryBarChart from './SalaryBarChart';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 function TotalPayoutsChart() {
   const [hover, sethover] = useState(false);
@@ -16,7 +16,7 @@ function TotalPayoutsChart() {
     if (typeof window !== 'undefined' && chartRef.current) {
       const drawChart = async () => {
         // Load Google Charts
-        await new Promise((resolve) => {
+        await new Promise(resolve => {
           const script = document.createElement('script');
           script.src = 'https://www.gstatic.com/charts/loader.js';
           script.onload = resolve;
@@ -36,45 +36,42 @@ function TotalPayoutsChart() {
 
         const options = {
           backgroundColor: '#ede8fa',
-          chartArea: { 
-            width: '80%', 
+          chartArea: {
+            width: '80%',
             height: '80%',
-            backgroundColor: '#ede8fa'
+            backgroundColor: '#ede8fa',
           },
           bar: { groupWidth: '40%' },
           legend: { position: 'none' },
           vAxis: {
             gridlines: {
               color: '#b1a8d7',
-              count: 9
+              count: 9,
             },
             minValue: 0,
             maxValue: 4500,
             format: '#',
-            textStyle: { 
-              color: '#7669b5',
-              fontSize: 12 ,
-              bold: true, // You can also use `true` for bold.
-              fontWeight: '600',
-            }
-          },
-          hAxis: {
-            textStyle: { 
+            textStyle: {
               color: '#7669b5',
               fontSize: 12,
               bold: true, // You can also use `true` for bold.
               fontWeight: '600',
-             
-            }
+            },
+          },
+          hAxis: {
+            textStyle: {
+              color: '#7669b5',
+              fontSize: 12,
+              bold: true, // You can also use `true` for bold.
+              fontWeight: '600',
+            },
           },
           animation: {
             startup: true,
             duration: 1000,
-            easing: 'out'
-          }
+            easing: 'out',
+          },
         };
-
-       
 
         const chart = new google.visualization.ColumnChart(chartRef.current);
         chart.draw(data, options);
@@ -89,20 +86,17 @@ function TotalPayoutsChart() {
     }
   }, [chartRef]);
 
-
   return (
     <div className="py-1.5">
       <div className="flex items-end justify-between gap-2  ">
         <div className="flex items-center gap-3 w-fit custom-lg:ml-16 pl-1 text-base text-[#685aad] font-bold">
-          <div className="bg-[#fc7777] h-[25px] w-[25px] rounded-sm">
-            &nbsp;
-          </div>{" "}
-          Total Payouts
+          <div className="bg-[#fc7777] h-[25px] w-[25px] rounded-sm">&nbsp;</div> Total Payouts
         </div>
 
         <div></div>
         <div className="w-fit">
-          <Image  loading="lazy" 
+          <Image
+            loading="lazy"
             onMouseEnter={() => {
               sethover(true);
             }}
@@ -115,7 +109,7 @@ function TotalPayoutsChart() {
           />
           <div
             className={`absolute w-fit -top-5 right-4 bg-[#7669b5] px-3.5 py-1.5 text-xl  rounded-xl text-white transition-all duration-700 transform  origin-bottom-right  ${
-              hover ? "scale-100 opacity-100" : "scale-0 opacity-0"
+              hover ? 'scale-100 opacity-100' : 'scale-0 opacity-0'
             }`}
           >
             Download Report
@@ -125,10 +119,7 @@ function TotalPayoutsChart() {
 
       <div className="">
         <div className="max-w-4xl mx-auto  flex items-center justify-center py-3">
-
-        <div ref={chartRef} className="w-full max-w-full h-[400px]" />
-
-          
+          <div ref={chartRef} className="w-full max-w-full h-[400px]" />
         </div>
       </div>
     </div>
@@ -136,6 +127,3 @@ function TotalPayoutsChart() {
 }
 
 export default TotalPayoutsChart;
-
-
-

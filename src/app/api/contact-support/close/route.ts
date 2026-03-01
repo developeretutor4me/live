@@ -1,10 +1,10 @@
-import { NextRequest, NextResponse } from "next/server";
-import Ticket from "@/app/api/models/Ticket";
-import {connectMongoDB} from "@/app/api/connection/connection";
-import { authOptions } from "@/app/auth/auth";
-import { getServerSession } from "next-auth";
+import { NextRequest, NextResponse } from 'next/server';
+import Ticket from '@/app/api/models/Ticket';
+import { connectMongoDB } from '@/app/api/connection/connection';
+import { authOptions } from '@/app/auth/auth';
+import { getServerSession } from 'next-auth';
 
-export async function POST(req:NextRequest) {
+export async function POST(req: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
     if (!session) {
@@ -15,13 +15,17 @@ export async function POST(req:NextRequest) {
     const { ticketId } = await req.json();
 
     const ticket = await Ticket.findById(ticketId);
-    if (!ticket) return NextResponse.json({ success: false, error: "Ticket not found" }, { status: 404 });
+    if (!ticket)
+      return NextResponse.json({ success: false, error: 'Ticket not found' }, { status: 404 });
 
-    ticket.status = "closed";
+    ticket.status = 'closed';
     await ticket.save();
 
-    return NextResponse.json({ success: true, message: "Ticket closed successfully" }, { status: 200 });
-  } catch (error:any) {
+    return NextResponse.json(
+      { success: true, message: 'Ticket closed successfully' },
+      { status: 200 }
+    );
+  } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }
 }

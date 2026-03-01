@@ -1,7 +1,7 @@
-import { ChevronDown, ChevronUp } from "lucide-react";
-import React from "react";
+import { ChevronDown, ChevronUp } from 'lucide-react';
+import React from 'react';
 
-import { ContactInformationProps } from "./Data";
+import { ContactInformationProps } from './Data';
 
 const ContactInformation: React.FC<ContactInformationProps> = ({
   phone,
@@ -28,11 +28,9 @@ const ContactInformation: React.FC<ContactInformationProps> = ({
   isEditing,
 }) => {
   return (
-    activeTab === "CONTACTINFORMATION" && (
+    activeTab === 'CONTACTINFORMATION' && (
       <div className=" mt-8 sm:px-4">
-        <h1 className="text-4xl font-bold text-[#685AAD]">
-          Contact information
-        </h1>
+        <h1 className="text-4xl font-bold text-[#685AAD]">Contact information</h1>
         <div className="mt-14 flex flex-wrap justify-between gap-8">
           <div className="sm:max-w-[30.9rem] w-full">
             <label className="block text-lg sm:text-xl font-semibold text-[#685AAD]">
@@ -63,7 +61,7 @@ const ContactInformation: React.FC<ContactInformationProps> = ({
               type="text"
               className="mt-2 sm:mt-4 px-4 py-2.5 block w-full rounded-lg text-white bg-[#B4A5D7] text-lg sm:text-xl md:text-xl"
               value={streetName}
-              onChange={(e) => {
+              onChange={e => {
                 setStreetName(e.target.value);
               }}
               disabled={!isEditing}
@@ -77,7 +75,7 @@ const ContactInformation: React.FC<ContactInformationProps> = ({
               type="text"
               className="mt-2 sm:mt-4 px-4 py-2.5 block w-full rounded-lg text-white bg-[#B4A5D7] text-lg sm:text-xl md:text-xl"
               value={shippingAddress}
-              onChange={(e) => {
+              onChange={e => {
                 setShippingAddress(e.target.value);
               }}
               disabled={!isEditing}
@@ -91,7 +89,7 @@ const ContactInformation: React.FC<ContactInformationProps> = ({
               type="text"
               className="mt-2 sm:mt-4 px-4 py-2.5 block w-full rounded-lg text-white bg-[#B4A5D7] text-lg sm:text-xl md:text-xl"
               value={city}
-              onChange={(e) => {
+              onChange={e => {
                 setCity(e.target.value);
               }}
               disabled={!isEditing}
@@ -105,7 +103,7 @@ const ContactInformation: React.FC<ContactInformationProps> = ({
               type="text"
               className="mt-2 sm:mt-4 px-4 py-2.5 block w-full rounded-lg text-white bg-[#B4A5D7] text-lg sm:text-xl md:text-xl"
               value={postcode}
-              onChange={(e) => {
+              onChange={e => {
                 setPostcode(e.target.value);
               }}
               disabled={!isEditing}
@@ -121,7 +119,7 @@ const ContactInformation: React.FC<ContactInformationProps> = ({
                 className={`w-full bg-[#B4A5D7] text-white font-normal  text-sm custom-lg:text-xl pr-8 pl-5 py-4 rounded-lg cursor-pointer flex justify-between items-center`}
                 onClick={toggleCountryDropdown}
               >
-                <span>{selectedCountry || "select Country"}</span>
+                <span>{selectedCountry || 'select Country'}</span>
 
                 {isCountryOpen ? (
                   <ChevronUp size={22} className="text-white" />
@@ -131,20 +129,15 @@ const ContactInformation: React.FC<ContactInformationProps> = ({
               </div>
               {isCountryOpen && (
                 <div className="absolute top-full left-0 right-0 px-8 mt-2 bg-[#B4A5D7] text-white rounded-lg overflow-hidden z-10 w-[97%] mx-auto py-3 ">
-                  <div
-                    id="style-2"
-                    className="max-h-[16.4rem] overflow-y-scroll  "
-                  >
-                    {countryoptions.map((country) => (
+                  <div id="style-2" className="max-h-[16.4rem] overflow-y-scroll  ">
+                    {countryoptions.map(country => (
                       <div
                         key={country.value}
                         className="py-2 cursor-pointer flex items-center"
                         onClick={() => handleCountryClick(country.value)}
                       >
                         <div className=" border-b border-white py-2 flex  gap-4  w-full px-4 sm:max-w-[22rem] truncate">
-                          <span className="ml-2 text-xl text-white ">
-                            {country.label}
-                          </span>
+                          <span className="ml-2 text-xl text-white ">{country.label}</span>
                         </div>
                       </div>
                     ))}
@@ -163,7 +156,7 @@ const ContactInformation: React.FC<ContactInformationProps> = ({
                 className={`w-full bg-[#B4A5D7] text-white font-normal  text-sm custom-lg:text-xl pr-8 pl-5 py-4 rounded-lg cursor-pointer flex justify-between items-center`}
                 onClick={toggleTimezoneDropdown}
               >
-                <span>{selectedTimezone || "select Country"}</span>
+                <span>{selectedTimezone || 'select Country'}</span>
 
                 {isTimezoneOpen ? (
                   <ChevronUp size={22} className="text-white" />
@@ -173,20 +166,15 @@ const ContactInformation: React.FC<ContactInformationProps> = ({
               </div>
               {isTimezoneOpen && (
                 <div className="absolute top-full left-0 right-0 px-8 mt-2 bg-[#B4A5D7] text-white rounded-lg overflow-hidden z-10 w-[97%] mx-auto py-3  ">
-                  <div
-                    id="style-2"
-                    className="max-h-[16.4rem] overflow-y-scroll  "
-                  >
-                    {timezoneoptions.map((time) => (
+                  <div id="style-2" className="max-h-[16.4rem] overflow-y-scroll  ">
+                    {timezoneoptions.map(time => (
                       <div
                         key={time.value}
                         className=" py-2 cursor-pointer flex items-center"
                         onClick={() => handletimezoneClick(time.value)}
                       >
                         <div className=" border-b border-white py-2 flex  gap-4  w-full px-4 sm:max-w-[22rem] truncate">
-                          <span className="ml-2 text-xl text-white ">
-                            {time.label}
-                          </span>
+                          <span className="ml-2 text-xl text-white ">{time.label}</span>
                         </div>
                       </div>
                     ))}

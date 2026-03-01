@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const StartJourney = () => {
   return (
@@ -8,8 +8,6 @@ const StartJourney = () => {
       </h2>
 
       <div className="flex w-[93.5%] justify-around items-stretch space-x-4 py-20 pt-[116px] mb:flex-col mb:gap-10 mb:py-8 mb:justify-center mb:items-center tb:flex-wrap">
-
-
         <div className="relative  mb:w-4/5  w-[25.8%] lg:w-[30%]">
           <div className="absolute inset-0 bg-[#BBB4D5] rounded-lg transform translate-x-8 translate-y-8  z-0 mb:-translate-x-3 mb:translate-y-3"></div>
           <div className="relative bg-white h-full rounded-lg border-darkBlue border px-9 py-6  flex flex-col justify-between z-10">
@@ -18,9 +16,8 @@ const StartJourney = () => {
                 Take 1 to 2 Free Trial Sessions
               </h2>
               <p className="text-xl  2xl:text-[32px] text-[#473171] leading-tight mt-3 mb:text-sm mb:leading-normal mb-11">
-                Begin your journey with a free trial session from one of our
-                eTutors. Experience firsthand how eTutor4Me works, with no
-                obligation.
+                Begin your journey with a free trial session from one of our eTutors. Experience
+                firsthand how eTutor4Me works, with no obligation.
               </p>
             </div>
           </div>
@@ -34,9 +31,8 @@ const StartJourney = () => {
                 Unsure of your Package?
               </h2>
               <p className="text-xl  2xl:text-[32px] text-[#473171] leading-tight mt-3 mb:text-sm mb:leading-normal">
-                Set up a meeting with on of our advisors to discuss your
-                learning goals to ensure we find the perfect eTutor match and
-                package for you
+                Set up a meeting with on of our advisors to discuss your learning goals to ensure we
+                find the perfect eTutor match and package for you
               </p>
             </div>
           </div>
@@ -50,14 +46,12 @@ const StartJourney = () => {
                 Start your <br /> journey
               </h2>
               <p className="text-xl 2xl:text-[32px] text-[#473171] leading-tight mt-3 mb:text-sm mb:leading-normal">
-                Book your personalized session package abd begin achieving your
-                academic goals with eTutor4Me
+                Book your personalized session package abd begin achieving your academic goals with
+                eTutor4Me
               </p>
             </div>
           </div>
         </div>
-
-
       </div>
     </div>
   );

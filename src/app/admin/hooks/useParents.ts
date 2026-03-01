@@ -13,11 +13,10 @@ export const useParent = () => {
     revalidateOnFocus: true, // Re-fetch on window focus
   });
 
- 
   return {
     parent: data?.data,
-    isLoading2:isLoading,
-    error2:error,
+    isLoading2: isLoading,
+    error2: error,
     mutate, // Can be used to manually revalidate the data
   };
 };

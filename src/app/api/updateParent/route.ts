@@ -10,8 +10,6 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { userId, parentData } = body;
 
-
-
     // Connect to MongoDB
     await connectMongoDB();
 
@@ -34,15 +32,17 @@ export async function POST(req: Request) {
       availability: parentData.parent.availability,
       childInformation: parentData.parent.childInformation,
       parentPersonalInformation: parentData.parent.parentPersonalInformation,
-      firstName: parentData.firstName ||parentData.parent.firstName ,
-      lastName: parentData.lastName ||parentData.parent.lastName,
+      firstName: parentData.firstName || parentData.parent.firstName,
+      lastName: parentData.lastName || parentData.parent.lastName,
       phoneNumber: parentData.parent.phoneNumber,
     });
-  
 
     return NextResponse.json({ message: 'Parent created successfully' }, { status: 200 });
-  } catch (error:any) {
+  } catch (error: any) {
     console.error('Error creating parent:', error);
-    return NextResponse.json({ message: 'Internal Server Error', error: error.message }, { status: 500 });
+    return NextResponse.json(
+      { message: 'Internal Server Error', error: error.message },
+      { status: 500 }
+    );
   }
 }

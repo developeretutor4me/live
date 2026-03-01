@@ -1,33 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
+import React, { useEffect, useState } from 'react';
+import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 
-const months = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
+const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-const names = ["Total", "Daily", "Weekly", "Monthly", "Yearly"];
+const names = ['Total', 'Daily', 'Weekly', 'Monthly', 'Yearly'];
 
 function ActiveEtutor() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentName, setCurrentName] = useState(names[0]);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [storedDates, setStoredDates] = useState([currentDate]); // To store all visited dates
-  const [startDate, setStartDate] = useState(new Date("2023-02-01")); // Initial start date
+  const [startDate, setStartDate] = useState(new Date('2023-02-01')); // Initial start date
   //   const [currentDateMonth, setCurrentDateMo] = useState(new Date()); // Track the current date
-  const [storedMonths, setStoredMonths] = useState([
-    months[new Date().getMonth()],
-  ]);
+  const [storedMonths, setStoredMonths] = useState([months[new Date().getMonth()]]);
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear()); // Track the current year
   const [storedYears, setStoredYears] = useState([new Date().getFullYear()]);
 
@@ -44,7 +29,7 @@ function ActiveEtutor() {
 
   const updateYear = (newYear: any) => {
     setCurrentYear(newYear);
-    setStoredYears((prevYears) => {
+    setStoredYears(prevYears => {
       if (!prevYears.includes(newYear)) {
         return [...prevYears, newYear];
       }
@@ -68,7 +53,7 @@ function ActiveEtutor() {
   const updateMonth = (newDate: any) => {
     setCurrentDate(newDate);
     const newMonthName = months[newDate.getMonth()];
-    setStoredMonths((prevMonths) => {
+    setStoredMonths(prevMonths => {
       if (!prevMonths.includes(newMonthName)) {
         return [...prevMonths, newMonthName];
       }
@@ -79,8 +64,8 @@ function ActiveEtutor() {
   //   date by week--------------
   // Format a date as "dd/mm/yyyy"
   const formatDateWeek = (date: any) => {
-    const day = date.getDate().toString().padStart(2, "0");
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
   };
@@ -91,9 +76,7 @@ function ActiveEtutor() {
     end.setDate(start.getDate() + 6); // 6 days after the start date
     return `${formatDateWeek(start)} - ${formatDateWeek(end)}`;
   };
-  const [storedWeeks, setStoredWeeks] = useState([
-    getFormattedWeek(new Date("2023-02-01")),
-  ]);
+  const [storedWeeks, setStoredWeeks] = useState([getFormattedWeek(new Date('2023-02-01'))]);
   const handlePreviousWeek = () => {
     const newStartDate = new Date(startDate);
     newStartDate.setDate(startDate.getDate() - 7); // Move back by 7 days
@@ -109,7 +92,7 @@ function ActiveEtutor() {
   const updateWeek = (newStartDate: any) => {
     setStartDate(newStartDate);
     const formattedWeek = getFormattedWeek(newStartDate);
-    setStoredWeeks((prevWeeks) => {
+    setStoredWeeks(prevWeeks => {
       // Avoid duplicates in the stored weeks array
       if (!prevWeeks.includes(formattedWeek)) {
         return [...prevWeeks, formattedWeek];
@@ -120,11 +103,11 @@ function ActiveEtutor() {
 
   // -----------------------------
   //   date by day---------------------
-  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
   const formatDate = (date: any) => {
-    const day = date.getDate().toString().padStart(2, "0");
-    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Months are 0-based
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-based
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
   };
@@ -143,13 +126,9 @@ function ActiveEtutor() {
 
   const updateDate = (newDate: any) => {
     setCurrentDate(newDate);
-    setStoredDates((prevDates) => {
+    setStoredDates(prevDates => {
       // Avoid duplicates in the stored dates array
-      if (
-        !prevDates.some(
-          (date) => date.toDateString() === newDate.toDateString()
-        )
-      ) {
+      if (!prevDates.some(date => date.toDateString() === newDate.toDateString())) {
         return [...prevDates, newDate];
       }
       return prevDates;
@@ -158,15 +137,11 @@ function ActiveEtutor() {
   // =----------------------
 
   const handlePrevious = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? names.length - 1 : prevIndex - 1
-    );
+    setCurrentIndex(prevIndex => (prevIndex === 0 ? names.length - 1 : prevIndex - 1));
   };
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === names.length - 1 ? 0 : prevIndex + 1
-    );
+    setCurrentIndex(prevIndex => (prevIndex === names.length - 1 ? 0 : prevIndex + 1));
   };
 
   // Update `currentName` whenever `currentIndex` changes
@@ -175,31 +150,23 @@ function ActiveEtutor() {
   }, [currentIndex]);
   return (
     <div className="rounded-md sm:rounded-xl  custom-lg:rounded-3xl       px-3 custom-xl:px-10 py-3 custom-xl:py-4  bg-[#ede8fa] ">
+      <div className="flex  justify-between items-center  ">
+        <div className="flex flex-col  justify-between   px-3 py-1.5">
+          <h1 className="flex gap-5 items-center text-xl sm:text-3xl custom-lg:text-[43px] leading-10 text-[#7669b5] font-medium py-4">
+            <div className="bg-[#00dae5] h-[25px] w-[25px] rounded-sm">&nbsp;</div> Active eTutors
+          </h1>
 
-    <div className="flex  justify-between items-center  ">
-      <div className="flex flex-col  justify-between   px-3 py-1.5">
+          <h1 className="text-base sm:text-lg custom-lg:text-2xl font-medium custom-xl:leading-none text-[#9085c4] flex items-center  gap-3 py-4">
+            Today&apos;s peak: 560 User
+          </h1>
+        </div>
 
-
-        <h1 className="flex gap-5 items-center text-xl sm:text-3xl custom-lg:text-[43px] leading-10 text-[#7669b5] font-medium py-4">
-          <div className="bg-[#00dae5] h-[25px] w-[25px] rounded-sm">
-            &nbsp;
-          </div>{" "}
-          Active eTutors
-        </h1>
-    
-        <h1 className="text-base sm:text-lg custom-lg:text-2xl font-medium custom-xl:leading-none text-[#9085c4] flex items-center  gap-3 py-4">
-          Today&apos;s peak: 560 User
-        </h1>
-
-
+        <div className=" pr-2">
+          <h1 className="text-3xl md:text-4xl custom-lg:text-[112px]  mb-2 custom-xl:leading-none text-[#b394fc] font-medium py-2 custom-lg:py-6">
+            1234
+          </h1>
+        </div>
       </div>
-
-      <div className=" pr-2">
-      <h1 className="text-3xl md:text-4xl custom-lg:text-[112px]  mb-2 custom-xl:leading-none text-[#b394fc] font-medium py-2 custom-lg:py-6">
-          1234
-        </h1>
-      </div>
-    </div>
     </div>
   );
 }

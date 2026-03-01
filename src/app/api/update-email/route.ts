@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import bcrypt from 'bcrypt';
 import { getServerSession } from 'next-auth';
 import User from '../models/User'; // Import the User model
-import {authOptions} from '@/app/auth/auth'; 
+import { authOptions } from '@/app/auth/auth';
 
 export async function PUT(req: Request) {
   try {
@@ -44,8 +44,11 @@ export async function PUT(req: Request) {
     await currentUser.save();
 
     return NextResponse.json({ message: 'Email updated successfully' }, { status: 200 });
-  } catch (error:any) {
+  } catch (error: any) {
     console.error('Error updating email:', error);
-    return NextResponse.json({ message: 'Failed to update email', error: error.message }, { status: 500 });
+    return NextResponse.json(
+      { message: 'Failed to update email', error: error.message },
+      { status: 500 }
+    );
   }
 }

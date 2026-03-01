@@ -1,12 +1,10 @@
-import { Cross, X } from "lucide-react";
-import React from "react";
+import { Cross, X } from 'lucide-react';
+import React from 'react';
 
-
-
-interface EtutorPerformanceFormprops{
-    close:any
+interface EtutorPerformanceFormprops {
+  close: any;
 }
-function ETutorPerformanceForm({close}:EtutorPerformanceFormprops) {
+function ETutorPerformanceForm({ close }: EtutorPerformanceFormprops) {
   return (
     <div className="w-full max-w-[1501px] bg-[#ede8fa] p-4 sm:p-5 md:px-[75px] md:py-[70px] rounded-xl sm:rounded-2xl md:rounded-3xl mx-auto">
       <div className="flex justify-between items-start">
@@ -14,17 +12,19 @@ function ETutorPerformanceForm({close}:EtutorPerformanceFormprops) {
           eTutor Performance Feedback Form
         </h1>
 
-        <button onClick={()=>{
-            close(false)
-        }} className="" >
-        <X  className="text-[#8653FF] hover:text-[#FC7777] "/>
+        <button
+          onClick={() => {
+            close(false);
+          }}
+          className=""
+        >
+          <X className="text-[#8653FF] hover:text-[#FC7777] " />
         </button>
       </div>
 
       <p className="text-[#7b6eaf] text-sm sm:text-base md:text-2xl mb-4 sm:mb-5 md:mb-6 leading-tight">
-        Share your thoughts on your eTutor&apos;s performance to help us improve
-        the tutoring experience, track progress, and maintain high-quality
-        sessions.
+        Share your thoughts on your eTutor&apos;s performance to help us improve the tutoring
+        experience, track progress, and maintain high-quality sessions.
       </p>
 
       <div className="w-full sm:w-[90%] md:w-[87%] h-[1px] sm:h-[1.5px] md:h-[2px] bg-[#7b6eaf] bg-opacity-30 mt-4 sm:mt-5 md:mt-6 mb-4 sm:mb-5 md:mb-7"></div>

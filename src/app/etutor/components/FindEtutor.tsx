@@ -1,106 +1,99 @@
-import React, { useEffect, useState } from "react";
-import {
-  ChevronDown,
-  ChevronUp,
-  X,
-  Search,
-  ArrowLeft,
-  Check,
-} from "lucide-react";
-import searchicon from "../../../../public/search icon.svg";
-import badge from "../../../../public/badge.svg";
-import Image from "next/image";
+import React, { useEffect, useState } from 'react';
+import { ChevronDown, ChevronUp, X, Search, ArrowLeft, Check } from 'lucide-react';
+import searchicon from '../../../../public/search icon.svg';
+import badge from '../../../../public/badge.svg';
+import Image from 'next/image';
 // import BookingForm from "./BookingForm";
 
 const subjects = [
-  { name: "Maths", levels: "11+, GCSE, KS2, KS3" },
-  { name: "Chemistry", levels: "A-Level, GCSE, KS3" },
-  { name: "Biology", levels: "1-Level, GCSE, KS3" },
-  { name: "English Language", levels: "GCSE" },
-  { name: "English Literature", levels: "GCSE" },
+  { name: 'Maths', levels: '11+, GCSE, KS2, KS3' },
+  { name: 'Chemistry', levels: 'A-Level, GCSE, KS3' },
+  { name: 'Biology', levels: '1-Level, GCSE, KS3' },
+  { name: 'English Language', levels: 'GCSE' },
+  { name: 'English Literature', levels: 'GCSE' },
 ];
 // Dummy data for search results
 const dummyTutors = [
   {
     id: 1,
-    name: "Mr. Firstname",
-    bio: "Experienced tutor specializing in Mathematics and Science",
+    name: 'Mr. Firstname',
+    bio: 'Experienced tutor specializing in Mathematics and Science',
     price: 20,
-    availability: "Mon, Wed, Thu from 4:00 p.m",
-    subjects: ["Math", "Science"],
-    about: "this is about of the teach",
-    study: "this is study of the teacher",
-    experience: "3 years and 7 students currently",
+    availability: 'Mon, Wed, Thu from 4:00 p.m',
+    subjects: ['Math', 'Science'],
+    about: 'this is about of the teach',
+    study: 'this is study of the teacher',
+    experience: '3 years and 7 students currently',
     level: 10,
-    image: "/assets/heroimg2.png",
+    image: '/assets/heroimg2.png',
   },
   {
     id: 2,
-    name: "Mr. abdullah",
-    bio: "Experienced tutor specializing in Mathematics and Science",
+    name: 'Mr. abdullah',
+    bio: 'Experienced tutor specializing in Mathematics and Science',
     price: 20,
-    availability: "Mon, Wed, Thu from 4:00 p.m",
-    subjects: ["Math", "Science"],
-    about: "this is about of the teacher",
-    study: "this is study of the teacher",
-    experience: "3 years and 7 students currently",
+    availability: 'Mon, Wed, Thu from 4:00 p.m',
+    subjects: ['Math', 'Science'],
+    about: 'this is about of the teacher',
+    study: 'this is study of the teacher',
+    experience: '3 years and 7 students currently',
     level: 10,
-    image: "/assets/heroimg2.png",
+    image: '/assets/heroimg2.png',
   },
   // Add more dummy tutors here...
 ];
 
 const options = [
-  { value: "", label: "Sort by" },
-  { value: "date", label: "Joining Date" },
-  { value: "name", label: "Alphabetical Order" },
-  { value: "age", label: "Age" },
+  { value: '', label: 'Sort by' },
+  { value: 'date', label: 'Joining Date' },
+  { value: 'name', label: 'Alphabetical Order' },
+  { value: 'age', label: 'Age' },
 ];
 const memberships = [
-  { name: "Premium", price: 249, sessions: 8 },
-  { name: "Standard", price: 139, sessions: 4 },
+  { name: 'Premium', price: 249, sessions: 8 },
+  { name: 'Standard', price: 139, sessions: 4 },
 ];
 const ETutorSearch = () => {
   const [ismemberOpen, setIsmemberOpen] = useState(false);
   const [selectedMembership, setSelectedMembership] = useState(null);
 
   const [isGenderOpen, setIsGenderOpen] = useState(false);
-  const [selectedGender, setSelectedGender] = useState("");
+  const [selectedGender, setSelectedGender] = useState('');
   const [isSubjectDropdownOpen, setIsSubjectDropdownOpen] = useState(false);
   const [selectedSubjects, setSelectedSubjects] = useState([]);
   const [isLevelOpen, setIsLevelOpen] = useState(false);
-  const [selectedLevel, setSelectedLevel] = useState("");
+  const [selectedLevel, setSelectedLevel] = useState('');
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedOption, setSelectedOption] = useState('');
   const [showResults, setShowResults] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [showBooking, setShowBooking] = useState(false);
   const [selectedTutor, setSelectedTutor] = useState(null);
   const [bookingStep, setBookingStep] = useState(1);
   const [searchParams, setSearchParams] = useState({
-    sortBy: "",
-    searchTerm: "",
+    sortBy: '',
+    searchTerm: '',
     subjects: [],
-    level: "",
-    gender: "",
+    level: '',
+    gender: '',
     tutorLevel: 5,
   });
   const [bookingInfo, setBookingInfo] = useState({
-    subject: "",
-    level: "",
-    date: "",
-    time: "",
+    subject: '',
+    level: '',
+    date: '',
+    time: '',
   });
   const subjectOptions = [
-    { value: "Art", label: "Art" },
-    { value: "Math", label: "Math" },
-    { value: "Science", label: "Science" },
-    { value: "History", label: "History" },
+    { value: 'Art', label: 'Art' },
+    { value: 'Math', label: 'Math' },
+    { value: 'Science', label: 'Science' },
+    { value: 'History', label: 'History' },
   ];
   const levelOptions = [
-    { value: "beginner", label: "Beginner" },
-    { value: "intermediate", label: "Intermediate" },
-    { value: "advanced", label: "Advanced" },
+    { value: 'beginner', label: 'Beginner' },
+    { value: 'intermediate', label: 'Intermediate' },
+    { value: 'advanced', label: 'Advanced' },
   ];
 
   const togglememberDropdown = () => setIsmemberOpen(!isOpen);
@@ -109,13 +102,12 @@ const ETutorSearch = () => {
     setSelectedMembership(membership);
     setIsmemberOpen(false);
   };
-  const toggleSubjectDropdown = () =>
-    setIsSubjectDropdownOpen(!isSubjectDropdownOpen);
+  const toggleSubjectDropdown = () => setIsSubjectDropdownOpen(!isSubjectDropdownOpen);
 
   const handleSubjectClick = (subject: string) => {
     //@ts-ignore
     if (selectedSubjects.includes(subject)) {
-      setSelectedSubjects(selectedSubjects.filter((item) => item !== subject));
+      setSelectedSubjects(selectedSubjects.filter(item => item !== subject));
     } else {
       //@ts-ignore
       setSelectedSubjects([...selectedSubjects, subject]);
@@ -123,23 +115,19 @@ const ETutorSearch = () => {
   };
 
   const removeSubject = (subject: never) => {
-    setSelectedSubjects(selectedSubjects.filter((item) => item !== subject));
+    setSelectedSubjects(selectedSubjects.filter(item => item !== subject));
   };
   const [filteredTutors, setFilteredTutors] = useState(dummyTutors);
 
   // Effect to update search results when search parameters change
   useEffect(() => {
-    const results = dummyTutors.filter((tutor) => {
+    const results = dummyTutors.filter(tutor => {
       const matchesSearchTerm =
-        tutor.name
-          .toLowerCase()
-          .includes(searchParams.searchTerm.toLowerCase()) ||
+        tutor.name.toLowerCase().includes(searchParams.searchTerm.toLowerCase()) ||
         tutor.bio.toLowerCase().includes(searchParams.searchTerm.toLowerCase());
       const matchesSubjects =
         searchParams.subjects.length === 0 ||
-        searchParams.subjects.some((subject) =>
-          tutor.subjects.includes(subject)
-        );
+        searchParams.subjects.some(subject => tutor.subjects.includes(subject));
       const matchesLevel =
         !searchParams.level ||
         //@ts-ignore
@@ -151,19 +139,15 @@ const ETutorSearch = () => {
       const matchesTutorLevel = tutor.level >= searchParams.tutorLevel;
 
       return (
-        matchesSearchTerm &&
-        matchesSubjects &&
-        matchesLevel &&
-        matchesGender &&
-        matchesTutorLevel
+        matchesSearchTerm && matchesSubjects && matchesLevel && matchesGender && matchesTutorLevel
       );
     });
     if (searchParams.sortBy) {
       //@ts-ignore
       results.sort((a, b) => {
-        if (searchParams.sortBy === "name") {
+        if (searchParams.sortBy === 'name') {
           return a.name.localeCompare(b.name);
-        } else if (searchParams.sortBy === "price") {
+        } else if (searchParams.sortBy === 'price') {
           return a.price - b.price;
         }
         // Add more sorting options as needed
@@ -189,7 +173,7 @@ const ETutorSearch = () => {
     setShowBooking(false);
   };
   const handleInputChange = (field: string, value: any[]) => {
-    setSearchParams((prev) => ({ ...prev, [field]: value }));
+    setSearchParams(prev => ({ ...prev, [field]: value }));
   };
 
   const handleLevelClick = (level: React.SetStateAction<string>) => {
@@ -201,21 +185,21 @@ const ETutorSearch = () => {
   const handleAddSubject = (subject: any) => {
     //@ts-ignore
     if (!searchParams.subjects.includes(subject)) {
-      handleInputChange("subjects", [...searchParams.subjects, subject]);
+      handleInputChange('subjects', [...searchParams.subjects, subject]);
     }
   };
 
   const handleRemoveSubject = (subject: any) => {
     handleInputChange(
-      "subjects",
-      searchParams.subjects.filter((s) => s !== subject)
+      'subjects',
+      searchParams.subjects.filter(s => s !== subject)
     );
   };
 
   const genderOptions = [
-    { value: "male", label: "Male" },
-    { value: "female", label: "Female" },
-    { value: "other", label: "Other" },
+    { value: 'male', label: 'Male' },
+    { value: 'female', label: 'Female' },
+    { value: 'other', label: 'Other' },
   ];
 
   const toggleGenderDropdown = () => {
@@ -251,7 +235,7 @@ const ETutorSearch = () => {
   };
   // @ts-ignore
   const handleBookingInputChange = (field, value) => {
-    setBookingInfo((prev) => ({ ...prev, [field]: value }));
+    setBookingInfo(prev => ({ ...prev, [field]: value }));
   };
 
   const handleNextBookingStep = () => {
@@ -268,19 +252,17 @@ const ETutorSearch = () => {
     setShowProfile(false);
     // Reset booking info
     setBookingInfo({
-      subject: "",
-      level: "",
-      date: "",
-      time: "",
+      subject: '',
+      level: '',
+      date: '',
+      time: '',
     });
   };
 
   const SearchForm = () => (
     <div className="space-y-4  bg-[#EDE8FA] px-6 py-6 rounded-3xl max-w-[62.5rem] mx-auto  min-h-screen ">
       <div className="flex justify-between items-center flex-col custom-xl:flex-row space-x-2 pt-7">
-        <h1 className=" text-3xl custom-xl:text-5xl font-bold text-[#685AAD] pl-8">
-          Find eTutor
-        </h1>
+        <h1 className=" text-3xl custom-xl:text-5xl font-bold text-[#685AAD] pl-8">Find eTutor</h1>
 
         {/* -----------sort by dropdown------- */}
 
@@ -288,15 +270,12 @@ const ETutorSearch = () => {
           <div className="relative order-2 custom-xl:order-1  h-fit   w-full custom-xl:w-fit">
             <div
               className={`bg-[#DBCAFF] text-[#a394d6] text-xs sm:text-sm pl-10 pr-6 py-2 rounded-full cursor-pointer select-none   flex items-center justify-between w-full custom-xl:w-[16rem] ${
-                isOpen
-                  ? "border  border-[#a394d6]"
-                  : "border border-transparent"
+                isOpen ? 'border  border-[#a394d6]' : 'border border-transparent'
               } `}
               onClick={toggleDropdown}
             >
               <span>
-                {options.find((option) => option.value === selectedOption)
-                  ?.label || "Sort by"}
+                {options.find(option => option.value === selectedOption)?.label || 'Sort by'}
               </span>
               {isOpen ? (
                 <ChevronUp className="text-[#a394d6]" />
@@ -307,11 +286,11 @@ const ETutorSearch = () => {
 
             {isOpen && (
               <ul className=" absolute top-full left-0 w-full m-auto  bg-[#DBCAFF] border  border-[#a394d6] text-[#8f81c7] text-xs sm:text-sm mt-2 rounded-xl shadow-lg z-10 max-h-[13rem]  ">
-                {options.map((option) => (
+                {options.map(option => (
                   <li
                     key={option.value}
                     className={`px-4 py-2 cursor-pointer     ${
-                      selectedOption === option.value ? "" : ""
+                      selectedOption === option.value ? '' : ''
                     }`}
                     onClick={() => handleOptionClick(option.value)}
                   >
@@ -332,10 +311,11 @@ const ETutorSearch = () => {
               // value={searchParams.searchTerm}
               // onChange={(e) => handleInputChange("searchTerm", e.target.value)}
             />
-            <Image  loading="lazy" 
+            <Image
+              loading="lazy"
               src={searchicon}
               className="absolute right-4 top-1/2 transform -translate-y-1/2 text-[#6949ff] w-4 h-4 "
-              alt={""}
+              alt={''}
             />
           </div>
         </div>
@@ -351,7 +331,7 @@ const ETutorSearch = () => {
               <span>
                 {selectedSubjects.length > 0
                   ? `${selectedSubjects.length} selected`
-                  : "select subject(s)"}
+                  : 'select subject(s)'}
               </span>
               {isSubjectDropdownOpen ? (
                 <ChevronUp size={30} className="text-[#a394d6] " />
@@ -362,7 +342,7 @@ const ETutorSearch = () => {
 
             {isSubjectDropdownOpen && (
               <div className="absolute top-full left-0 right-0 mt-2 bg-[#DBCAFF] rounded-3xl overflow-hidden z-10 w-[90%] mx-auto py-7 ">
-                {subjectOptions.map((subject) => (
+                {subjectOptions.map(subject => (
                   <div
                     key={subject.value}
                     className="px-8 py-2 cursor-pointer flex items-center"
@@ -380,22 +360,17 @@ const ETutorSearch = () => {
                         <div
                           className={`h-7 w-7  border-2 border-[#6C5BAA] hover:bg-[#a394d6] hover:border-[#a394d6] rounded-md flex items-center justify-center 
                      ${
-                            //@ts-ignore
-                       selectedSubjects.includes(subject.value)
-                         ? "bg-[#6c5baa]"
-                         : ""
+                       //@ts-ignore
+                       selectedSubjects.includes(subject.value) ? 'bg-[#6c5baa]' : ''
                      }`}
                         >
                           {
-                          //@ts-ignore
-                          selectedSubjects.includes(subject.value) && (
-                            <Check />
-                          )}
+                            //@ts-ignore
+                            selectedSubjects.includes(subject.value) && <Check />
+                          }
                         </div>
                       </div>
-                      <span className="ml-2 text-2xl text-[#6C5BAA] ">
-                        {subject.label}
-                      </span>
+                      <span className="ml-2 text-2xl text-[#6C5BAA] ">{subject.label}</span>
                     </div>
                   </div>
                 ))}
@@ -404,7 +379,7 @@ const ETutorSearch = () => {
           </div>
           {selectedSubjects.length > 0 && (
             <div className="flex flex-wrap items-start justify-start gap-2 mt-6  max-w-[26rem] mx-auto min-h-[5rem]">
-              {selectedSubjects.map((subject) => (
+              {selectedSubjects.map(subject => (
                 <span
                   key={subject}
                   className="bg-[#6C5BAA] text-white px-4 py-1 rounded-full flex items-center max-w-[8rem] w-full justify-between"
@@ -428,7 +403,7 @@ const ETutorSearch = () => {
               className={`w-full bg-[#DBCAFF] text-[#a394d6]  text-sm custom-lg:text-xl custom-xl:text-2xl pr-7 sm:pr-14 pl-10 sm:pl-20 py-2 sm:py-4 rounded-full cursor-pointer flex justify-between items-center`}
               onClick={toggleLevelDropdown}
             >
-              <span>{selectedLevel || "select level"}</span>
+              <span>{selectedLevel || 'select level'}</span>
 
               {isLevelOpen ? (
                 <ChevronUp size={30} className="text-[#a394d6] " />
@@ -438,7 +413,7 @@ const ETutorSearch = () => {
             </div>
             {isLevelOpen && (
               <div className="absolute top-full left-0 right-0 mt-2 bg-[#DBCAFF] rounded-3xl overflow-hidden z-10 w-[90%] mx-auto py-5 ">
-                {levelOptions.map((level) => (
+                {levelOptions.map(level => (
                   <div
                     key={level.value}
                     className=" py-2 text-2xl text-[#6C5BAA] border-b-2 border-[#a394d682] w-[80%] mx-auto "
@@ -460,7 +435,7 @@ const ETutorSearch = () => {
               className={`w-full bg-[#DBCAFF] text-[#a394d6]  text-sm custom-lg:text-xl custom-xl:text-2xl pr-7 sm:pr-14 pl-10 sm:pl-20 py-2 sm:py-4 rounded-full cursor-pointer flex justify-between items-center`}
               onClick={toggleGenderDropdown}
             >
-              <span>{selectedGender || "select gender"}</span>
+              <span>{selectedGender || 'select gender'}</span>
 
               {isGenderOpen ? (
                 <ChevronUp size={30} className="text-[#a394d6]" />
@@ -470,7 +445,7 @@ const ETutorSearch = () => {
             </div>
             {isGenderOpen && (
               <div className="absolute top-full left-0 right-0 mt-2 bg-[#DBCAFF] rounded-3xl overflow-hidden z-10 w-[90%] mx-auto py-5">
-                {genderOptions.map((gender) => (
+                {genderOptions.map(gender => (
                   <div
                     key={gender.value}
                     className="py-2 text-2xl text-[#6C5BAA] border-b-2 border-[#a394d682] w-[80%] mx-auto"
@@ -500,9 +475,7 @@ const ETutorSearch = () => {
               // }
               className="w-full scroll-smooth select-none mt-5  border-none accent-[#00DAE5]"
             />
-            <p className="text-lg mt-2 mb-5 text-[#b9aed6]">
-              Slide to adjust eTutor&apos;s level
-            </p>
+            <p className="text-lg mt-2 mb-5 text-[#b9aed6]">Slide to adjust eTutor&apos;s level</p>
           </div>
         </div>
 
@@ -516,13 +489,11 @@ const ETutorSearch = () => {
         </div>
         <div className="max-w-[40rem] w-full bg-[#e2d6fd] rounded-3xl  mt-10 px-12 py-4 mx-auto">
           <h1 className="text-[#685AAD] text-sm sm:text-xl font-bold">
-            Want <span className="text-[#8653FF]"> discounts? </span>{" "}
+            Want <span className="text-[#8653FF]"> discounts? </span>{' '}
           </h1>
           <p className="text-[#685AAD] text-md mt-3">
-            Discounts apply when you book 6, 11, 26, or more sessions in bulk.{" "}
-            <br />
-            You will only be charged after you complete your sessions with the
-            eTutors.
+            Discounts apply when you book 6, 11, 26, or more sessions in bulk. <br />
+            You will only be charged after you complete your sessions with the eTutors.
           </p>
         </div>
       </div>
@@ -531,9 +502,7 @@ const ETutorSearch = () => {
 
   const ResultsView = () => (
     <div className="bg-[#EDE8FA] w-full h-full rounded-3xl px-8 py-6">
-      <h1 className="text-3xl font-bold text-[#685AAD] px-6 mb-8">
-        Find your eTutor
-      </h1>
+      <h1 className="text-3xl font-bold text-[#685AAD] px-6 mb-8">Find your eTutor</h1>
 
       {/* <button
     onClick={handleBackToSearch}
@@ -543,7 +512,7 @@ const ETutorSearch = () => {
   </button> */}
 
       <div className="flex flex-col gap-4 custom-lg:gap-9">
-        {filteredTutors.map((tutor) => (
+        {filteredTutors.map(tutor => (
           <div
             key={tutor.id}
             className="flex flex-col custom-xl:flex-row  justify-between bg-[#A296CC] rounded-3xl px-8 py-6 gap-6"
@@ -583,7 +552,7 @@ const ETutorSearch = () => {
                 <div className="mt-4 flex flex-col items-center sm:items-start">
                   <h3 className="text-lg text-white">Subjects:</h3>
                   <p className="text-lg text-[#473171] text-center sm:text-start">
-                    {tutor.subjects.join(", ")}{" "}
+                    {tutor.subjects.join(', ')}{' '}
                   </p>
                 </div>
               </div>
@@ -593,10 +562,10 @@ const ETutorSearch = () => {
             <div className="  custom-xl:max-w-[36rem] w-full ">
               <h3 className="text-lg ">About me</h3>
               <p className="text-lg text-[#473171]">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                irure dolor
               </p>
 
               <h3 className="text-lg  mt-6">Study</h3>
@@ -604,15 +573,17 @@ const ETutorSearch = () => {
 
               <h3 className="text-lg  mt-6">Teaching Experience</h3>
               <p className="text-lg text-[#473171]">
-                {tutor.experience} years and {
-                //@ts-ignore
-                tutor?.currentStudents}
+                {tutor.experience} years and{' '}
+                {
+                  //@ts-ignore
+                  tutor?.currentStudents
+                }
               </p>
             </div>
 
             {/* Right column: Availability, Subjects, Badge, More info button */}
             <div className="flex custom-xl:flex-col items-center justify-between  flex-row w-full custom-xl:w-32 ">
-              <Image  loading="lazy"  src={badge} alt="" className="w-16 sm:min-w-32 " />
+              <Image loading="lazy" src={badge} alt="" className="w-16 sm:min-w-32 " />
 
               <button
                 onClick={() => handleViewProfile(tutor)}
@@ -643,29 +614,31 @@ const ETutorSearch = () => {
               <div>
                 <h2 className="text-xl text-center sm:text-start sm:text-3xl font-semibold">
                   {
-                  //@ts-ignore
-                  selectedTutor?.name}
+                    //@ts-ignore
+                    selectedTutor?.name
+                  }
                 </h2>
                 <p className="text-xl text-[#534988] max-w-[22rem] text-center sm:text-start">
                   EXPERIENCE (Formal): 1 to 3 years
                 </p>
-                <p className="text-xl text-[#534988] text-center sm:text-start">
-                  BOOKINGs:
-                </p>
+                <p className="text-xl text-[#534988] text-center sm:text-start">BOOKINGs:</p>
               </div>
             </div>
 
             <div className=" ">
-              <Image  loading="lazy"  src={badge} alt="" className="w-28 hidden sm:block" />
+              <Image loading="lazy" src={badge} alt="" className="w-28 hidden sm:block" />
             </div>
           </div>
 
           <div className=" mt-8">
             <div>
               <p className="text-lg text-white">About me</p>
-              <p className="text-[#473171] text-lg">{
-              //@ts-ignore
-              selectedTutor?.about}</p>
+              <p className="text-[#473171] text-lg">
+                {
+                  //@ts-ignore
+                  selectedTutor?.about
+                }
+              </p>
             </div>
           </div>
 
@@ -684,15 +657,11 @@ const ETutorSearch = () => {
             <div className=" ">
               <div className="mb-8">
                 <h3 className="text-lg text-white">Study</h3>
-                <p className="text-[#473171] text-lg">
-                  University up to PhD grade
-                </p>
+                <p className="text-[#473171] text-lg">University up to PhD grade</p>
               </div>
               <div>
                 <h3 className="text-lg text-white">Teaching Experience</h3>
-                <p className="text-[#473171] text-lg">
-                  3 years as 2 students monthly
-                </p>
+                <p className="text-[#473171] text-lg">3 years as 2 students monthly</p>
               </div>
             </div>
           </div>
@@ -708,9 +677,7 @@ const ETutorSearch = () => {
         {/* Reviews card */}
         <div className="bg-[#A296CC] rounded-3xl p-7">
           <div className="">
-            <h1 className="text-xl sm:text-3xl font-medium mb-4 pl-3">
-              Qualifications
-            </h1>
+            <h1 className="text-xl sm:text-3xl font-medium mb-4 pl-3">Qualifications</h1>
 
             <div>
               <div className="w-full  mx-auto bg-purple-600 rounded-t-3xl rounded-b-xl overflow-hidden">
@@ -720,9 +687,7 @@ const ETutorSearch = () => {
                       <th className="py-3  text-sm sm:text-xl font-medium pl-12 ">
                         SUBJECT/TUTORING
                       </th>
-                      <th className="py-3 px-4 text-sm sm:text-xl font-medium">
-                        LEVEL
-                      </th>
+                      <th className="py-3 px-4 text-sm sm:text-xl font-medium">LEVEL</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -747,9 +712,7 @@ const ETutorSearch = () => {
 
           <div className="bg-[#A296CC] rounded-3xl ">
             <div>
-              <h1 className="text-xl sm:text-3xl font-medium mb-8 pl-3 mt-8">
-                Reviews
-              </h1>
+              <h1 className="text-xl sm:text-3xl font-medium mb-8 pl-3 mt-8">Reviews</h1>
               <div className="bg-[#8876B8] rounded-3xl px-7 py-7">
                 <div className="py-1 px-10 bg-[#534988] rounded-xl flex justify-end text-xs sm:text-lg">
                   8 Reviews in total
@@ -762,12 +725,10 @@ const ETutorSearch = () => {
                       className="w-8 sm:w-20 rounded-full border-2"
                     />
                     <div>
-                      <h1 className="text-xl sm:text-3xl font-medium">
-                        Kishwar A.
-                      </h1>
+                      <h1 className="text-xl sm:text-3xl font-medium">Kishwar A.</h1>
                       <p className="text-xs sm:text-md">
-                        Lorem ipsum dolor sit amet consectetur, adipisicing
-                        elit. Consequatur, aperiam.
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consequatur,
+                        aperiam.
                       </p>
                     </div>
                   </div>
@@ -782,13 +743,10 @@ const ETutorSearch = () => {
       <div className=" w-full custom-xl:w-[37%] space-y-4">
         {/* Booking card */}
         <div className="bg-[#A296CC] rounded-3xl p-10 ">
-          <h2 className="text-xl sm:text-5xl font-bold mb-4">
-            Book Mr. Firstname
-          </h2>
+          <h2 className="text-xl sm:text-5xl font-bold mb-4">Book Mr. Firstname</h2>
           <p className="text-xs sm:text-md mb-4 text-[#564589] font-medium">
-            You can change your membership by selecting one of the two other
-            plans listed below, or visit the{" "}
-            <span className="text-[#6949FF]">My Membership</span> page for more
+            You can change your membership by selecting one of the two other plans listed below, or
+            visit the <span className="text-[#6949FF]">My Membership</span> page for more
             information.
           </p>
 
@@ -799,16 +757,16 @@ const ETutorSearch = () => {
             >
               <span className="text-xl font-bold">
                 {selectedMembership
-                //@ts-ignore
-                  ? selectedMembership.name
-                  : "Select membership"}
+                  ? //@ts-ignore
+                    selectedMembership.name
+                  : 'Select membership'}
               </span>
               {isOpen ? <ChevronUp size={24} /> : <ChevronDown size={24} />}
             </button>
 
             {ismemberOpen && (
               <div className="absolute left-0 w-full bg-[#685AAD] rounded-lg shadow-lg mt-8">
-                {memberships.map((membership) => (
+                {memberships.map(membership => (
                   <div
                     key={membership.name}
                     //@ts-ignore
@@ -816,21 +774,18 @@ const ETutorSearch = () => {
                     className="p-4 hover:bg-purple-700 cursor-pointer border-b border-purple-500 last:border-b-0 flex justify-between items-center"
                   >
                     <div>
-                      <h3 className="text-xl font-bold text-white">
-                        {membership.name}
-                      </h3>
+                      <h3 className="text-xl font-bold text-white">{membership.name}</h3>
                       <p className="text-purple-200">
-                        <span className="text-2xl font-bold">
-                          ${membership.price}
-                        </span>{" "}
-                        / {membership.sessions} sessions / month
+                        <span className="text-2xl font-bold">${membership.price}</span> /{' '}
+                        {membership.sessions} sessions / month
                       </p>
                     </div>
                     {
-                    //@ts-ignore
-                    selectedMembership?.name === membership.name && (
-                      <Check size={24} className="text-white" />
-                    )}
+                      //@ts-ignore
+                      selectedMembership?.name === membership.name && (
+                        <Check size={24} className="text-white" />
+                      )
+                    }
                   </div>
                 ))}
               </div>
@@ -843,16 +798,16 @@ const ETutorSearch = () => {
             >
               <span className="text-xl font-bold">
                 {selectedMembership
-                //@ts-ignore
-                  ? selectedMembership.name
-                  : "Select Package Name"}
+                  ? //@ts-ignore
+                    selectedMembership.name
+                  : 'Select Package Name'}
               </span>
               {isOpen ? <ChevronUp size={24} /> : <ChevronDown size={24} />}
             </button>
 
             {ismemberOpen && (
               <div className="absolute left-0 w-full bg-[#685AAD] rounded-lg shadow-lg mt-8">
-                {memberships.map((membership) => (
+                {memberships.map(membership => (
                   <div
                     key={membership.name}
                     //@ts-ignore
@@ -860,21 +815,18 @@ const ETutorSearch = () => {
                     className="p-4 hover:bg-purple-700 cursor-pointer border-b border-purple-500 last:border-b-0 flex justify-between items-center"
                   >
                     <div>
-                      <h3 className="text-xl font-bold text-white">
-                        {membership.name}
-                      </h3>
+                      <h3 className="text-xl font-bold text-white">{membership.name}</h3>
                       <p className="text-purple-200">
-                        <span className="text-2xl font-bold">
-                          ${membership.price}
-                        </span>{" "}
-                        / {membership.sessions} sessions / month
+                        <span className="text-2xl font-bold">${membership.price}</span> /{' '}
+                        {membership.sessions} sessions / month
                       </p>
                     </div>
                     {
-                    //@ts-ignore
-                    selectedMembership?.name === membership.name && (
-                      <Check size={24} className="text-white" />
-                    )}
+                      //@ts-ignore
+                      selectedMembership?.name === membership.name && (
+                        <Check size={24} className="text-white" />
+                      )
+                    }
                   </div>
                 ))}
               </div>
@@ -882,11 +834,9 @@ const ETutorSearch = () => {
           </div>
 
           <p className="text-xs sm:text-lg mb-4">
-            You currently have the{" "}
-            <span className="text-[#6949FF]">Pay As You Go</span> membership
-            plan. This free plan allows you to book an eTutor at any time,
-            paying only the fees listed for each session. No upfront costs or
-            subscription fees
+            You currently have the <span className="text-[#6949FF]">Pay As You Go</span> membership
+            plan. This free plan allows you to book an eTutor at any time, paying only the fees
+            listed for each session. No upfront costs or subscription fees
           </p>
 
           <div className="flex items-center mb-4">
@@ -912,9 +862,7 @@ const ETutorSearch = () => {
 
         {/* 24/7 Support card */}
         <div className="bg-[#A296CC] rounded-2xl p-6">
-          <h3 className="font-semibold mb-2 text-lg text-white">
-            24/7 SUPPORT
-          </h3>
+          <h3 className="font-semibold mb-2 text-lg text-white">24/7 SUPPORT</h3>
           <p className="text-sm text-[#473171]">Need help?</p>
           <p className="text-sm text-[#473171]">Contact us</p>
         </div>
@@ -937,7 +885,8 @@ const ETutorSearch = () => {
         <div>
           <div className="flex flex-col items-center">
             <div className="photo mb-4 mt-4">
-              <Image  loading="lazy" 
+              <Image
+                loading="lazy"
                 src={badge}
                 alt=""
                 className="rounded-full h-32 w-32  border-2 overflow-hidden border-red-800"
@@ -949,8 +898,7 @@ const ETutorSearch = () => {
                 Lastname
               </h1>
               <p className="text-sm font-bold text-[#685AAD]  text-center">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. <br />{" "}
-                Aut, dolores!
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. <br /> Aut, dolores!
               </p>
             </div>
           </div>
@@ -963,7 +911,7 @@ const ETutorSearch = () => {
                 <span>
                   {selectedSubjects.length > 0
                     ? `${selectedSubjects.length} selected`
-                    : "select subject(s)"}
+                    : 'select subject(s)'}
                 </span>
                 {isSubjectDropdownOpen ? (
                   <ChevronUp size={30} className="text-[#a394d6] " />
@@ -974,7 +922,7 @@ const ETutorSearch = () => {
 
               {isSubjectDropdownOpen && (
                 <div className="absolute top-full left-0 right-0 mt-2 bg-[#DBCAFF] rounded-3xl overflow-hidden z-10 w-[90%] mx-auto py-7 ">
-                  {subjectOptions.map((subject) => (
+                  {subjectOptions.map(subject => (
                     <div
                       key={subject.value}
                       className="px-8 py-2 cursor-pointer flex items-center"
@@ -992,22 +940,17 @@ const ETutorSearch = () => {
                           <div
                             className={`h-7 w-7  border-2 border-[#6C5BAA] hover:bg-[#a394d6] hover:border-[#a394d6] rounded-md flex items-center justify-center 
                      ${
-                              //@ts-ignore
-                       selectedSubjects.includes(subject.value)
-                         ? "bg-[#6c5baa]"
-                         : ""
+                       //@ts-ignore
+                       selectedSubjects.includes(subject.value) ? 'bg-[#6c5baa]' : ''
                      }`}
                           >
                             {
-                            //@ts-ignore
-                            selectedSubjects.includes(subject.value) && (
-                              <Check />
-                            )}
+                              //@ts-ignore
+                              selectedSubjects.includes(subject.value) && <Check />
+                            }
                           </div>
                         </div>
-                        <span className="ml-2 text-2xl text-[#6C5BAA] ">
-                          {subject.label}
-                        </span>
+                        <span className="ml-2 text-2xl text-[#6C5BAA] ">{subject.label}</span>
                       </div>
                     </div>
                   ))}
@@ -1016,7 +959,7 @@ const ETutorSearch = () => {
             </div>
             {selectedSubjects.length > 0 && (
               <div className="flex flex-wrap items-start justify-start gap-2 mt-6  max-w-[26rem] mx-auto min-h-[5rem]">
-                {selectedSubjects.map((subject) => (
+                {selectedSubjects.map(subject => (
                   <span
                     key={subject}
                     className="bg-[#6C5BAA] text-white px-4 py-1 rounded-full flex items-center max-w-[8rem] w-full justify-between"
@@ -1040,7 +983,7 @@ const ETutorSearch = () => {
                 className={`w-full bg-[#DBCAFF] text-[#a394d6]  text-sm custom-lg:text-xl custom-xl:text-2xl pr-7 sm:pr-14 pl-10 sm:pl-20 py-2 sm:py-4 rounded-full cursor-pointer flex justify-between items-center`}
                 onClick={toggleLevelDropdown}
               >
-                <span>{selectedLevel || "select level"}</span>
+                <span>{selectedLevel || 'select level'}</span>
 
                 {isLevelOpen ? (
                   <ChevronUp size={30} className="text-[#a394d6] " />
@@ -1050,7 +993,7 @@ const ETutorSearch = () => {
               </div>
               {isLevelOpen && (
                 <div className="absolute top-full left-0 right-0 mt-2 bg-[#DBCAFF] rounded-3xl overflow-hidden z-10 w-[90%] mx-auto py-5 ">
-                  {levelOptions.map((level) => (
+                  {levelOptions.map(level => (
                     <div
                       key={level.value}
                       className=" py-2 text-2xl text-[#6C5BAA] border-b-2 border-[#a394d682] w-[80%] mx-auto "
@@ -1072,7 +1015,7 @@ const ETutorSearch = () => {
                 className={`w-full bg-[#DBCAFF] text-[#a394d6]  text-sm custom-lg:text-xl custom-xl:text-2xl pr-7 sm:pr-14 pl-10 sm:pl-20 py-2 sm:py-4 rounded-full cursor-pointer flex justify-between items-center`}
                 onClick={toggleGenderDropdown}
               >
-                <span>{selectedGender || "select gender"}</span>
+                <span>{selectedGender || 'select gender'}</span>
 
                 {isGenderOpen ? (
                   <ChevronUp size={30} className="text-[#a394d6]" />
@@ -1082,7 +1025,7 @@ const ETutorSearch = () => {
               </div>
               {isGenderOpen && (
                 <div className="absolute top-full left-0 right-0 mt-2 bg-[#DBCAFF] rounded-3xl overflow-hidden z-10 w-[90%] mx-auto py-5">
-                  {genderOptions.map((gender) => (
+                  {genderOptions.map(gender => (
                     <div
                       key={gender.value}
                       className="py-2 text-2xl text-[#6C5BAA] border-b-2 border-[#a394d682] w-[80%] mx-auto"
@@ -1117,10 +1060,8 @@ const ETutorSearch = () => {
               <input
                 type="date"
                 className={`w-full bg-[#DBCAFF] text-[#a394d6] text-sm custom-lg:text-xl custom-xl:text-2xl pl-10 pr-16 py-2 sm:py-4 rounded-full cursor-pointer`}
-                value={bookingInfo.date || ""}
-                onChange={(e) =>
-                  handleBookingInputChange("date", e.target.value)
-                }
+                value={bookingInfo.date || ''}
+                onChange={e => handleBookingInputChange('date', e.target.value)}
               />
               <span className="absolute right-4 top-1/2 transform -translate-y-1/2">
                 {/* Replace with your date icon, e.g., <YourDateIcon /> */}
@@ -1139,10 +1080,8 @@ const ETutorSearch = () => {
               <input
                 type="time"
                 className={`w-full bg-[#DBCAFF] text-[#a394d6] text-sm custom-lg:text-xl custom-xl:text-2xl pl-10 pr-16 py-2 sm:py-4 rounded-full cursor-pointer`}
-                value={bookingInfo.time || ""}
-                onChange={(e) =>
-                  handleBookingInputChange("time", e.target.value)
-                }
+                value={bookingInfo.time || ''}
+                onChange={e => handleBookingInputChange('time', e.target.value)}
               />
               <span className="absolute right-4 top-1/2 transform -translate-y-1/2">
                 {/* Replace with your time icon, e.g., <YourTimeIcon /> */}
@@ -1170,9 +1109,7 @@ const ETutorSearch = () => {
 
       {bookingStep === 3 && (
         <div className=" h-screen border-2 gap-14 flex flex-col items-center justify-center">
-          <h3 className="text-3xl text-[#685AAD] font-bold">
-            Confirm your Booking
-          </h3>
+          <h3 className="text-3xl text-[#685AAD] font-bold">Confirm your Booking</h3>
           <div className="w-full rounded-3xl max-w-[50rem] p-8 text-[#9184D2] bg-[#DBCAFF] border-red-500">
             <div className="border-b-2 border-[#9184D2]">
               <div className="flex justify-between text-xl capitalize px-2 py-3 font-medium text-[#9184D2]">
@@ -1212,18 +1149,17 @@ const ETutorSearch = () => {
                 <p>Total Cost</p>
                 <p className="text-[#685AAD]">value</p>
               </div>
-              
             </div>
           </div>
 
           <div className="max-w-[22rem] w-full mx-auto flex items-center justify-center ">
-          <button
-            onClick={handleConfirmBooking}
-            className="w-full   bg-[#8653FF] text-white px-2 py-2 sm:py-4 font-bold text-xl rounded-full hover:bg-[#5a3dd8] transition-colors"
+            <button
+              onClick={handleConfirmBooking}
+              className="w-full   bg-[#8653FF] text-white px-2 py-2 sm:py-4 font-bold text-xl rounded-full hover:bg-[#5a3dd8] transition-colors"
             >
-            Confirm
-          </button>
-            </div>
+              Confirm
+            </button>
+          </div>
         </div>
       )}
     </div>
@@ -1242,5 +1178,5 @@ const ETutorSearch = () => {
 
 export default ETutorSearch;
 function onLevelChange(level: React.SetStateAction<string>) {
-  throw new Error("Function not implemented.");
+  throw new Error('Function not implemented.');
 }

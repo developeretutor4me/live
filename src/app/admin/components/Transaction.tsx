@@ -1,16 +1,16 @@
-import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
-import React, { useEffect, useState } from "react";
-import Totalincome from "./Totalincome";
-import TotalPayouts from "./TotalPayouts";
-import TotalPayoutsChart from "./TotalPayoutsChart";
-import Image from "next/image";
-import downloadReport from "../../../../public/downloadReport.svg";
-import TotalIncomeChart from "./TotalIncomeChart";
-import PendingTransection from "./PendingTransection";
-import ConfirmedTransaction from "./ConfirmedTransaction";
-import LoadingTransaction from "./LoadingTransaction";
-import CompletedTransaction from "./CompletedTransaction";
-import { usePageSpeedData } from "../hooks/usePageSpeedData";
+import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import Totalincome from './Totalincome';
+import TotalPayouts from './TotalPayouts';
+import TotalPayoutsChart from './TotalPayoutsChart';
+import Image from 'next/image';
+import downloadReport from '../../../../public/downloadReport.svg';
+import TotalIncomeChart from './TotalIncomeChart';
+import PendingTransection from './PendingTransection';
+import ConfirmedTransaction from './ConfirmedTransaction';
+import LoadingTransaction from './LoadingTransaction';
+import CompletedTransaction from './CompletedTransaction';
+import { usePageSpeedData } from '../hooks/usePageSpeedData';
 function Transaction() {
   const [hover, sethover] = useState(false);
 
@@ -23,9 +23,7 @@ function Transaction() {
       <div className="flex flex-col gap-y-9 mt-4">
         {/* section 1 -------------------------------- */}
         <section className=" mt-5 custom-xl:mt-10 grid grid-cols-1 custom-xl:grid-cols-2  grid-rows-2 min-h-[32.5rem] gap-7">
-        
-            <Totalincome />
-          
+          <Totalincome />
 
           <div className="bg-[#ede8fa] px-3 custom-xl:px-6 py-3 custom-xl:py-6 col-span-1 row-span-2 rounded-md sm:rounded-xl  custom-lg:rounded-3xl relative ">
             <TotalPayoutsChart />
@@ -46,13 +44,13 @@ function Transaction() {
         </section>
         {/* section 4 ------------------------ */}
         <section className="bg-[#ede8fa] rounded-md sm:rounded-xl  custom-lg:rounded-3xl h-fit  px-3 custom-xl:px-10  py-3 custom-xl:py-6 relative">
-          <ConfirmedTransaction/>
+          <ConfirmedTransaction />
         </section>
         <section className="bg-[#ede8fa] rounded-md sm:rounded-xl  custom-lg:rounded-3xl h-fit  px-3 custom-xl:px-10  py-3 custom-xl:py-6 relative">
-          <LoadingTransaction/>
+          <LoadingTransaction />
         </section>
         <section className="bg-[#ede8fa] rounded-md sm:rounded-xl  custom-lg:rounded-3xl h-fit  px-3 custom-xl:px-10  py-3 custom-xl:py-6 relative">
-          <CompletedTransaction/>
+          <CompletedTransaction />
         </section>
       </div>
     </div>

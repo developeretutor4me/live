@@ -3,14 +3,17 @@ import { NextResponse } from 'next/server';
 import bcrypt from 'bcrypt';
 import { getServerSession } from 'next-auth';
 import User from '../models/User';
-import {authOptions} from '@/app/auth/auth'; 
+import { authOptions } from '@/app/auth/auth';
 
 export async function PUT(req: Request) {
   try {
     const { currentPassword, newPassword } = await req.json();
 
     if (!currentPassword || !newPassword) {
-      return NextResponse.json({ message: 'Current and new password are required' }, { status: 400 });
+      return NextResponse.json(
+        { message: 'Current and new password are required' },
+        { status: 400 }
+      );
     }
 
     // Get the logged-in user's session
@@ -41,8 +44,11 @@ export async function PUT(req: Request) {
     await currentUser.save();
 
     return NextResponse.json({ message: 'Password updated successfully' }, { status: 200 });
-  } catch (error:any) {
+  } catch (error: any) {
     console.error('Error updating password:', error);
-    return NextResponse.json({ message: 'Failed to update password', error: error.message }, { status: 500 });
+    return NextResponse.json(
+      { message: 'Failed to update password', error: error.message },
+      { status: 500 }
+    );
   }
 }

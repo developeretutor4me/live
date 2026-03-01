@@ -22,7 +22,7 @@
 
 //     // Find the parent document based on the user ID and update the phone number
 //     const parent = await Parent.findOneAndUpdate(
-//       { user: userId }, 
+//       { user: userId },
 //       { phoneNumber: phoneNumber },
 //       { new: true } // Returns the updated document
 //     );
@@ -40,7 +40,7 @@
 
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import {authOptions} from '@/app/auth/auth'; 
+import { authOptions } from '@/app/auth/auth';
 import Parent from '../models/Parent';
 import Student from '../models/Student';
 import Teacher from '../models/Teacher';
@@ -48,7 +48,6 @@ import Teacher from '../models/Teacher';
 export async function PUT(req: Request) {
   try {
     const { phoneNumber } = await req.json();
-  
 
     if (!phoneNumber) {
       return NextResponse.json({ message: 'Phone number is required' }, { status: 400 });
@@ -61,7 +60,6 @@ export async function PUT(req: Request) {
 
     const userId = session.user.id;
     const userRole = session.user.role;
-
 
     let updatedUser;
     let query = { user: userId };
@@ -90,10 +88,10 @@ export async function PUT(req: Request) {
           // For teacher model: phone is nested in contactInformation
           const updateData = {
             $set: {
-              'contactInformation.phone': phoneNumber
-            }
+              'contactInformation.phone': phoneNumber,
+            },
           };
-          
+
           // First verify the document exists
           const existingTeacher = await Teacher.findOne(query);
 
@@ -101,20 +99,15 @@ export async function PUT(req: Request) {
             return NextResponse.json({ message: 'Teacher not found' }, { status: 404 });
           }
 
-          updatedUser = await Teacher.findOneAndUpdate(
-            query,
-            updateData,
-            { 
-              new: true,
-              runValidators: true
-            }
-          );
+          updatedUser = await Teacher.findOneAndUpdate(query, updateData, {
+            new: true,
+            runValidators: true,
+          });
           break;
 
         default:
           return NextResponse.json({ message: 'Invalid user role' }, { status: 400 });
       }
-
 
       if (!updatedUser) {
         return NextResponse.json({ message: `${userRole} not found` }, { status: 404 });
@@ -134,25 +127,32 @@ export async function PUT(req: Request) {
           break;
       }
 
-      return NextResponse.json({ 
-        message: 'Phone number updated successfully',
-        user: updatedUser,
-        verifiedUpdate: verifiedUser
-      }, { status: 200 });
-
-    } catch (dbError:any) {
+      return NextResponse.json(
+        {
+          message: 'Phone number updated successfully',
+          user: updatedUser,
+          verifiedUpdate: verifiedUser,
+        },
+        { status: 200 }
+      );
+    } catch (dbError: any) {
       console.error('Database error:', dbError);
-      return NextResponse.json({ 
-        message: 'Database error', 
-        error: dbError.message 
-      }, { status: 500 });
+      return NextResponse.json(
+        {
+          message: 'Database error',
+          error: dbError.message,
+        },
+        { status: 500 }
+      );
     }
-
-  } catch (error:any) {
+  } catch (error: any) {
     console.error('Error updating phone number:', error);
-    return NextResponse.json({ 
-      message: 'Failed to update phone number', 
-      error: error.message 
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        message: 'Failed to update phone number',
+        error: error.message,
+      },
+      { status: 500 }
+    );
   }
 }

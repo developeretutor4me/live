@@ -1,4 +1,3 @@
-
 // src/app/api/upload-profile-picture/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
@@ -13,7 +12,7 @@ const s3Client = new S3Client({
   },
 });
 
-export async function POST(req: NextRequest, res:NextResponse) {
+export async function POST(req: NextRequest, res: NextResponse) {
   try {
     const { userId, imageBase64 } = await req.json(); // Get the data from the request body
 
@@ -40,22 +39,17 @@ export async function POST(req: NextRequest, res:NextResponse) {
     // Generate the image URL
     const profilePictureUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${imageKey}`;
 
-
-
-   
     // Update the user's profile picture in the database
     await connectMongoDB();
-     await User.findByIdAndUpdate(
-        userId,
-        { profilePicture: profilePictureUrl },
-        { new: true } // Return the updated document
-      );
-  
-    
+    await User.findByIdAndUpdate(
+      userId,
+      { profilePicture: profilePictureUrl },
+      { new: true } // Return the updated document
+    );
 
     return NextResponse.json({ profilePictureUrl });
   } catch (error) {
-    console.error("Error uploading profile picture:", error);
+    console.error('Error uploading profile picture:', error);
     return NextResponse.json({ message: 'Failed to upload profile picture' }, { status: 500 });
   }
 }

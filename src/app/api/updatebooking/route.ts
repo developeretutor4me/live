@@ -2,7 +2,7 @@ import { connectMongoDB } from '../connection/connection';
 import TeacherModel from '../models/Teacher';
 import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
-import {authOptions} from '@/app/auth/auth'; // Update with your actual path
+import { authOptions } from '@/app/auth/auth'; // Update with your actual path
 
 export async function POST(req: Request) {
   try {
@@ -11,12 +11,9 @@ export async function POST(req: Request) {
 
     // Get the session to access the user ID
     const session = await getServerSession(authOptions);
-    
+
     if (!session || !session.user) {
-      return NextResponse.json(
-        { message: 'Unauthorized: No session found' },
-        { status: 401 }
-      );
+      return NextResponse.json({ message: 'Unauthorized: No session found' }, { status: 401 });
     }
 
     const userId = session.user.id; // Adjust based on how you store user ID in session
@@ -25,10 +22,7 @@ export async function POST(req: Request) {
     const teacher = await TeacherModel.findOne({ user: userId });
 
     if (!teacher) {
-      return NextResponse.json(
-        { message: 'Teacher not found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ message: 'Teacher not found' }, { status: 404 });
     }
 
     // Increment the totalBooking field by 1
@@ -51,10 +45,7 @@ export async function POST(req: Request) {
       );
     } else {
       console.error('An unknown error occurred');
-      return NextResponse.json(
-        { message: 'An unknown error occurred' },
-        { status: 500 }
-      );
+      return NextResponse.json({ message: 'An unknown error occurred' }, { status: 500 });
     }
   }
 }

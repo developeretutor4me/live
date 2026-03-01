@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 function ActiveEtutorOverview() {
   return (
@@ -7,10 +7,7 @@ function ActiveEtutorOverview() {
         <div className="flex  justify-between items-center  ">
           <div className="flex flex-col  justify-between   px-3 py-1.5">
             <h1 className="flex gap-5 items-center text-xl sm:text-3xl custom-lg:text-[43px] leading-10 text-[#7669b5] font-medium py-4">
-              <div className="bg-[#00dae5] h-[25px] w-[25px] rounded-sm">
-                &nbsp;
-              </div>{" "}
-              Active eTutors
+              <div className="bg-[#00dae5] h-[25px] w-[25px] rounded-sm">&nbsp;</div> Active eTutors
             </h1>
 
             <h1 className="text-base sm:text-lg custom-lg:text-2xl font-medium custom-xl:leading-none text-[#9085c4] flex items-center  gap-3 py-4">

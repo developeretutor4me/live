@@ -68,8 +68,9 @@ const ContactInformation = ({
               onClick={toggleDropdown}
             >
               <button
-                className={`bg-purpleBtn focus:outline-none  ${country ? 'text-darkpurple' : 'text-[#AD9DDE]'
-                  }`}
+                className={`bg-purpleBtn focus:outline-none  ${
+                  country ? 'text-darkpurple' : 'text-[#AD9DDE]'
+                }`}
               >
                 {country ? country : 'Select a country'} {/* Show selected country */}
               </button>
@@ -88,7 +89,7 @@ const ContactInformation = ({
                 className="absolute z-10 w-11/12 mt-20 m-auto top-0 rounded-3xl shadow-lg bg-[#DBCAFF] py-4 px-10 "
               >
                 <div id="style-2" className=" max-h-[20rem] overflow-y-auto">
-                  {countryData.map((subject) => (
+                  {countryData.map(subject => (
                     <div
                       key={subject.name}
                       className="flex items-center p-2 text-darkBlue border-b px-5 py-2 text-2xl border-darkBlue cursor-pointer mb:text-sm placeholder-darkpurple max-w-[80%] "
@@ -261,9 +262,9 @@ const ContactInformation = ({
                   <input
                     type="tel"
                     value={phoneNumber}
-                    onChange={(e) => {
+                    onChange={e => {
                       setPhoneNumber(e.target.value);
-                      const matchedCountry = countryData.find((country) =>
+                      const matchedCountry = countryData.find(country =>
                         e.target.value.startsWith(country.dial_code)
                       );
                       if (matchedCountry) {
@@ -331,9 +332,10 @@ const ContactInformation = ({
             }
             className={`
               w-full md:w-1/2 py-4 px-8 rounded-full text-[22px] xl:text-[27px] 2xl:text-[30px] font-semibold text-white transition-all duration-300
-              ${country && firstname && lastname && email && password && Zip && phoneNumber
-                ? 'bg-[#9184F0] hover:bg-[#7A6BD9] cursor-pointer shadow-lg hover:shadow-xl'
-                : 'bg-gray-400 cursor-not-allowed opacity-50'
+              ${
+                country && firstname && lastname && email && password && Zip && phoneNumber
+                  ? 'bg-[#9184F0] hover:bg-[#7A6BD9] cursor-pointer shadow-lg hover:shadow-xl'
+                  : 'bg-gray-400 cursor-not-allowed opacity-50'
               }
             `}
             onClick={handleSubmit}

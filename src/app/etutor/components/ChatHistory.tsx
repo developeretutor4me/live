@@ -1,27 +1,27 @@
-import React from "react";
-import messageicon from "../../../../public/whitemessageicon.svg";
-import Image from "next/image";
+import React from 'react';
+import messageicon from '../../../../public/whitemessageicon.svg';
+import Image from 'next/image';
 const ChatHistory = () => {
   const chatHistory = [
     {
       topic: '"eTokies counter not working...',
-      date: "SAT / 17 - jun - 2024",
-      assistant: "Jackson",
+      date: 'SAT / 17 - jun - 2024',
+      assistant: 'Jackson',
     },
     {
       topic: '"eTokies counter not working...',
-      date: "SAT / 17 - jun - 2024",
-      assistant: "Jackson",
+      date: 'SAT / 17 - jun - 2024',
+      assistant: 'Jackson',
     },
     {
       topic: '"eTokies counter not working...',
-      date: "SAT / 17 - jun - 2024",
-      assistant: "Jackson",
+      date: 'SAT / 17 - jun - 2024',
+      assistant: 'Jackson',
     },
     {
       topic: '"eTokies counter not working...',
-      date: "SAT / 17 - jun - 2024",
-      assistant: "Jackson",
+      date: 'SAT / 17 - jun - 2024',
+      assistant: 'Jackson',
     },
   ];
 
@@ -43,15 +43,11 @@ const ChatHistory = () => {
             className="bg-[#7565A4] rounded-2xl px-4 sm:px-10 py-2 sm:py-7 grid  grid-cols-3 items-center "
           >
             <div className="">
-              <p className="text-white  text-sm custom-xl:text-xl font-medium">
-                {chat.topic}
-              </p>
+              <p className="text-white  text-sm custom-xl:text-xl font-medium">{chat.topic}</p>
             </div>
 
             <div className="border-x border-white flex items-center justify-center">
-              <p className="text-white text-sm custom-xl:text-lg ">
-                {chat.date}
-              </p>
+              <p className="text-white text-sm custom-xl:text-lg ">{chat.date}</p>
             </div>
 
             <div className="flex justify-between items-center">
@@ -62,11 +58,7 @@ const ChatHistory = () => {
                 <p className="text-white text-xs h-fit m-0 p-0 ">Assistant</p>
               </div>
 
-              <Image  loading="lazy" 
-                src={messageicon}
-                alt=""
-                className="w-3 h-3 sm:w-8 sm:h-8"
-              />
+              <Image loading="lazy" src={messageicon} alt="" className="w-3 h-3 sm:w-8 sm:h-8" />
             </div>
           </div>
         ))}

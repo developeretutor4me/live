@@ -23,13 +23,12 @@
 // export default Message;
 // export type { IMessage };
 
-
 import mongoose, { Schema, Document } from 'mongoose';
 import { IUser } from './User';
 
 interface IMessage extends Document {
-  senderId: IUser["_id"];
-  recipientId: IUser["_id"];
+  senderId: IUser['_id'];
+  recipientId: IUser['_id'];
   content: string;
   fileUrl?: string;
   fileType?: string;
@@ -52,9 +51,9 @@ const messageSchema = new Schema({
   senderId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   recipientId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   content: { type: String },
-  fileUrl: { type: String, default:null },
-  fileType: { type: String , default:null},
-  fileName: { type: String , default:null},
+  fileUrl: { type: String, default: null },
+  fileType: { type: String, default: null },
+  fileName: { type: String, default: null },
   conversationId: { type: mongoose.Schema.Types.ObjectId, ref: 'Conversation', required: true },
   timestamp: { type: Date, default: Date.now },
   status: {
@@ -67,4 +66,4 @@ const messageSchema = new Schema({
 const Message = mongoose.models.Message || mongoose.model<IMessage>('Message', messageSchema);
 
 export default Message;
-export type { IMessage }; 
+export type { IMessage };

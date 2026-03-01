@@ -1,12 +1,12 @@
-import Image from "next/image";
-import React, { useState } from "react";
-import etokiicon from "../../../../public/etokiIcon.svg";
-import plus from "../../../../public/plusIncrease.svg";
-import minus from "../../../../public/minusDecrease.svg";
-import minuscircle from "../../../../public/minuscircle.svg";
-import pluscircle from "../../../../public/plusecircle.svg";
-import axios from "axios";
-import { useSession } from "next-auth/react";
+import Image from 'next/image';
+import React, { useState } from 'react';
+import etokiicon from '../../../../public/etokiIcon.svg';
+import plus from '../../../../public/plusIncrease.svg';
+import minus from '../../../../public/minusDecrease.svg';
+import minuscircle from '../../../../public/minuscircle.svg';
+import pluscircle from '../../../../public/plusecircle.svg';
+import axios from 'axios';
+import { useSession } from 'next-auth/react';
 interface activityprops {
   parent: any;
   etokiesprop: any;
@@ -25,13 +25,13 @@ function Activity({ parent, etokiesprop, sessionData }: activityprops) {
     setLoading(true);
     // Reset success message
     try {
-      const response = await axios.post("/api/UpdateEtokies", { etokies });
+      const response = await axios.post('/api/UpdateEtokies', { etokies });
       if (response.data.success) {
         etokiesprop(etokies);
       } else {
       }
     } catch (error) {
-      console.error("Error redeeming etokies:", error);
+      console.error('Error redeeming etokies:', error);
     } finally {
       setLoading(false);
     }
@@ -40,10 +40,10 @@ function Activity({ parent, etokiesprop, sessionData }: activityprops) {
   const handleSave = async () => {
     // Call API to update trial sessions
     setLoading(true);
-    const response = await fetch("/api/updateTrialsessions", {
-      method: "PATCH",
+    const response = await fetch('/api/updateTrialsessions', {
+      method: 'PATCH',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({ userId: session?.user.id, trialSessionsLeft }),
     });
@@ -52,7 +52,7 @@ function Activity({ parent, etokiesprop, sessionData }: activityprops) {
       setIsEditing(false);
       setLoading(false);
     } else {
-      console.error("Failed to update trial sessions");
+      console.error('Failed to update trial sessions');
       setLoading(false);
     }
   };
@@ -62,11 +62,7 @@ function Activity({ parent, etokiesprop, sessionData }: activityprops) {
       <div className=" ">
         <div className="flex gap-4 sm:gap-8 custom-lg:gap-16 custom-xl:gap-16 items-center ">
           <div className="img  rounded-full h-[70px] sm:h-[100px] custom-xl:h-[200px] w-[70px] sm:w-[100px] custom-xl:w-[200px] flex items-center justify-center overflow-hidden">
-            <img
-              src={parent?.user?.profilePicture}
-              alt=""
-              className="object-cover w-full"
-            />
+            <img src={parent?.user?.profilePicture} alt="" className="object-cover w-full" />
           </div>
 
           <div className="flex flex-col gap-1 custom-xl:gap-3">
@@ -77,7 +73,7 @@ function Activity({ parent, etokiesprop, sessionData }: activityprops) {
               Student ID: {parent?.user?._id.substring(0, 6)}
             </span>
             <span className=" text-lg custom-lg:text-xl custom-xl:text-[26px] leading-none font-medium text-[#6c5baa]">
-              {parent?.user?.email || ""}
+              {parent?.user?.email || ''}
             </span>
           </div>
         </div>
@@ -90,7 +86,7 @@ function Activity({ parent, etokiesprop, sessionData }: activityprops) {
             <input
               type="text"
               className="mt-2 sm:mt-4 px-9 py-2 sm:py-3 custom-xl:py-5 outline-none block w-full rounded-xl text-white bg-[#b4a5d7] text-base sm:text-lg custom-xl:text-2xl "
-              value={parent?.user?.planType?.type || "-"}
+              value={parent?.user?.planType?.type || '-'}
               disabled
             />
           </div>
@@ -101,7 +97,7 @@ function Activity({ parent, etokiesprop, sessionData }: activityprops) {
             <input
               type="text"
               className="mt-2 sm:mt-4 px-9 py-2 sm:py-3 custom-xl:py-5 outline-none block w-full rounded-xl text-white bg-[#b4a5d7] text-base sm:text-lg custom-xl:text-2xl "
-              value={parent?.user?.durationMonths || "-"}
+              value={parent?.user?.durationMonths || '-'}
               disabled
             />
           </div>
@@ -112,7 +108,7 @@ function Activity({ parent, etokiesprop, sessionData }: activityprops) {
             <input
               type="text"
               className="mt-2 sm:mt-4 px-9 py-2 sm:py-3 custom-xl:py-5 outline-none block w-full rounded-xl text-white bg-[#b4a5d7] text-base sm:text-lg custom-xl:text-2xl "
-              value={parent?.user?.tutorLevel || "-"}
+              value={parent?.user?.tutorLevel || '-'}
               disabled
             />
           </div>
@@ -123,29 +119,25 @@ function Activity({ parent, etokiesprop, sessionData }: activityprops) {
             <input
               type="text"
               className="mt-2 sm:mt-4 px-9 py-2 sm:py-3 custom-xl:py-5 outline-none block w-full rounded-xl text-white bg-[#b4a5d7] text-base sm:text-lg custom-xl:text-2xl "
-              value={new Date(
-                parent?.user?.planType?.updatedAt
-              ).toLocaleDateString("en-GB", {
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric",
+              value={new Date(parent?.user?.planType?.updatedAt).toLocaleDateString('en-GB', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
               })}
               disabled
             />
           </div>
           <div className="">
-            <label className="block text-lg sm:text-3xl  font-medium text-[#685aad]">
-              Age
-            </label>
+            <label className="block text-lg sm:text-3xl  font-medium text-[#685aad]">Age</label>
             <input
               type="text"
               className="mt-2 sm:mt-4 px-9 py-2 sm:py-3 custom-xl:py-5 outline-none block w-full rounded-xl text-white bg-[#b4a5d7] text-base sm:text-lg custom-xl:text-2xl "
               value={
-                parent?.user?.role === "student"
+                parent?.user?.role === 'student'
                   ? parent?.personalInformation.age
-                  : parent?.user?.role === "parent"
-                  ? parent?.childInformation.age
-                  : "Not Available"
+                  : parent?.user?.role === 'parent'
+                    ? parent?.childInformation.age
+                    : 'Not Available'
               }
               disabled
             />
@@ -157,7 +149,7 @@ function Activity({ parent, etokiesprop, sessionData }: activityprops) {
             <input
               type="text"
               className="mt-2 sm:mt-4 px-9 py-2 sm:py-3 custom-xl:py-5 outline-none block w-full rounded-xl text-white bg-[#b4a5d7] text-base sm:text-lg custom-xl:text-2xl "
-              value={parent?.grade || "Not Available"}
+              value={parent?.grade || 'Not Available'}
               disabled
             />
           </div>
@@ -169,11 +161,11 @@ function Activity({ parent, etokiesprop, sessionData }: activityprops) {
               type="text"
               className="mt-2 sm:mt-4 px-9 py-2 sm:py-3 custom-xl:py-5 outline-none block w-full rounded-xl text-white bg-[#b4a5d7] text-base sm:text-lg custom-xl:text-2xl "
               value={
-                parent?.user?.role === "student"
+                parent?.user?.role === 'student'
                   ? parent?.personalInformation.institution
-                  : parent?.user?.role === "parent"
-                  ? parent?.childInformation.institution
-                  : "Not Available"
+                  : parent?.user?.role === 'parent'
+                    ? parent?.childInformation.institution
+                    : 'Not Available'
               }
               disabled
             />
@@ -185,14 +177,11 @@ function Activity({ parent, etokiesprop, sessionData }: activityprops) {
             <input
               type="text"
               className="mt-2 sm:mt-4 px-9 py-2 sm:py-3 custom-xl:py-5 outline-none block w-full rounded-xl text-white bg-[#b4a5d7] text-base sm:text-lg custom-xl:text-2xl "
-              value={new Date(parent?.user?.createdAt).toLocaleDateString(
-                "en-GB",
-                {
-                  day: "2-digit",
-                  month: "2-digit",
-                  year: "numeric",
-                }
-              )}
+              value={new Date(parent?.user?.createdAt).toLocaleDateString('en-GB', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+              })}
               disabled
             />
           </div>
@@ -206,8 +195,7 @@ function Activity({ parent, etokiesprop, sessionData }: activityprops) {
               value={
                 sessionData.filter(
                   (request: any) =>
-                    request.status === "accepted" &&
-                    request.meetingCompleted === true
+                    request.status === 'accepted' && request.meetingCompleted === true
                 ).length || 0
               }
             />
@@ -232,8 +220,7 @@ function Activity({ parent, etokiesprop, sessionData }: activityprops) {
               className="mt-2 sm:mt-4 px-9 py-2 sm:py-3 custom-xl:py-5 outline-none block w-full rounded-xl text-white bg-[#b4a5d7] text-base sm:text-lg custom-xl:text-2xl "
               value={
                 sessionData.filter(
-                  (request: any) =>
-                    request.status === "accepted" && !request.meetingCompleted
+                  (request: any) => request.status === 'accepted' && !request.meetingCompleted
                 ).length || 0
               }
               disabled
@@ -250,7 +237,7 @@ function Activity({ parent, etokiesprop, sessionData }: activityprops) {
               value={
                 sessionData.filter(
                   (request: any) =>
-                    request.status === "accepted" &&
+                    request.status === 'accepted' &&
                     request.meetingCompleted === true &&
                     request.IsTrialSession === true
                 ).length || 0
@@ -280,16 +267,16 @@ function Activity({ parent, etokiesprop, sessionData }: activityprops) {
                 <div className="flex gap-2 absolute top-1/2  transform  -translate-y-1/2 right-3">
                   <Image
                     className="hover:cursor-pointer w-[25px] sm:w-[35px] custom-xl:w-[51px] "
-                    onClick={(e) => {
+                    onClick={e => {
                       e.preventDefault();
-                      setTrialSessionsLeft((prev) => Math.max(prev - 1, 0));
+                      setTrialSessionsLeft(prev => Math.max(prev - 1, 0));
                     }}
                     src={minuscircle}
                     alt=""
                   />
                   <Image
                     className="hover:cursor-pointer w-[25px] sm:w-[35px] custom-xl:w-[51px] "
-                    onClick={(e) => {
+                    onClick={e => {
                       e.preventDefault();
                       setTrialSessionsLeft(Number(trialSessionsLeft) + 1);
                     }}
@@ -299,9 +286,9 @@ function Activity({ parent, etokiesprop, sessionData }: activityprops) {
                 </div>
               ) : (
                 <button
-                  onClick={(e) => {
+                  onClick={e => {
                     e.preventDefault();
-                    setIsEditing((prev) => !prev);
+                    setIsEditing(prev => !prev);
                   }}
                   className="absolute top-1/2  transform  -translate-y-1/2 right-3 rounded-lg bg-[#8653ff] px-12 text-lg py-2 sm:py-2.5 custom-xl:py-3.5 "
                 >
@@ -314,11 +301,9 @@ function Activity({ parent, etokiesprop, sessionData }: activityprops) {
               {isEditing && (
                 <div className="flex gap-x-2 sm:order-1 order-2">
                   <button
-                    onClick={(e) => {
+                    onClick={e => {
                       e.preventDefault();
-                      setTrialSessionsLeft(
-                        Number(parent?.user?.TrialSessionLeft)
-                      );
+                      setTrialSessionsLeft(Number(parent?.user?.TrialSessionLeft));
                       setIsEditing(false);
                     }}
                     className="px-4 sm:px-8 py-0.5 sm:py-2 rounded-xl bg-[#ff6c72] text-white text-base sm:text-2xl"
@@ -329,7 +314,7 @@ function Activity({ parent, etokiesprop, sessionData }: activityprops) {
                     onClick={handleSave}
                     className="px-4 sm:px-9 py-0.5 sm:py-2 rounded-xl bg-[#8653ff] text-white text-base sm:text-2xl"
                   >
-                    {loading ? "wait..." : "Save"}
+                    {loading ? 'wait...' : 'Save'}
                   </button>
                 </div>
               )}
@@ -340,7 +325,7 @@ function Activity({ parent, etokiesprop, sessionData }: activityprops) {
           <label className="block text-lg sm:text-3xl  font-medium text-[#685aad]   custom-xl:gap-x-12 mt-2 sm:mt-4 custom-lg:mt-7 custom-xl:mt-10">
             Subjects Needed
           </label>
-          {parent?.user?.role === "parent"
+          {parent?.user?.role === 'parent'
             ? parent?.subjectChildNeeds?.length > 0 && (
                 <div className="flex flex-wrap items-start justify-start gap-2 mt-6  max-w-[26rem]  min-h-[5rem]">
                   {parent?.subjectChildNeeds.map((subject: any) => (
@@ -398,8 +383,8 @@ function Activity({ parent, etokiesprop, sessionData }: activityprops) {
             {etokieEdit ? (
               <>
                 <div className="flex gap-x-2 ">
-                <button
-                    onClick={(e) => {
+                  <button
+                    onClick={e => {
                       e.preventDefault();
                       setetokies(Number(parent?.user?.etokis));
                       setetokieEdit(false);
@@ -412,18 +397,14 @@ function Activity({ parent, etokiesprop, sessionData }: activityprops) {
                     onClick={sendRedeemRequest}
                     className="py-2 sm:py-2.5 custom-xl:py-3.5 px-8 rounded-xl bg-[#8653ff] text-white text-base sm:text-2xl"
                   >
-                    {loading ? "wait..." : "Save"}
+                    {loading ? 'wait...' : 'Save'}
                   </button>
-               
                 </div>
-
-                
-
 
                 <div className="flex gap-2 ">
                   <Image
                     className="hover:cursor-pointer w-[25px] sm:w-[35px] custom-xl:w-[51px] "
-                    onClick={(e) => {
+                    onClick={e => {
                       e.preventDefault();
                       setetokies(Number(etokies) - 1);
                     }}
@@ -432,7 +413,7 @@ function Activity({ parent, etokiesprop, sessionData }: activityprops) {
                   />
                   <Image
                     className="hover:cursor-pointer w-[25px] sm:w-[35px] custom-xl:w-[51px] "
-                    onClick={(e) => {
+                    onClick={e => {
                       e.preventDefault();
                       setetokies(Number(etokies) + 1);
                     }}
@@ -440,25 +421,19 @@ function Activity({ parent, etokiesprop, sessionData }: activityprops) {
                     alt=""
                   />
                 </div>
-
-
-
-                
-             
               </>
             ) : (
               <div className="flex justify-between w-full">
                 <div></div>
-              <button
-              onClick={(e) => {
-                e.preventDefault();
-                setetokieEdit((prev) => !prev);
-              }}
-              className="rounded-lg bg-[#8653ff] px-12 text-lg py-2 sm:py-2.5 custom-xl:py-3.5 "
-            >
-              Edit
-            </button>
-
+                <button
+                  onClick={e => {
+                    e.preventDefault();
+                    setetokieEdit(prev => !prev);
+                  }}
+                  className="rounded-lg bg-[#8653ff] px-12 text-lg py-2 sm:py-2.5 custom-xl:py-3.5 "
+                >
+                  Edit
+                </button>
               </div>
             )}
           </div>

@@ -1,34 +1,34 @@
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
-import plusicon from "../../../../public/plus circle icon purple.svg";
-import editicon from "../../../../public/edit icon.svg";
-import alerticon from "../../../../public/alert.svg";
-import { useSession } from "next-auth/react";
-import { ChevronDown, Edit2 } from "lucide-react";
-import Germany from "../../../../public/Flag_of_Germany.svg.webp";
-import editiconwhite from "../../../../public/editiconwhite.svg";
-import UnitedKingdom from "../../../../public/Flag_of_the_United_Kingdom_(1-2).svg.webp";
-import UnitedStates from "../../../../public/america.png";
-import France from "../../../../public/Flag-France.webp";
-import Italy from "../../../../public/images.png";
-import Ireland from "../../../../public/Irish_Flag__86476.jpg";
-import Canada from "../../../../public/Flag-Canada.webp";
-import Malta from "../../../../public/Flag-Malta.webp";
-import Belize from "../../../../public/Belize.jpg";
-import Belgium from "../../../../public/Belgium.webp";
-import Switzerland from "../../../../public/Switzerland.png";
-import Luxembourg from "../../../../public/Luxembourg.jpeg";
-import Monaco from "../../../../public/Monaco.png";
-import Haiti from "../../../../public/Haiti.png";
-import Austria from "../../../../public/Flag_of_Austria.png";
-import Liechtenstein from "../../../../public/liechtenstein.webp";
-import Jamaica from "../../../../public/Flag_of_Jamaica.png";
-import Barbados from "../../../../public/Flag_of_Barbados.svg";
-import SaintLucia from "../../../../public/Saint Lucia.png";
-import BurkinaFaso from "../../../../public/Flag-of-Burkina-Faso.webp";
-import IvoryCoas from "../../../../public/ivory-coast.webp";
-import useSWR from "swr";
-import { useToast } from "@/hooks/use-toast";
+import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
+import plusicon from '../../../../public/plus circle icon purple.svg';
+import editicon from '../../../../public/edit icon.svg';
+import alerticon from '../../../../public/alert.svg';
+import { useSession } from 'next-auth/react';
+import { ChevronDown, Edit2 } from 'lucide-react';
+import Germany from '../../../../public/Flag_of_Germany.svg.webp';
+import editiconwhite from '../../../../public/editiconwhite.svg';
+import UnitedKingdom from '../../../../public/Flag_of_the_United_Kingdom_(1-2).svg.webp';
+import UnitedStates from '../../../../public/america.png';
+import France from '../../../../public/Flag-France.webp';
+import Italy from '../../../../public/images.png';
+import Ireland from '../../../../public/Irish_Flag__86476.jpg';
+import Canada from '../../../../public/Flag-Canada.webp';
+import Malta from '../../../../public/Flag-Malta.webp';
+import Belize from '../../../../public/Belize.jpg';
+import Belgium from '../../../../public/Belgium.webp';
+import Switzerland from '../../../../public/Switzerland.png';
+import Luxembourg from '../../../../public/Luxembourg.jpeg';
+import Monaco from '../../../../public/Monaco.png';
+import Haiti from '../../../../public/Haiti.png';
+import Austria from '../../../../public/Flag_of_Austria.png';
+import Liechtenstein from '../../../../public/liechtenstein.webp';
+import Jamaica from '../../../../public/Flag_of_Jamaica.png';
+import Barbados from '../../../../public/Flag_of_Barbados.svg';
+import SaintLucia from '../../../../public/Saint Lucia.png';
+import BurkinaFaso from '../../../../public/Flag-of-Burkina-Faso.webp';
+import IvoryCoas from '../../../../public/ivory-coast.webp';
+import useSWR from 'swr';
+import { useToast } from '@/hooks/use-toast';
 
 interface CountryCode {
   code: string;
@@ -36,88 +36,85 @@ interface CountryCode {
   name: string;
 }
 const countryCodes: CountryCode[] = [
-  { code: "+49", flag: Germany, name: "Germany" },
-  { code: "+44", flag: UnitedKingdom, name: "United Kingdom" },
-  { code: "+1", flag: UnitedStates, name: "United States" },
-  { code: "+33", flag: France, name: "France" },
-  { code: "+39", flag: Italy, name: "Italy" },
-  { code: "+353", flag: Ireland, name: "Ireland" },
-  { code: "+1", flag: Canada, name: "Canada" },
-  { code: "+356", flag: Malta, name: "Malta" },
-  { code: "+501", flag: Belize, name: "Belize" },
-  { code: "+32", flag: Belgium, name: "Belgium" },
-  { code: "+41", flag: Switzerland, name: "Switzerland" },
-  { code: "+352", flag: Luxembourg, name: "Luxembourg" },
-  { code: "+377", flag: Monaco, name: "Monaco" },
-  { code: "+509", flag: Haiti, name: "Haiti" },
-  { code: "+43", flag: Austria, name: "Austria" },
-  { code: "+423", flag: Liechtenstein, name: "Liechtenstein" },
-  { code: "+1 876", flag: Jamaica, name: "Jamaica" },
-  { code: "+1 246", flag: Barbados, name: "Barbados" },
-  { code: "+1 758", flag: SaintLucia, name: "Saint Lucia" },
-  { code: "+226", flag: BurkinaFaso, name: "Burkina Faso" },
-  { code: "+225", flag: IvoryCoas, name: "Ivory Coast" },
+  { code: '+49', flag: Germany, name: 'Germany' },
+  { code: '+44', flag: UnitedKingdom, name: 'United Kingdom' },
+  { code: '+1', flag: UnitedStates, name: 'United States' },
+  { code: '+33', flag: France, name: 'France' },
+  { code: '+39', flag: Italy, name: 'Italy' },
+  { code: '+353', flag: Ireland, name: 'Ireland' },
+  { code: '+1', flag: Canada, name: 'Canada' },
+  { code: '+356', flag: Malta, name: 'Malta' },
+  { code: '+501', flag: Belize, name: 'Belize' },
+  { code: '+32', flag: Belgium, name: 'Belgium' },
+  { code: '+41', flag: Switzerland, name: 'Switzerland' },
+  { code: '+352', flag: Luxembourg, name: 'Luxembourg' },
+  { code: '+377', flag: Monaco, name: 'Monaco' },
+  { code: '+509', flag: Haiti, name: 'Haiti' },
+  { code: '+43', flag: Austria, name: 'Austria' },
+  { code: '+423', flag: Liechtenstein, name: 'Liechtenstein' },
+  { code: '+1 876', flag: Jamaica, name: 'Jamaica' },
+  { code: '+1 246', flag: Barbados, name: 'Barbados' },
+  { code: '+1 758', flag: SaintLucia, name: 'Saint Lucia' },
+  { code: '+226', flag: BurkinaFaso, name: 'Burkina Faso' },
+  { code: '+225', flag: IvoryCoas, name: 'Ivory Coast' },
 ];
 
-interface  UserProfileprops{
-  teacher:any
+interface UserProfileprops {
+  teacher: any;
 }
-const UserProfile = ({teacher}:UserProfileprops) => {
-  const [activeTab, setActiveTab] = useState<
-    "personal" | "account" | "Academic"
-  >("personal");
+const UserProfile = ({ teacher }: UserProfileprops) => {
+  const [activeTab, setActiveTab] = useState<'personal' | 'account' | 'Academic'>('personal');
   const { toast } = useToast();
-  const [subactive, setsubactive] = useState("");
+  const [subactive, setsubactive] = useState('');
   const [isEditing, setIsEditing] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [firstNames, setFirstName] = useState("Loading...");
-  const [Lastname, setLastname] = useState("Loading...");
-  const [Age, setAge] = useState("Loading...");
-  const [grade, setGrade] = useState("Loading...");
-  const [studentid, Setstudentid] = useState("Loading...");
-  const [Institution, setInstitution] = useState("Loading...");
-  const [additionalinfo, setAdditionalinfo] = useState("Loading...");
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [firstNames, setFirstName] = useState('Loading...');
+  const [Lastname, setLastname] = useState('Loading...');
+  const [Age, setAge] = useState('Loading...');
+  const [grade, setGrade] = useState('Loading...');
+  const [studentid, Setstudentid] = useState('Loading...');
+  const [Institution, setInstitution] = useState('Loading...');
+  const [additionalinfo, setAdditionalinfo] = useState('Loading...');
   const [parentData, setParentData] = useState<any>(null);
   const [selectedSubjects, setSelectedSubjects] = useState([]);
-  const [userId, setUserId] = useState("");
-  const [Phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
+  const [userId, setUserId] = useState('');
+  const [Phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
   const { data: session, status } = useSession();
-  const [newEmail, setNewEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmNewPassword, setConfirmNewPassword] = useState("");
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-  const [imagePreview, setImagePreview] = useState("/assets/heroimg.png");
+  const [newEmail, setNewEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmNewPassword, setConfirmNewPassword] = useState('');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const [imagePreview, setImagePreview] = useState('/assets/heroimg.png');
   const [selectedImage, setSelectedImage] = useState(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState(countryCodes[0]);
-  const [completephonenumber, setCompletephonenumber] = useState("");
-  const [fetchedPhonenumber, setfetchedPhonenumber] = useState("")
+  const [completephonenumber, setCompletephonenumber] = useState('');
+  const [fetchedPhonenumber, setfetchedPhonenumber] = useState('');
 
-
-  const [pictureuploadloading, setpictureuploadloading] = useState(false)  
+  const [pictureuploadloading, setpictureuploadloading] = useState(false);
   const [image, setImage] = useState<File | null>(null); // State to hold the selected image
   const [isUploading, setIsUploading] = useState(false); // State to show the uploading status
-  
-  const [uploadedImage, setUploadedImage] = useState<string | null>(""); 
+
+  const [uploadedImage, setUploadedImage] = useState<string | null>('');
 
   // Handle the image selection
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-     const file = e.target.files ? e.target.files[0] : null;
+    const file = e.target.files ? e.target.files[0] : null;
     if (file) {
       setImage(file);
-      setError(""); // Reset any previous error
+      setError(''); // Reset any previous error
     }
   };
 
   // Handle image upload
   const handleUpload = async () => {
-    setpictureuploadloading(true)
+    setpictureuploadloading(true);
     if (!image) {
-      setError("Please select an image first.");
+      setError('Please select an image first.');
       return;
     }
 
@@ -143,20 +140,20 @@ const UserProfile = ({teacher}:UserProfileprops) => {
         const data = await response.json();
 
         if (response.ok) {
-          setImage(null)
+          setImage(null);
           // Successfully uploaded the image, update the profile picture URL
           setUploadedImage(data.profilePictureUrl);
-          setpictureuploadloading(false)
+          setpictureuploadloading(false);
         } else {
-          setImage(null)
-          setpictureuploadloading(false)
+          setImage(null);
+          setpictureuploadloading(false);
           setError(data.message || 'Failed to upload the image.');
         }
       } catch (error) {
-        setImage(null)
-        setpictureuploadloading(false)
-        console.error("Error uploading profile picture:", error);
-        setError("An error occurred while uploading the image.");
+        setImage(null);
+        setpictureuploadloading(false);
+        console.error('Error uploading profile picture:', error);
+        setError('An error occurred while uploading the image.');
       } finally {
         setIsUploading(false); // Hide the uploading status
       }
@@ -165,14 +162,6 @@ const UserProfile = ({teacher}:UserProfileprops) => {
     reader.readAsDataURL(image); // Convert the image file to base64
   };
 
-
-
-
-
-
-
-
-
   const handleEdit = () => {
     setIsEditing(true);
     setShowDropdown(false);
@@ -180,10 +169,10 @@ const UserProfile = ({teacher}:UserProfileprops) => {
 
   async function updatePhoneNumber() {
     try {
-      const response = await fetch("/api/update-phone-number", {
-        method: "PUT",
+      const response = await fetch('/api/update-phone-number', {
+        method: 'PUT',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ phoneNumber: completephonenumber }),
       });
@@ -192,22 +181,19 @@ const UserProfile = ({teacher}:UserProfileprops) => {
       if (response.ok) {
         // Success message
       } else {
-      // Error message
+        // Error message
       }
     } catch (error) {
-      console.error("Error updating phone number:", error);
+      console.error('Error updating phone number:', error);
     }
   }
   const handleSave = async () => {
-    setfetchedPhonenumber(`(${selectedCountry.code}) ${phoneNumber}`)
-    await setCompletephonenumber(`(${selectedCountry.code}) ${phoneNumber}`)
+    setfetchedPhonenumber(`(${selectedCountry.code}) ${phoneNumber}`);
+    await setCompletephonenumber(`(${selectedCountry.code}) ${phoneNumber}`);
     setIsEditing(false);
     setShowDropdown(false);
     updatePhoneNumber();
   };
-
-
-
 
   const handleCancel = () => {
     setIsEditing(false);
@@ -216,16 +202,16 @@ const UserProfile = ({teacher}:UserProfileprops) => {
 
   const fetcher = async (url: string, userId: string) => {
     const response = await fetch(url, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({ userId }),
     });
 
     if (!response.ok) {
-      console.error("Failed to fetch parent data");
-      throw new Error("Failed to fetch parent data");
+      console.error('Failed to fetch parent data');
+      throw new Error('Failed to fetch parent data');
     }
 
     const data = await response.json();
@@ -235,42 +221,33 @@ const UserProfile = ({teacher}:UserProfileprops) => {
   // Use SWR hook
   //@ts-ignore
   const { data: parentDataSWR, err: any } = useSWR(
-    session?.user.id
-      ? ["/api/parentapis/fetch-parent-data", session.user.id]
-      : null,
+    session?.user.id ? ['/api/parentapis/fetch-parent-data', session.user.id] : null,
     ([url, userId]) => fetcher(url, userId),
     {
       revalidateOnFocus: true,
       revalidateOnReconnect: true,
-      onSuccess: (data) => {
-      
+      onSuccess: data => {
         setParentData(data);
       },
-      onError: (err) => {
-        console.error("Error fetching parent data:", err);
+      onError: err => {
+        console.error('Error fetching parent data:', err);
       },
     }
   );
-  
 
   // Update all the states when parentDataSWR changes
   useEffect(() => {
     try {
-      if(isEditing !== true){
+      if (isEditing !== true) {
+        setfetchedPhonenumber(teacher?.contactInformation?.phone);
 
-        setfetchedPhonenumber(teacher?.contactInformation?.phone)
-        
         setEmail(teacher?.user?.email);
-        
+
         setFirstName(teacher?.contactInformation?.firstName);
         setLastname(teacher?.contactInformation?.lastName);
-        
+
         setGrade(teacher?.grade);
       }
-       
-       
-     
-    
     } catch (err) {
       console.error(err);
     }
@@ -279,30 +256,28 @@ const UserProfile = ({teacher}:UserProfileprops) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const response = await fetch("/api/update-email", {
-      method: "PUT",
+    const response = await fetch('/api/update-email', {
+      method: 'PUT',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({ newEmail, password }),
     });
 
     const data = await response.json();
     if (response.ok) {
-  
       toast({
-        title: "Email updated successfully",
-        description: "",
-        variant: "default",
+        title: 'Email updated successfully',
+        description: '',
+        variant: 'default',
       });
-      setNewEmail("");
-      setPassword("");
+      setNewEmail('');
+      setPassword('');
     } else {
-    
       toast({
         title: `Error: ${data.message}`,
-        description: "",
-        variant: "default",
+        description: '',
+        variant: 'default',
       });
     }
   };
@@ -310,20 +285,20 @@ const UserProfile = ({teacher}:UserProfileprops) => {
   const handleEditClick = () => setIsEditing(true);
   const handleCancelClick = () => {
     setIsEditing(false);
-    setPhoneNumber(""); // Reset or keep existing value when canceling
+    setPhoneNumber(''); // Reset or keep existing value when canceling
   };
   const handleSaveClick = () => setIsEditing(false);
 
   const hanldeupdatepassword = async (e: any) => {
     e.preventDefault();
-    setError("");
-    setSuccess("");
+    setError('');
+    setSuccess('');
 
     // Check if the new password meets the minimum length requirement
     if (newPassword.length < 8) {
-      setError("New password must be at least 8 characters long");
+      setError('New password must be at least 8 characters long');
       setTimeout(() => {
-        setError("");
+        setError('');
       }, 3000);
       return;
     }
@@ -332,50 +307,47 @@ const UserProfile = ({teacher}:UserProfileprops) => {
     if (newPassword !== confirmNewPassword) {
       setError("New passwords don't match");
       setTimeout(() => {
-        setError("");
+        setError('');
       }, 3000);
       return;
     }
 
     try {
-      const response = await fetch("/api/update-password", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
+      const response = await fetch('/api/update-password', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ currentPassword, newPassword }),
       });
 
       const data = await response.json();
       if (response.ok) {
         setSuccess(data.message); // Password updated successfully
-        setCurrentPassword("");
-        setNewPassword("");
-        setConfirmNewPassword("");
+        setCurrentPassword('');
+        setNewPassword('');
+        setConfirmNewPassword('');
       } else {
         setError(data.message); // Error message from the backend
       }
     } catch (error) {
-      setError("An error occurred while updating the password");
+      setError('An error occurred while updating the password');
       console.error(error);
     } finally {
       setTimeout(() => {
-        setError("");
-        setSuccess("");
+        setError('');
+        setSuccess('');
       }, 3000);
     }
   };
 
- 
-  
   return (
     <div className="min-h-screen rounded-3xl relative  bg-[#EDE8FA] text-white mt-16">
       <div className="px-5 custom-2xl:px-9 py-5 custom-2xl:py-12 flex gap-2 sm:gap-8 custom-2xl:gap-16 ">
         {/* left side bar */}
         <div className="bg-[#B4A5D7] font-roboto max-w-[20rem] custom-2xl:max-w-[26.4rem] w-full  rounded-3xl  min-h-screen  px-5 custom-2xl:px-10 ">
-        <div className="m-auto w-full  flex flex-col items-center  mt-20">
+          <div className="m-auto w-full  flex flex-col items-center  mt-20">
             <img
-              src={  uploadedImage || teacher?.user?.profilePicture}
+              src={uploadedImage || teacher?.user?.profilePicture}
               alt="Profile"
-             
               className="rounded-full w-[5rem] h-[5rem] custom-2xl:w-[11.4rem] custom-2xl:h-[11.4rem]  "
             />
 
@@ -383,60 +355,48 @@ const UserProfile = ({teacher}:UserProfileprops) => {
               <input
                 type="file"
                 accept="image/*"
-                onChange={handleImageChange} 
+                onChange={handleImageChange}
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
               />
               Upload photo
-             
-
-
             </p>
-              {image && (
-                <button
+            {image && (
+              <button
                 className="w-full sm:w-auto py-1 px-9 mt-6 text-base custom-2xl:text-base rounded-sm bg-[#8358F7] hover:bg-[#4a3683] capitalize hover:bg-opacity-90 transition-colors"
-                onClick={()=>{
-                  handleUpload()
+                onClick={() => {
+                  handleUpload();
                 }}
-                >
-                  {pictureuploadloading ? "wait...":"upload"} 
-                  
-                  </button>
-              )}
-            
-              
+              >
+                {pictureuploadloading ? 'wait...' : 'upload'}
+              </button>
+            )}
           </div>
 
           <div className="space-y-2 mt-[137px] ">
             <button
               className={`w-full py-4  px-9 rounded-3xl text-sm custom-xl:text-lg custom-2xl:text-2xl font-bold transition-all flex  ${
-                activeTab === "personal"
-                  ? "bg-white text-[#685AAD]"
-                  : " text-[#685AAD]"
+                activeTab === 'personal' ? 'bg-white text-[#685AAD]' : ' text-[#685AAD]'
               }`}
               onClick={() => {
-                setActiveTab("personal");
-                setsubactive("");
+                setActiveTab('personal');
+                setsubactive('');
               }}
             >
               Personal information
             </button>
             <button
               className={`w-full py-4  px-9 rounded-3xl text-sm custom-xl:text-lg custom-2xl:text-2xl font-bold transition-all flex ${
-                activeTab === "account"
-                  ? "bg-white text-[#685AAD]"
-                  : "text-[#685AAD]"
+                activeTab === 'account' ? 'bg-white text-[#685AAD]' : 'text-[#685AAD]'
               }`}
-              onClick={() => setActiveTab("account")}
+              onClick={() => setActiveTab('account')}
             >
               Account settings
             </button>
             <button
               className={`w-full py-4  px-9 rounded-3xl text-sm custom-xl:text-lg custom-2xl:text-2xl font-bold transition-all flex ${
-                activeTab === "Academic"
-                  ? "bg-white text-[#685AAD]"
-                  : "text-[#685AAD]"
+                activeTab === 'Academic' ? 'bg-white text-[#685AAD]' : 'text-[#685AAD]'
               }`}
-              onClick={() => setActiveTab("Academic")}
+              onClick={() => setActiveTab('Academic')}
             >
               Acadamic records
             </button>
@@ -445,7 +405,7 @@ const UserProfile = ({teacher}:UserProfileprops) => {
 
         {/* right side content */}
         <div className="w-full font-roboto relative ">
-          {activeTab === "personal" && (
+          {activeTab === 'personal' && (
             <div className="space-y-4 mt-8 sm:mt-12 md:mt-16 ">
               <h2 className="text-3xl sm:text-4xl md:text-[57px]  text-[#685AAD] font-bold ">
                 Personal information
@@ -481,7 +441,7 @@ const UserProfile = ({teacher}:UserProfileprops) => {
                     type="text"
                     className="mt-2 sm:mt-4 pl-4 sm:pl-8 md:pl-12 pr-4 py-2 sm:py-3 custom-2xl:py-5 block w-full rounded-xl text-white bg-[#B4A5D7] text-lg sm:text-xl md:text-2xl"
                     disabled
-                    value={teacher?.contactInformation?.country || "Not Available"}
+                    value={teacher?.contactInformation?.country || 'Not Available'}
                   />
                 </div>
                 <div className="w-full">
@@ -492,7 +452,7 @@ const UserProfile = ({teacher}:UserProfileprops) => {
                     type="text"
                     className="mt-2 sm:mt-4 pl-4 sm:pl-8 md:pl-12 pr-4 py-2 sm:py-3 custom-2xl:py-5 block w-full rounded-xl text-white bg-[#B4A5D7] text-lg sm:text-xl md:text-2xl"
                     disabled
-                    value={ teacher?.contactInformation.city || "Not Available"}
+                    value={teacher?.contactInformation.city || 'Not Available'}
                   />
                 </div>
                 <div className="w-full custom-2xl:col-span-2 ">
@@ -503,13 +463,13 @@ const UserProfile = ({teacher}:UserProfileprops) => {
                     type="text"
                     className="mt-2 sm:mt-4 pl-4 sm:pl-8 md:pl-12 pr-4 py-2 sm:py-3 custom-2xl:py-5 block w-full custom-2xl:w-[47%] rounded-xl text-white bg-[#B4A5D7] text-lg sm:text-xl md:text-2xl"
                     disabled
-                    value={teacher?.contactInformation?.streetname ||"Not Available"}
+                    value={teacher?.contactInformation?.streetname || 'Not Available'}
                   />
                 </div>
               </div>
             </div>
           )}
-          {activeTab === "account" && subactive === "" && (
+          {activeTab === 'account' && subactive === '' && (
             <div className="space-y-4 mt-10">
               <div className="flex flex-col gap-8">
                 <div className=" custom-2xl:max-w-[55%] w-full mb-2.5">
@@ -519,7 +479,8 @@ const UserProfile = ({teacher}:UserProfileprops) => {
                         Phone Number
                       </label>
                       {!isEditing ? (
-                        <Image  loading="lazy" 
+                        <Image
+                          loading="lazy"
                           src={editicon}
                           alt=""
                           className="w-12 cursor-pointer"
@@ -559,15 +520,14 @@ const UserProfile = ({teacher}:UserProfileprops) => {
                             >
                               <div className="flex items-center gap-4  ">
                                 <span className="">
-                                  <Image  loading="lazy" 
+                                  <Image
+                                    loading="lazy"
                                     src={selectedCountry.flag}
                                     alt=""
                                     className="w-8 h-8 rounded-full"
                                   />
                                 </span>
-                                <span className="text-white text-xl">
-                                  {selectedCountry.code}
-                                </span>
+                                <span className="text-white text-xl">{selectedCountry.code}</span>
                               </div>
 
                               <ChevronDown className="ml-5 w-5 h-5 text-white font-bold" />
@@ -575,7 +535,7 @@ const UserProfile = ({teacher}:UserProfileprops) => {
                             <input
                               type="tel"
                               value={phoneNumber}
-                              onChange={(e) => setPhoneNumber(e.target.value)}
+                              onChange={e => setPhoneNumber(e.target.value)}
                               className="bg-transparent ml-6 w-full outline-none text-white bg-[#B4A5D7] placeholder-white font-medium truncate"
                               placeholder="Phone number"
                             />
@@ -583,7 +543,7 @@ const UserProfile = ({teacher}:UserProfileprops) => {
 
                           {showDropdown && (
                             <div className="absolute top-full left-0 mt-2 w-44 bg-[#B4A5D7] text-white rounded-3xl shadow-lg py-2  max-h-[12.5rem] px-3 overflow-y-auto scrollbar-none">
-                              {countryCodes.map((country) => (
+                              {countryCodes.map(country => (
                                 <button
                                   key={country.code}
                                   onClick={() => {
@@ -593,15 +553,14 @@ const UserProfile = ({teacher}:UserProfileprops) => {
                                   className="flex items-center space-x-3 w-full p-3 hover:bg-purple-50 transition-colors border-b border-[#0000004b] last:border-b-0  "
                                 >
                                   <span className="rounded-full relative  flex items-center justify-center">
-                                    <Image  loading="lazy" 
+                                    <Image
+                                      loading="lazy"
                                       src={country.flag}
                                       alt=""
                                       className="w-6 h-6 rounded-full"
                                     />
                                   </span>
-                                  <span className="text-white">
-                                    {country.code}
-                                  </span>
+                                  <span className="text-white">{country.code}</span>
                                 </button>
                               ))}
                             </div>
@@ -617,11 +576,12 @@ const UserProfile = ({teacher}:UserProfileprops) => {
                     <label className="text-lg sm:text-xl font-semibold   text-[#685AAD]  ">
                       Email Address
                     </label>
-                    <Image  loading="lazy" 
+                    <Image
+                      loading="lazy"
                       src={editicon}
                       alt=""
                       className="w-12 cursor-pointer"
-                      onClick={() => setsubactive("email")}
+                      onClick={() => setsubactive('email')}
                     />
                   </div>
                   <div className="mt-1 flex rounded-md shadow-sm">
@@ -646,7 +606,7 @@ const UserProfile = ({teacher}:UserProfileprops) => {
                     className="mt-4  placeholder-white  sm:mt-4 pl-4 sm:pl-8 md:pl-12 pr-4 py-2 sm:py-3 custom-2xl:py-5 block w-full rounded-xl text-white bg-[#B4A5D7] text-lg sm:text-xl md:text-2xl"
                     placeholder="old password"
                     value={currentPassword}
-                    onChange={(e) => setCurrentPassword(e.target.value)}
+                    onChange={e => setCurrentPassword(e.target.value)}
                     required
                   />
                 </div>
@@ -654,7 +614,7 @@ const UserProfile = ({teacher}:UserProfileprops) => {
                   {success && <p className="text-green-500">{success}</p>}
                   {error && (
                     <div className="flex items-center gap-3 text-xs text-[#FF9580]">
-                      <Image  loading="lazy"  src={alerticon} alt="" className="h-7 w-7" />
+                      <Image loading="lazy" src={alerticon} alt="" className="h-7 w-7" />
                       {error && <p className="">{error} </p>}
                       {/* <p>The password you entered is incorrect. Please enter the correct password, or click here to receive an email to reset it </p> */}
                     </div>
@@ -670,7 +630,7 @@ const UserProfile = ({teacher}:UserProfileprops) => {
                     className="mt-4 placeholder-white  sm:mt-4 pl-4 sm:pl-8 md:pl-12 pr-4 py-2 sm:py-3 custom-2xl:py-5 block w-full rounded-xl text-white bg-[#B4A5D7] text-lg sm:text-xl md:text-2xl"
                     placeholder="new password"
                     value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
+                    onChange={e => setNewPassword(e.target.value)}
                     required
                   />
                 </div>
@@ -684,7 +644,7 @@ const UserProfile = ({teacher}:UserProfileprops) => {
                     className="mt-4 placeholder-white   sm:mt-4 pl-4 sm:pl-8 md:pl-12 pr-4 py-2 sm:py-3 custom-2xl:py-5 block w-full rounded-xl text-white bg-[#B4A5D7] text-lg sm:text-xl md:text-2xl"
                     placeholder="repeat password"
                     value={confirmNewPassword}
-                    onChange={(e) => setConfirmNewPassword(e.target.value)}
+                    onChange={e => setConfirmNewPassword(e.target.value)}
                     required
                   />
                 </div>
@@ -702,37 +662,37 @@ const UserProfile = ({teacher}:UserProfileprops) => {
               </div>
             </div>
           )}
-          {subactive === "email" && (
+          {subactive === 'email' && (
             <div className="mt-40 flex flex-col gap-12 items-center ">
               <div className=" w-full custom-2xl:w-[90%]">
                 <label className="text-lg sm:text-2xl font-semibold   text-[#685AAD] pl-12">
-                  New Email Address{" "}
+                  New Email Address{' '}
                 </label>
                 <input
                   type="email"
                   className="mt-4  placeholder-white  sm:mt-4 pl-4 sm:pl-8 md:pl-12 pr-4 py-2 sm:py-3 custom-2xl:py-5 block w-full rounded-xl text-white bg-[#B4A5D7] text-lg sm:text-xl md:text-2xl"
                   placeholder="enter new email address"
                   value={newEmail}
-                  onChange={(e) => setNewEmail(e.target.value)}
+                  onChange={e => setNewEmail(e.target.value)}
                   required
                 />
               </div>
               <div className="w-full custom-2xl:w-[90%]">
                 <label className="text-lg sm:text-2xl font-semibold   text-[#685AAD] pl-12">
-                  Current Password{" "}
+                  Current Password{' '}
                 </label>
                 <input
                   type="password"
                   className="mt-4  placeholder-white  sm:mt-4 pl-4 sm:pl-8 md:pl-12 pr-4 py-2 sm:py-3 custom-2xl:py-5 block w-full rounded-xl text-white bg-[#B4A5D7] text-lg sm:text-xl md:text-2xl"
                   placeholder="enter your password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={e => setPassword(e.target.value)}
                   required
                 />
               </div>
               <div className="flex justify-end space-x-3 pt-7 ">
                 <button
-                  onClick={() => setsubactive("")}
+                  onClick={() => setsubactive('')}
                   className=" bg-[#685AAD] rounded-full text-sm sm:text-lg custom-2xl:text-3xl font-medium  px-3 sm:px-5 custom-2xl:px-10  py-1 sm:py-2 custom-2xl:py-3"
                 >
                   cancel
@@ -747,7 +707,7 @@ const UserProfile = ({teacher}:UserProfileprops) => {
             </div>
           )}
 
-          {activeTab === "Academic" && (
+          {activeTab === 'Academic' && (
             <div className="space-y-4 mt-8 sm:mt-12 md:mt-16 relative ">
               <h2 className="text-3xl sm:text-4xl md:text-[57px]  text-[#685AAD] font-bold ">
                 Academic records
@@ -761,7 +721,7 @@ const UserProfile = ({teacher}:UserProfileprops) => {
                     type="text"
                     className="mt-2 sm:mt-4 pl-4 sm:pl-8 md:pl-12 pr-4 py-2 sm:py-3 custom-2xl:py-5 block w-full rounded-xl text-white bg-[#B4A5D7] text-lg sm:text-xl md:text-2xl"
                     disabled
-                    value={teacher?.education?.highestDegree || "Not Available"}
+                    value={teacher?.education?.highestDegree || 'Not Available'}
                   />
                 </div>
 
@@ -773,7 +733,7 @@ const UserProfile = ({teacher}:UserProfileprops) => {
                     type="text"
                     className="mt-2 sm:mt-4 pl-4 sm:pl-8 md:pl-12 pr-4 py-2 sm:py-3 custom-2xl:py-5 block w-full rounded-xl text-white bg-[#B4A5D7] text-lg sm:text-xl md:text-2xl"
                     disabled
-                    value={teacher?.experience?.internationalExperience || "Not Available"}
+                    value={teacher?.experience?.internationalExperience || 'Not Available'}
                   />
                 </div>
 
@@ -785,7 +745,7 @@ const UserProfile = ({teacher}:UserProfileprops) => {
                     type="text"
                     className="mt-2 sm:mt-4 pl-4 sm:pl-8 md:pl-12 pr-4 py-2 sm:py-3 custom-2xl:py-5 block w-full rounded-xl text-white bg-[#B4A5D7] text-lg sm:text-xl md:text-2xl"
                     disabled
-                    value={teacher?.education?.graduationSchool || "Not Available"}
+                    value={teacher?.education?.graduationSchool || 'Not Available'}
                   />
                 </div>
 
@@ -797,7 +757,7 @@ const UserProfile = ({teacher}:UserProfileprops) => {
                     type="text"
                     className="mt-2 sm:mt-4 pl-4 sm:pl-8 md:pl-12 pr-4 py-2 sm:py-3 custom-2xl:py-5 block w-full rounded-xl text-transparent bg-transparent text-lg sm:text-xl md:text-2xl"
                     disabled
-                    value={"Not Available"}
+                    value={'Not Available'}
                   />
                 </div>
 
@@ -809,15 +769,15 @@ const UserProfile = ({teacher}:UserProfileprops) => {
                     type="text"
                     className="mt-2 sm:mt-4 pl-4 sm:pl-8 md:pl-12 pr-4 py-2 sm:py-3 custom-2xl:py-5 block w-full custom-2xl:w-[47%] rounded-xl text-white bg-[#B4A5D7] text-lg sm:text-xl md:text-2xl"
                     disabled
-                    value={teacher?.experience?.languages || "Not Available"}
+                    value={teacher?.experience?.languages || 'Not Available'}
                   />
                 </div>
               </div>
             </div>
           )}
-          {activeTab === "Academic" && (
+          {activeTab === 'Academic' && (
             <button className="bg-[#FC7777] absolute bottom-0 right-0 px-8 py-2 rounded-lg">
-              <Image  loading="lazy"  src={editiconwhite} alt="" className="w-16" />
+              <Image loading="lazy" src={editiconwhite} alt="" className="w-16" />
             </button>
           )}
         </div>

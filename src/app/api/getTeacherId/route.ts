@@ -37,7 +37,10 @@ export async function GET(req: Request) {
   } catch (error: unknown) {
     if (error instanceof Error) {
       console.error('Error fetching teacher ID:', error.message, error.stack);
-      return NextResponse.json({ message: 'Internal server error', error: error.message }, { status: 500 });
+      return NextResponse.json(
+        { message: 'Internal server error', error: error.message },
+        { status: 500 }
+      );
     } else {
       console.error('An unknown error occurred');
       return NextResponse.json({ message: 'An unknown error occurred' }, { status: 500 });

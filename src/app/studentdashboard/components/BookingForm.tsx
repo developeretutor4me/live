@@ -1,12 +1,3 @@
-
-
-
-
-
-
-
-
-
 // export const  BookingView = () => (
 //     <div className="space-y-4 bg-[#EDE8FA] px-6 py-6 rounded-3xl max-w-[62.5rem] mx-auto min-h-screen">
 //     <div className="w-full bg-[#e9deff] rounded-full h-[4px] mb-4">
@@ -17,7 +8,6 @@
 //       ></div>
 //     </div>
 
-    
 //     {
 //     // @ts-ignore
 //     bookingStep === 1 && (
@@ -129,15 +119,10 @@
 //   throw new Error("Function not implemented.");
 // }
 
-
-import React from 'react'
+import React from 'react';
 
 function BookingForm() {
-  return (
-    <div>
-      
-    </div>
-  )
+  return <div></div>;
 }
 
-export default BookingForm
+export default BookingForm;

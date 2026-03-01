@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import {connectMongoDB} from '../../connection/connection'; // MongoDB connection function
+import { connectMongoDB } from '../../connection/connection'; // MongoDB connection function
 import ParentModel from '../../models/Parent';
 
 export async function POST(req: NextRequest) {
@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ updatedParent });
   } catch (error) {
-    console.error("Error updating parent data:", error);
+    console.error('Error updating parent data:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }

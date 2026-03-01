@@ -12,18 +12,19 @@ const StudentDashboard = () => {
   // Function to handle request status update (Accept/Reject)
   const handleResponse = async (relationshipId: string, status: string) => {
     try {
-      const response = await axios.post('/api/parent-Student-Relationship/Student-Side-api/Update-request-status', {
-        relationshipId,
-        status,
-      });
+      const response = await axios.post(
+        '/api/parent-Student-Relationship/Student-Side-api/Update-request-status',
+        {
+          relationshipId,
+          status,
+        }
+      );
 
       // Update the requests state after successfully updating the status
       if (response.data.message === 'Request status updated successfully') {
-        setRequests((prevRequests:any) =>
-          prevRequests.map((request:any) =>
-            request.requestId === relationshipId
-              ? { ...request, status: status }
-              : request
+        setRequests((prevRequests: any) =>
+          prevRequests.map((request: any) =>
+            request.requestId === relationshipId ? { ...request, status: status } : request
           )
         );
       }
@@ -37,9 +38,12 @@ const StudentDashboard = () => {
       if (!session?.user?.id) return;
 
       try {
-        const response = await axios.get('/api/parent-Student-Relationship/Student-Side-api/fetchRequestsFromParent', {
-          params: { studentUserId: session.user.id }, // Send studentUserId to the backend
-        });
+        const response = await axios.get(
+          '/api/parent-Student-Relationship/Student-Side-api/fetchRequestsFromParent',
+          {
+            params: { studentUserId: session.user.id }, // Send studentUserId to the backend
+          }
+        );
         setRequests(response.data.requests);
       } catch (error) {
         console.error('Error fetching requests:', error);
@@ -50,7 +54,6 @@ const StudentDashboard = () => {
 
     fetchRequests();
   }, [session?.user?.id]);
-
 
   if (loading) return <p>Loading requests...</p>;
 
@@ -69,7 +72,7 @@ const StudentDashboard = () => {
         {pendingRequests.length === 0 ? (
           <p className="text-center text-gray-500 italic">No pending requests found</p>
         ) : (
-          pendingRequests.map((request:any) => (
+          pendingRequests.map((request: any) => (
             <li
               key={request.requestId}
               className="flex items-center justify-between py-3 hover:bg-gray-50 transition-colors duration-200"
@@ -79,7 +82,9 @@ const StudentDashboard = () => {
                   {request.parentName} ({request.parentEmail})
                 </span>
               </div>
-              <span className="text-gray-500 text-sm">{new Date(request.requestDate).toLocaleDateString()}</span>
+              <span className="text-gray-500 text-sm">
+                {new Date(request.requestDate).toLocaleDateString()}
+              </span>
 
               {/* Accept/Reject buttons */}
               {request.status === 'pending' && (
@@ -101,7 +106,9 @@ const StudentDashboard = () => {
 
               {/* Display status */}
               {request.status !== 'pending' && (
-                <span className={`text-sm ${request.status === 'accepted' ? 'text-green-500' : 'text-red-500'}`}>
+                <span
+                  className={`text-sm ${request.status === 'accepted' ? 'text-green-500' : 'text-red-500'}`}
+                >
                   {request.status === 'accepted' ? 'Accepted' : 'Rejected'}
                 </span>
               )}

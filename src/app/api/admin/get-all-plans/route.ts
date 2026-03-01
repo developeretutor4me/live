@@ -1,9 +1,9 @@
 export const dynamic = 'force-dynamic';
-import { NextResponse } from "next/server";
-import MembershipPlan from "@/app/api/models/PriceManagement";
-import { connectMongoDB } from "@/app/api/connection/connection";
-import { authOptions } from "@/app/auth/auth";
-import { getServerSession } from "next-auth";
+import { NextResponse } from 'next/server';
+import MembershipPlan from '@/app/api/models/PriceManagement';
+import { connectMongoDB } from '@/app/api/connection/connection';
+import { authOptions } from '@/app/auth/auth';
+import { getServerSession } from 'next-auth';
 
 export async function GET() {
   try {
@@ -19,14 +19,14 @@ export async function GET() {
     const plans = await MembershipPlan.find();
 
     if (!plans.length) {
-      return NextResponse.json({ error: "No plans found." }, { status: 404 });
+      return NextResponse.json({ error: 'No plans found.' }, { status: 404 });
     }
 
     // Create a map to store the latest plan for each combination of planType and tutorLevel
     const latestPlans: Record<string, any> = {};
 
     // Iterate over all plans and map them by planType and tutorLevel
-    plans.forEach((plan) => {
+    plans.forEach(plan => {
       const key = `${plan.planType}_${plan.tutorLevel}`;
       if (!latestPlans[key]) {
         latestPlans[key] = plan;
@@ -38,7 +38,7 @@ export async function GET() {
 
     return NextResponse.json({ plans: result });
   } catch (error) {
-    console.error("Error fetching membership plans:", error);
-    return NextResponse.json({ error: "Failed to fetch membership plans." }, { status: 500 });
+    console.error('Error fetching membership plans:', error);
+    return NextResponse.json({ error: 'Failed to fetch membership plans.' }, { status: 500 });
   }
 }

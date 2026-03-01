@@ -13,7 +13,6 @@ export const usePauseTutoring = () => {
     revalidateOnFocus: true, // Re-fetch on window focus
   });
 
- 
   return {
     PauseTutoring: data?.data,
     isLoading,

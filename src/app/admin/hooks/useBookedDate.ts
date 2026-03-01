@@ -13,7 +13,6 @@ export const useBookedDate = () => {
     revalidateOnFocus: true, // Re-fetch on window focus
   });
 
- 
   return {
     bookedDate: data?.data,
     isLoading,

@@ -13,11 +13,10 @@ export const useTotalIncome = () => {
     revalidateOnFocus: true, // Re-fetch on window focus
   });
 
- 
   return {
     income: data?.data,
-    isLoading:isLoading,
-    error:error,
+    isLoading: isLoading,
+    error: error,
     mutate, // Can be used to manually revalidate the data
   };
 };

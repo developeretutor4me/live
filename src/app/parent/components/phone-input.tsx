@@ -168,14 +168,10 @@
 // FlagComponent.displayName = "FlagComponent";
 
 // export { PhoneInput };
-import React from 'react'
+import React from 'react';
 
 function phoneinput() {
-  return (
-    <div>
-      
-    </div>
-  )
+  return <div></div>;
 }
 
-export default phoneinput
+export default phoneinput;

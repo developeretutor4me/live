@@ -13,7 +13,6 @@ export const useUsers = () => {
     revalidateOnFocus: true, // Re-fetch on window focus
   });
 
- 
   return {
     users: data?.data,
     isLoading,

@@ -9,7 +9,6 @@ export const POST = async (req: Request) => {
   try {
     const { parentUserId, studentUserId } = await req.json();
 
-    
     if (!parentUserId || !studentUserId) {
       return NextResponse.json(
         { message: 'Parent and Student User IDs are required' },
@@ -48,7 +47,7 @@ export const POST = async (req: Request) => {
       },
       { status: 200 }
     );
-  } catch (error:any) {
+  } catch (error: any) {
     console.error(error);
     return NextResponse.json(
       { message: 'Internal Server Error', error: error.message },

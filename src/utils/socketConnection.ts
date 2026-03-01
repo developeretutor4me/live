@@ -1,9 +1,7 @@
 import { io, Socket } from 'socket.io-client';
 
 const SOCKET_URL =
-  process.env.NODE_ENV === 'production'
-    ? 'https://etutor4me.com:5000'
-    : 'http://localhost:5000';
+  process.env.NODE_ENV === 'production' ? 'https://etutor4me.com:5000' : 'http://localhost:5000';
 
 interface SocketConnectionOptions {
   userId: string;

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import {connectMongoDB} from '../../../connection/connection';
+import { connectMongoDB } from '../../../connection/connection';
 import ParentStudentRelationship from '../../../models/ParentStudentRelation';
 import Parent from '../../../models/Parent';
 import Student from '../../../models/Student';
@@ -33,7 +33,10 @@ export const POST = async (req: NextRequest) => {
       requestedBy: parent._id,
     });
 
-    return NextResponse.json({ message: 'Request sent successfully', relationship }, { status: 200 });
+    return NextResponse.json(
+      { message: 'Request sent successfully', relationship },
+      { status: 200 }
+    );
   } catch (error) {
     console.error(error);
     return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });

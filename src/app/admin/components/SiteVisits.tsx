@@ -1,7 +1,7 @@
-import Image from "next/image";
-import React, { useState, useEffect } from "react";
-import downloadReport from "../../../../public/downloadReport.svg";
-import { useGoogleAnalytics } from "../hooks/useGoogleAnalytics";
+import Image from 'next/image';
+import React, { useState, useEffect } from 'react';
+import downloadReport from '../../../../public/downloadReport.svg';
+import { useGoogleAnalytics } from '../hooks/useGoogleAnalytics';
 
 function SiteVisits() {
   const [hover, sethover] = useState(false);
@@ -33,30 +33,30 @@ function SiteVisits() {
     if (chartLoaded && googleAnalytics?.dailyData) {
       drawChart();
     }
-  
+
     const handleResize = () => {
       if (chartLoaded && googleAnalytics?.dailyData) {
         drawChart(); // Redraw chart on window resize
       }
     };
-  
+
     // Add resize event listener
     window.addEventListener('resize', handleResize);
-  
+
     // Cleanup the event listener on component unmount
     return () => {
       window.removeEventListener('resize', handleResize);
     };
   }, [chartLoaded, googleAnalytics]);
 
-  const parseDateString = (dateString:any) => {
+  const parseDateString = (dateString: any) => {
     const year = dateString.substring(0, 4);
     const month = dateString.substring(4, 6);
     const day = dateString.substring(6, 8);
     return new Date(year, month - 1, day);
   };
 
-  const getDayName = (date:any) => {
+  const getDayName = (date: any) => {
     const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     return days[date.getDay()];
   };
@@ -68,7 +68,7 @@ function SiteVisits() {
     const chartData = [['Day', 'Visits']];
 
     // Aggregate data by date
-    const aggregatedData = googleAnalytics.dailyData.reduce((acc:any, day:any) => {
+    const aggregatedData = googleAnalytics.dailyData.reduce((acc: any, day: any) => {
       const date = day.date;
       if (!acc[date]) {
         acc[date] = {
@@ -90,8 +90,8 @@ function SiteVisits() {
     }
 
     // Prepare data for the chart
-    last7Days.forEach((date) => {
-      const formattedDate = date.toISOString().slice(0, 10).replace(/-/g, "");
+    last7Days.forEach(date => {
+      const formattedDate = date.toISOString().slice(0, 10).replace(/-/g, '');
       const visits = aggregatedData[formattedDate] ? aggregatedData[formattedDate].activeUsers : 0;
       chartData.push([getDayName(date), visits]);
     });
@@ -101,55 +101,46 @@ function SiteVisits() {
     const options = {
       backgroundColor: 'transparent',
       colors: ['#fc7777'],
-     
+
       legend: { position: 'none' },
       chartArea: {
         width: '90%',
         height: '80%',
-        
       },
       hAxis: {
-        
         gridlines: { color: 'transparent' },
         baselineColor: 'transparent',
-        textStyle: { 
+        textStyle: {
           color: '#7669b5',
           fontSize: 12,
           bold: true, // You can also use `true` for bold.
           fontWeight: '600',
-         
-        }
+        },
       },
       vAxis: {
-       
         gridlines: {
           color: '#b1a8d7',
-          count: 9
+          count: 9,
         },
-        
-        textStyle: { 
+
+        textStyle: {
           color: '#7669b5',
-          fontSize: 12 ,
+          fontSize: 12,
           bold: true, // You can also use `true` for bold.
           fontWeight: '600',
-          
         },
         baselineColor: 'transparent',
         minValue: 0,
-     
-        
-      
       },
       lineWidth: 3,
       pointSize: 0,
- 
+
       interpolateNulls: true,
       animation: {
         startup: true,
         duration: 1000,
-        easing: 'out'
-      }
-  
+        easing: 'out',
+      },
     };
 
     const chart = new window.google.visualization.LineChart(
@@ -164,16 +155,14 @@ function SiteVisits() {
       <div className="flex items-end justify-between gap-2 pt-1.5">
         <div className="flex items-center gap-3 w-fit custom-lg:ml-16 pl-1 text-base text-[#685AAD] font-bold">
           <div className="flex items-center gap-3">
-            <div className="bg-[#fc7777] h-[25px] w-[25px] rounded-sm">
-              &nbsp;
-            </div>{" "}
-            Visits
+            <div className="bg-[#fc7777] h-[25px] w-[25px] rounded-sm">&nbsp;</div> Visits
           </div>
         </div>
 
         <div></div>
         <div className="w-fit">
-          <Image  loading="lazy" 
+          <Image
+            loading="lazy"
             onMouseEnter={() => {
               sethover(true);
             }}
@@ -186,7 +175,7 @@ function SiteVisits() {
           />
           <div
             className={`absolute w-fit -top-5 right-4 bg-[#7669b5] px-3.5 py-1.5 text-xl rounded-xl text-white transition-all duration-700 transform origin-bottom-right ${
-              hover ? "scale-100 opacity-100" : "scale-0 opacity-0"
+              hover ? 'scale-100 opacity-100' : 'scale-0 opacity-0'
             }`}
           >
             Download Report
@@ -196,9 +185,7 @@ function SiteVisits() {
 
       <div className="chart h-[calc(100%-60px)]">
         {isLoading ? (
-          <div className="flex items-center justify-center h-full text-[#685AAD]">
-            Loading...
-          </div>
+          <div className="flex items-center justify-center h-full text-[#685AAD]">Loading...</div>
         ) : error ? (
           <div className="flex items-center justify-center h-full text-[#685AAD]">
             Error loading data

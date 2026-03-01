@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import { connectMongoDB } from '../connection/connection'; // MongoDB connection utility
 import StudentModel from '../models/Student'; // Student model import
 import { getServerSession } from 'next-auth';
-import {authOptions} from '@/app/auth/auth'; 
+import { authOptions } from '@/app/auth/auth';
 
 export async function PUT(req: Request) {
   try {
@@ -25,7 +25,8 @@ export async function PUT(req: Request) {
     }
 
     // Extract fields from request body
-    const { grade, subjects, personalInformation, additionalInformation, firstName, lastName } = body;
+    const { grade, subjects, personalInformation, additionalInformation, firstName, lastName } =
+      body;
 
     // Update only provided fields, leave others unchanged
     if (grade) student.grade = grade;

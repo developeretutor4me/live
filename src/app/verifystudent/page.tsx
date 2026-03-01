@@ -1,9 +1,9 @@
-"use client";
-import axios from "axios";
+'use client';
+import axios from 'axios';
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 
 function page() {
   const { data: session, update } = useSession();
@@ -14,16 +14,16 @@ function page() {
     const formData = {
       userId: session?.user?.id,
       userUpdates: {
-        role: "student",
+        role: 'student',
         profilePicture: session?.user.image,
       },
     };
 
     try {
-      const response = await fetch("/api/UpdateUser", {
-        method: "PUT",
+      const response = await fetch('/api/UpdateUser', {
+        method: 'PUT',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
       });
@@ -38,30 +38,27 @@ function page() {
   };
 
   const handleSubmit = async () => {
-    let getFormData: any = await localStorage.getItem("formData");
+    let getFormData: any = await localStorage.getItem('formData');
     let formData = await JSON.parse(getFormData);
 
     await session;
     if (session?.user?.name) {
-      const [firstName, ...lastNameParts] = session.user.name.split(" ");
+      const [firstName, ...lastNameParts] = session.user.name.split(' ');
 
-    
       formData = {
-        ...formData, 
-          firstName: firstName, 
-          lastName: lastNameParts.join(" "), 
-      
+        ...formData,
+        firstName: firstName,
+        lastName: lastNameParts.join(' '),
       };
-
     } else {
-      console.error("Session user name is undefined or invalid.");
+      console.error('Session user name is undefined or invalid.');
     }
 
     try {
-      const response = await fetch("/api/updatestudentdata", {
-        method: "POST",
+      const response = await fetch('/api/updatestudentdata', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           userId: session?.user?.id,
@@ -83,7 +80,7 @@ function page() {
     await update({
       user: {
         email: session?.user.email,
-        role: "student",
+        role: 'student',
         id: session?.user.id,
         isParent: false,
         isAdmin: false,
@@ -94,15 +91,13 @@ function page() {
 
     await userupdate();
 
-    router.push("/studentdashboard");
+    router.push('/studentdashboard');
     router.refresh();
 
-    localStorage.removeItem("formData");
+    localStorage.removeItem('formData');
     setloading(false);
   };
 
-
-  
   return (
     <div className="flex items-center justify-center h-screen w-screen">
       <button
@@ -112,7 +107,7 @@ function page() {
         }}
         className="px-12 py-4 bg-[#8653ff] rounded-full text-white  capitalize"
       >
-        {loading ? "Please Wait..." : "continue"}
+        {loading ? 'Please Wait...' : 'continue'}
       </button>
     </div>
   );

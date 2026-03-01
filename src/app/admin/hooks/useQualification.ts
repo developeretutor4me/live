@@ -9,15 +9,18 @@ const fetcher = async (url: string) => {
 };
 
 export const useQualification = () => {
-  const { data, error, isLoading, mutate } = useSWR('/api/admin/fetch-qualificationApprovals', fetcher, {
-    revalidateOnFocus: true, // Re-fetch on window focus
-  });
+  const { data, error, isLoading, mutate } = useSWR(
+    '/api/admin/fetch-qualificationApprovals',
+    fetcher,
+    {
+      revalidateOnFocus: true, // Re-fetch on window focus
+    }
+  );
 
- 
   return {
     docs: data?.data,
     isLoading,
     error,
-    mutate, 
+    mutate,
   };
 };

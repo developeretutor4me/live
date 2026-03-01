@@ -1,11 +1,9 @@
 export const dynamic = 'force-dynamic';
 
-
-
-import { connectMongoDB } from '../../connection/connection';  // Adjust the path as needed
-import TeacherModel from '../../models/Teacher';  // Adjust the import path based on your project structure
+import { connectMongoDB } from '../../connection/connection'; // Adjust the path as needed
+import TeacherModel from '../../models/Teacher'; // Adjust the import path based on your project structure
 import { NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';  // NextAuth session import
+import { getServerSession } from 'next-auth'; // NextAuth session import
 import { authOptions } from '@/app/auth/auth';
 
 export async function GET(req: Request) {
@@ -26,10 +24,10 @@ export async function GET(req: Request) {
     // Fetch the teacher by userId and populate the user details in the teacher model
     const teacher = await TeacherModel.findOne({ user: userId }) // Find teacher by userId
       .populate({
-        path: 'user',  // Populate the user field in the Teacher model
-        model: 'User'  // Specify the model to populate (User model in this case)
+        path: 'user', // Populate the user field in the Teacher model
+        model: 'User', // Specify the model to populate (User model in this case)
       })
-      .lean();  // Convert to plain JavaScript objects
+      .lean(); // Convert to plain JavaScript objects
 
     // If no teacher is found, return a 404 response
     if (!teacher) {
@@ -41,7 +39,10 @@ export async function GET(req: Request) {
   } catch (error: unknown) {
     if (error instanceof Error) {
       console.error('Error fetching teacher:', error.message, error.stack);
-      return NextResponse.json({ message: 'Internal server error', error: error.message }, { status: 500 });
+      return NextResponse.json(
+        { message: 'Internal server error', error: error.message },
+        { status: 500 }
+      );
     } else {
       console.error('An unknown error occurred');
       return NextResponse.json({ message: 'An unknown error occurred' }, { status: 500 });

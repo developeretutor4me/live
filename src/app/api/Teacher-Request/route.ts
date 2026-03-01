@@ -28,6 +28,9 @@ export async function PATCH(req: Request) {
     return NextResponse.json({ message: `Request ${status} successfully.` }, { status: 200 });
   } catch (error) {
     console.error('Error updating request status:', error);
-    return NextResponse.json({ message: 'Internal server error', error: (error as Error).message }, { status: 500 });
+    return NextResponse.json(
+      { message: 'Internal server error', error: (error as Error).message },
+      { status: 500 }
+    );
   }
 }

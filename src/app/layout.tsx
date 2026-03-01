@@ -8,6 +8,8 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { AuthProvider } from './AuthProvider';
 import '../lib/dbInit';
 
+export const dynamic = 'force-dynamic';
+
 const roboto = Roboto_Condensed({
   subsets: ['latin'],
   display: 'swap',

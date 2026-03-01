@@ -13,10 +13,9 @@ export const useRequest = () => {
     revalidateOnFocus: true, // Re-fetch on window focus
   });
 
- 
   return {
     sessionData: data?.data,
-    isLoadingData:isLoading,
+    isLoadingData: isLoading,
     error,
     mutate, // Can be used to manually revalidate the data
   };

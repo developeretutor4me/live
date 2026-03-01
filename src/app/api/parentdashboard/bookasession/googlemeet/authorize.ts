@@ -34,7 +34,6 @@
 
 //     // Save the refresh token securely (e.g., in your database)
 
-
 //     // Example: Save refresh token to an environment variable (not recommended for production)
 //     process.env.GOOGLE_REFRESH_TOKEN = tokens.refresh_token; // Replace this with your database save logic
 

@@ -1,8 +1,8 @@
-import Image from "next/image";
-import React, { useState, useEffect } from "react";
-import downloadReport from "../../../../public/downloadReport.svg";
-import { useGoogleAnalytics } from "../hooks/useGoogleAnalytics";
-import { MAX_VALUE_REG } from "recharts/types/util/ChartUtils";
+import Image from 'next/image';
+import React, { useState, useEffect } from 'react';
+import downloadReport from '../../../../public/downloadReport.svg';
+import { useGoogleAnalytics } from '../hooks/useGoogleAnalytics';
+import { MAX_VALUE_REG } from 'recharts/types/util/ChartUtils';
 
 function SiteVisitsDashboard() {
   const [hover, sethover] = useState(false);
@@ -91,8 +91,8 @@ function SiteVisitsDashboard() {
     }
 
     // Prepare data for the chart
-    last7Days.forEach((date) => {
-      const formattedDate = date.toISOString().slice(0, 10).replace(/-/g, "");
+    last7Days.forEach(date => {
+      const formattedDate = date.toISOString().slice(0, 10).replace(/-/g, '');
       const visits = aggregatedData[formattedDate] ? aggregatedData[formattedDate].activeUsers : 0;
       chartData.push([getDayName(date), visits]);
     });
@@ -105,13 +105,10 @@ function SiteVisitsDashboard() {
 
       legend: { position: 'none' },
       chartArea: {
-
         width: '90%',
         height: '88%',
-
       },
       hAxis: {
-
         gridlines: { color: 'transparent' },
         baselineColor: 'transparent',
         textStyle: {
@@ -119,14 +116,12 @@ function SiteVisitsDashboard() {
           fontSize: 16,
           bold: true, // You can also use `true` for bold.
           fontWeight: '600',
-
-        }
+        },
       },
       vAxis: {
-
         gridlines: {
           color: '#b1a8d7',
-          count: 9
+          count: 9,
         },
 
         textStyle: {
@@ -134,16 +129,10 @@ function SiteVisitsDashboard() {
           fontSize: 16,
           bold: true, // You can also use `true` for bold.
           fontWeight: '600',
-
-
         },
         baselineColor: 'transparent',
         minValue: 0,
         maxValue: 160,
-
-
-
-
       },
       lineWidth: 3,
       pointSize: 0,
@@ -152,9 +141,8 @@ function SiteVisitsDashboard() {
       animation: {
         startup: true,
         duration: 1000,
-        easing: 'out'
-      }
-
+        easing: 'out',
+      },
     };
 
     const chart = new window.google.visualization.LineChart(
@@ -169,21 +157,14 @@ function SiteVisitsDashboard() {
       <div className="flex items-end justify-between gap-2 pt-4">
         <div className="flex items-center gap-3 w-fit custom-lg:ml-[100px] pl-1 text-[22.09px] leading-[1.5rem] text-[#685AAD] font-bold">
           <div className="flex items-center gap-4">
-            <div className="bg-[#fc7777] h-[31px] w-[31px] rounded-lg">
-              &nbsp;
-            </div>{" "}
-            Visits
+            <div className="bg-[#fc7777] h-[31px] w-[31px] rounded-lg">&nbsp;</div> Visits
           </div>
         </div>
-
-
       </div>
 
       <div className="chart flex-grow h-full">
         {isLoading ? (
-          <div className="flex items-center justify-center h-full text-[#685AAD]">
-            Loading...
-          </div>
+          <div className="flex items-center justify-center h-full text-[#685AAD]">Loading...</div>
         ) : error ? (
           <div className="flex items-center justify-center h-full text-[#685AAD]">
             Error loading data

@@ -1,6 +1,5 @@
 export const dynamic = 'force-dynamic';
 
-
 import { connectMongoDB } from '../connection/connection';
 import StudentModel from '../models/Student';
 import ParentModel from '../models/Parent';
@@ -24,8 +23,7 @@ export async function GET(req: Request) {
     const students = await StudentModel.find()
       .populate({
         path: 'user',
-        select: '-password'
-        
+        select: '-password',
       })
       .lean(); // Converts to plain JavaScript objects
 
@@ -38,9 +36,8 @@ export async function GET(req: Request) {
       .lean();
 
     // Fetch all requests related to students and parents
-    const teacherId = await session?.user.id; 
-    
-    
+    const teacherId = await session?.user.id;
+
     const requests = await RequestModel.find().lean();
 
     // Combine students, parents, and requests into a single response object
@@ -54,7 +51,10 @@ export async function GET(req: Request) {
   } catch (error: unknown) {
     if (error instanceof Error) {
       console.error('Error fetching students, parents, or requests:', error.message, error.stack);
-      return NextResponse.json({ message: 'Internal server error', error: error.message }, { status: 500 });
+      return NextResponse.json(
+        { message: 'Internal server error', error: error.message },
+        { status: 500 }
+      );
     } else {
       console.error('An unknown error occurred');
       return NextResponse.json({ message: 'An unknown error occurred' }, { status: 500 });

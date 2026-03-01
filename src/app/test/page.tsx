@@ -1,56 +1,54 @@
-"use client";
-import { useState } from "react";
-import styles from "./session.module.css";
+'use client';
+import { useState } from 'react';
+import styles from './session.module.css';
 export default function MySessionComp() {
-  const [activetab, setactivetab] = useState("individual");
+  const [activetab, setactivetab] = useState('individual');
 
   const getTabColors = (tabName: string) => {
-    if (activetab === "individual") {
-      if (tabName === "group") return "#9B85C8";
-      if (tabName === "trial") return "#6B5692";
-    } else if (activetab === "group") {
-      if (tabName === "individual") return "#6B5692";
-      if (tabName === "trial") return "#9B85C8";
-    } else if (activetab === "trial") {
-      if (tabName === "group") return "#9B85C8";
-      if (tabName === "individual") return "#6B5692";
+    if (activetab === 'individual') {
+      if (tabName === 'group') return '#9B85C8';
+      if (tabName === 'trial') return '#6B5692';
+    } else if (activetab === 'group') {
+      if (tabName === 'individual') return '#6B5692';
+      if (tabName === 'trial') return '#9B85C8';
+    } else if (activetab === 'trial') {
+      if (tabName === 'group') return '#9B85C8';
+      if (tabName === 'individual') return '#6B5692';
     }
-    return "#EDE8FA"; // Active tab color
+    return '#EDE8FA'; // Active tab color
   };
 
   return (
     <div className={`${styles.maindiv} `}>
       {/* Individual Tab */}
       <div
-        onClick={() => setactivetab("individual")}
+        onClick={() => setactivetab('individual')}
         className={`${styles.individualtab} individualtab `}
-        style={{ backgroundColor: getTabColors("individual") }}
+        style={{ backgroundColor: getTabColors('individual') }}
       >
         {/* Top arc (was before) */}
         <button
           className={`
-            ${activetab === "individual" ? "text-[#685AAD]" : "text-white"}`}
-          style={{ backgroundColor: getTabColors("individual") }}
+            ${activetab === 'individual' ? 'text-[#685AAD]' : 'text-white'}`}
+          style={{ backgroundColor: getTabColors('individual') }}
         >
           <span className="">INDIVIDUAL SESSION</span>
         </button>
         {/* Bubble bump (was after) */}
-        <div
-          className={`${styles.bubble} bubble ${getTabColors("individual")}`}
-        />
+        <div className={`${styles.bubble} bubble ${getTabColors('individual')}`} />
       </div>
 
       {/* Group Tab */}
       <div className={`${styles.grouptab} grouptab`}>
         <div
-          onClick={() => setactivetab("group")}
+          onClick={() => setactivetab('group')}
           className={`${styles.subgrouptab}`}
-          style={{ backgroundColor: getTabColors("group") }}
+          style={{ backgroundColor: getTabColors('group') }}
         >
           <button
             className={`
-            ${activetab === "group" ? "text-[#685AAD]" : "text-white"}`}
-            style={{ backgroundColor: getTabColors("group") }}
+            ${activetab === 'group' ? 'text-[#685AAD]' : 'text-white'}`}
+            style={{ backgroundColor: getTabColors('group') }}
           >
             <span className="">GROUP SESSION</span>
           </button>
@@ -61,14 +59,14 @@ export default function MySessionComp() {
       {/* Trial Tab */}
       <div className={`${styles.trialtab} trialtab`}>
         <div
-          onClick={() => setactivetab("trial")}
+          onClick={() => setactivetab('trial')}
           className={`${styles.subtrialtab}`}
-          style={{ backgroundColor: getTabColors("trial") }}
+          style={{ backgroundColor: getTabColors('trial') }}
         >
           <button
             className={` 
-            ${activetab === "trial" ? "text-[#685AAD]" : "text-white"} `}
-            style={{ backgroundColor: getTabColors("trial") }}
+            ${activetab === 'trial' ? 'text-[#685AAD]' : 'text-white'} `}
+            style={{ backgroundColor: getTabColors('trial') }}
           >
             <span className="">TRIAL SESSION</span>
           </button>
@@ -77,9 +75,7 @@ export default function MySessionComp() {
       </div>
 
       {/* Active content display */}
-      <div className={`${styles.contentdiv} border border-red-950`}>
-
-      </div>
+      <div className={`${styles.contentdiv} border border-red-950`}></div>
 
       <style jsx>{`
         .individualtab .bubble {
@@ -91,7 +87,7 @@ export default function MySessionComp() {
           background-image: radial-gradient(
             circle at 100% 0%,
             rgba(207, 27, 27, 0) 33px,
-            ${getTabColors("individual")} 33px
+            ${getTabColors('individual')} 33px
           );
         }
 
@@ -104,7 +100,7 @@ export default function MySessionComp() {
           background-image: radial-gradient(
             circle at 100% 0%,
             rgba(207, 27, 27, 0) 33px,
-            ${getTabColors("group")} 33px
+            ${getTabColors('group')} 33px
           );
         }
 
@@ -117,7 +113,7 @@ export default function MySessionComp() {
           background-image: radial-gradient(
             circle at 100% 0%,
             rgba(207, 27, 27, 0) 33px,
-            ${getTabColors("trial")} 33px
+            ${getTabColors('trial')} 33px
           );
         }
 
@@ -130,7 +126,7 @@ export default function MySessionComp() {
             background-image: radial-gradient(
               circle at 100% 0%,
               rgba(207, 27, 27, 0) 23.41px,
-              ${getTabColors("trial")} 23.41px
+              ${getTabColors('trial')} 23.41px
             );
           }
           .grouptab .bubble {
@@ -141,7 +137,7 @@ export default function MySessionComp() {
             background-image: radial-gradient(
               circle at 100% 0%,
               rgba(207, 27, 27, 0) 23.41px,
-              ${getTabColors("group")} 23.41px
+              ${getTabColors('group')} 23.41px
             );
           }
           .individualtab .bubble {
@@ -152,7 +148,7 @@ export default function MySessionComp() {
             background-image: radial-gradient(
               circle at 100% 0%,
               rgba(207, 27, 27, 0) 23.41px,
-              /* 33 * 0.7093 */ ${getTabColors("individual")} 23.41px
+              /* 33 * 0.7093 */ ${getTabColors('individual')} 23.41px
             );
           }
         }
@@ -166,7 +162,7 @@ export default function MySessionComp() {
             background-image: radial-gradient(
               circle at 100% 0%,
               rgba(207, 27, 27, 0) 14.39px,
-              /* 23.41 * scale */ ${getTabColors("individual")} 14.39px
+              /* 23.41 * scale */ ${getTabColors('individual')} 14.39px
             );
           }
           .grouptab .bubble {
@@ -177,7 +173,7 @@ export default function MySessionComp() {
             background-image: radial-gradient(
               circle at 100% 0%,
               rgba(207, 27, 27, 0) 14.39px,
-              ${getTabColors("group")} 14.39px
+              ${getTabColors('group')} 14.39px
             );
           }
 
@@ -189,7 +185,7 @@ export default function MySessionComp() {
             background-image: radial-gradient(
               circle at 100% 0%,
               rgba(207, 27, 27, 0) 14.39px,
-              ${getTabColors("trial")} 14.39px
+              ${getTabColors('trial')} 14.39px
             );
           }
         }
@@ -203,7 +199,7 @@ export default function MySessionComp() {
             background-image: radial-gradient(
               circle at 100% 0%,
               rgba(207, 27, 27, 0) 11.51px,
-              /* 14.39 * 0.8 */ ${getTabColors("individual")} 11.51px
+              /* 14.39 * 0.8 */ ${getTabColors('individual')} 11.51px
             );
           }
 
@@ -215,7 +211,7 @@ export default function MySessionComp() {
             background-image: radial-gradient(
               circle at 100% 0%,
               rgba(207, 27, 27, 0) 11.51px,
-              ${getTabColors("group")} 11.51px
+              ${getTabColors('group')} 11.51px
             );
           }
 
@@ -227,7 +223,7 @@ export default function MySessionComp() {
             background-image: radial-gradient(
               circle at 100% 0%,
               rgba(207, 27, 27, 0) 11.51px,
-              ${getTabColors("trial")} 11.51px
+              ${getTabColors('trial')} 11.51px
             );
           }
         }

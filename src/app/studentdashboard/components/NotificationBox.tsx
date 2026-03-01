@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import bellicon from "../../../../public/bellnotification.svg";
-import dots from "../../../../public/3dotsNotification.svg";
-import selectiondots from "../../../../public/selectiondots.svg";
-import Cross from "../../../../public/crossicon.svg";
-import deleteicon from "../../../../public//deleteiconnoti.svg";
-import markasread from "../../../../public/markasread.svg";
-import nonotification from '../../../../public/nonotification.svg'
-import Image from "next/image";
-import { Dot, Ellipsis, Ticket, TicketCheck } from "lucide-react";
+import React, { useState } from 'react';
+import bellicon from '../../../../public/bellnotification.svg';
+import dots from '../../../../public/3dotsNotification.svg';
+import selectiondots from '../../../../public/selectiondots.svg';
+import Cross from '../../../../public/crossicon.svg';
+import deleteicon from '../../../../public//deleteiconnoti.svg';
+import markasread from '../../../../public/markasread.svg';
+import nonotification from '../../../../public/nonotification.svg';
+import Image from 'next/image';
+import { Dot, Ellipsis, Ticket, TicketCheck } from 'lucide-react';
 interface NotificationItem {
   id: string;
   title: string;
@@ -19,36 +19,34 @@ interface NotificationItem {
 const NotificationPanel: React.FC = () => {
   const [notifications, setNotifications] = useState<NotificationItem[]>([
     {
-      id: "1",
-      title: "SUPPORT RESPONSE:",
+      id: '1',
+      title: 'SUPPORT RESPONSE:',
       message:
         '"OUR SUPPORT TEAM HAS RESPONDED TO YOUR INQUIRY. HEAD TO YOUR INBOX TO VIEW THE RESPONSE."',
-      date: "YESTERDAY",
+      date: 'YESTERDAY',
       isRead: false,
     },
     {
-      id: "2",
-      title: "SUPPORT RESPONSE:",
+      id: '2',
+      title: 'SUPPORT RESPONSE:',
       message:
         '"OUR SUPPORT TEAM HAS RESPONDED TO YOUR INQUIRY. HEAD TO YOUR INBOX TO VIEW THE RESPONSE."',
-      date: "YESTERDAY",
+      date: 'YESTERDAY',
       isRead: false,
     },
     {
-      id: "3",
-      title: "SUPPORT RESPONSE:",
+      id: '3',
+      title: 'SUPPORT RESPONSE:',
       message:
         '"OUR SUPPORT TEAM HAS RESPONDED TO YOUR INQUIRY. HEAD TO YOUR INBOX TO VIEW THE RESPONSE."',
-      date: "SATURDAY",
+      date: 'SATURDAY',
       isRead: false,
     },
   ]);
   const [isOpen, setIsOpen] = useState(false);
 
   const [selectMode, setSelectMode] = useState(false);
-  const [selectedNotifications, setSelectedNotifications] = useState<string[]>(
-    []
-  );
+  const [selectedNotifications, setSelectedNotifications] = useState<string[]>([]);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -64,18 +62,14 @@ const NotificationPanel: React.FC = () => {
     if (selectedNotifications.length === notifications.length) {
       setSelectedNotifications([]);
     } else {
-      setSelectedNotifications(
-        notifications.map((notification) => notification.id)
-      );
+      setSelectedNotifications(notifications.map(notification => notification.id));
     }
   };
 
   // Handle individual selection
   const toggleSelectNotification = (id: string) => {
     if (selectedNotifications.includes(id)) {
-      setSelectedNotifications(
-        selectedNotifications.filter((item) => item !== id)
-      );
+      setSelectedNotifications(selectedNotifications.filter(item => item !== id));
     } else {
       setSelectedNotifications([...selectedNotifications, id]);
     }
@@ -84,9 +78,7 @@ const NotificationPanel: React.FC = () => {
   // Delete selected notifications
   const deleteSelectedNotifications = () => {
     setNotifications(
-      notifications.filter(
-        (notification) => !selectedNotifications.includes(notification.id)
-      )
+      notifications.filter(notification => !selectedNotifications.includes(notification.id))
     );
     setSelectedNotifications([]);
   };
@@ -94,7 +86,7 @@ const NotificationPanel: React.FC = () => {
   // Mark as read
   const markAsRead = () => {
     setNotifications(
-      notifications.map((notification) => {
+      notifications.map(notification => {
         if (selectedNotifications.includes(notification.id)) {
           return { ...notification, isRead: true };
         }
@@ -105,13 +97,16 @@ const NotificationPanel: React.FC = () => {
   };
 
   // Group notifications by date
-  const groupedNotifications = notifications.reduce((acc, notification) => {
-    if (!acc[notification.date]) {
-      acc[notification.date] = [];
-    }
-    acc[notification.date].push(notification);
-    return acc;
-  }, {} as Record<string, NotificationItem[]>);
+  const groupedNotifications = notifications.reduce(
+    (acc, notification) => {
+      if (!acc[notification.date]) {
+        acc[notification.date] = [];
+      }
+      acc[notification.date].push(notification);
+      return acc;
+    },
+    {} as Record<string, NotificationItem[]>
+  );
 
   return (
     <div className="bg-[#887cc4] rounded-[15px] sm:w-[596px] sm:h-[624px] max-w-full overflow-hidden flex flex-col">
@@ -121,23 +116,14 @@ const NotificationPanel: React.FC = () => {
         <div className="flex items-center space-x-4 justify-center">
           {selectMode ? (
             <>
-              <button
-                className="text-white hover:opacity-75"
-                onClick={markAsRead}
-              >
+              <button className="text-white hover:opacity-75" onClick={markAsRead}>
                 <Image src={markasread} alt="" />
               </button>
-              <button
-                className="text-white hover:opacity-75"
-                onClick={deleteSelectedNotifications}
-              >
+              <button className="text-white hover:opacity-75" onClick={deleteSelectedNotifications}>
                 <Image src={deleteicon} alt="" />
               </button>
 
-              <button
-                className="text-white hover:opacity-75"
-                onClick={toggleSelectMode}
-              >
+              <button className="text-white hover:opacity-75" onClick={toggleSelectMode}>
                 <Image src={Cross} alt="" />
               </button>
               <div className="mx-2"></div>
@@ -151,9 +137,7 @@ const NotificationPanel: React.FC = () => {
                 >
                   {/* <Image src={dots} alt="Menu" width={24} height={24} className="relative z-20" /> */}
                   <Ellipsis
-                    className={`${
-                      isOpen ? "text-[#887cc4]" : "text-white"
-                    }   relative z-20 `}
+                    className={`${isOpen ? 'text-[#887cc4]' : 'text-white'}   relative z-20 `}
                   />
                 </button>
 
@@ -187,10 +171,7 @@ const NotificationPanel: React.FC = () => {
           )}
 
           {selectMode && (
-            <button
-              className="text-white hover:opacity-75"
-              onClick={handleSelectAll}
-            >
+            <button className="text-white hover:opacity-75" onClick={handleSelectAll}>
               <Image src={selectiondots} alt="" />
             </button>
           )}
@@ -209,7 +190,7 @@ const NotificationPanel: React.FC = () => {
           <div key={date} className="my-3">
             <h2 className="text-white text-sm sm:text-xl mb-1 ml-3">{date}</h2>
 
-            {items.map((notification) => (
+            {items.map(notification => (
               <div
                 key={notification.id}
                 className="bg-[rgb(123,111,187)] hover:bg-[rgb(123,111,187,0.4)] duration-300 transition-all shadow-[0px_0px_6px_rgba(255,255,255,0.5)] hover:shadow-[0px_0px_6px_rgba(255,255,255,0.7)] rounded-xl mb-4 px-4 py-5 flex justify-between items-start"
@@ -218,18 +199,16 @@ const NotificationPanel: React.FC = () => {
                   <h3 className="text-white font-medium text-sm sm:text-xl">
                     {notification.title}
                   </h3>
-                  <p className="text-white text-xs sm:text-sm mt-1">
-                    {notification.message}
-                  </p>
+                  <p className="text-white text-xs sm:text-sm mt-1">{notification.message}</p>
                 </div>
                 <div className="flex-shrink-0">
                   {selectMode ? (
                     <div
-                      className={`w-5 h-5 border-2 border-[rgb(255,255,255,0.6)] hover:border-[rgb(255,255,255,1)] transition-all duration-300 rounded flex items-center justify-center cursor-pointer ${selectedNotifications.includes(notification.id) && "bg-white"}`}
+                      className={`w-5 h-5 border-2 border-[rgb(255,255,255,0.6)] hover:border-[rgb(255,255,255,1)] transition-all duration-300 rounded flex items-center justify-center cursor-pointer ${selectedNotifications.includes(notification.id) && 'bg-white'}`}
                       onClick={() => toggleSelectNotification(notification.id)}
                     >
                       {selectedNotifications.includes(notification.id) && (
-                        <TicketCheck className="text-transparent"/>
+                        <TicketCheck className="text-transparent" />
                       )}
                     </div>
                   ) : (

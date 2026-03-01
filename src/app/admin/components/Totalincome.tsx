@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
-import { useTotalIncome } from "../hooks/useTotalIncome";
+import React, { useEffect, useState } from 'react';
+import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useTotalIncome } from '../hooks/useTotalIncome';
 
-const months = [
-  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-];
+const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-const names = ["Total", "Daily", "Weekly", "Monthly", "Yearly"];
+const names = ['Total', 'Daily', 'Weekly', 'Monthly', 'Yearly'];
 
 function Totalincome() {
   const { income, isLoading, error } = useTotalIncome();
@@ -20,59 +17,60 @@ function Totalincome() {
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [storedYears, setStoredYears] = useState([new Date().getFullYear()]);
   const [currentAmount, setCurrentAmount] = useState(0);
-  const [StoredWeeks, setStoredWeeks] = useState<any>([currentDate])
+  const [StoredWeeks, setStoredWeeks] = useState<any>([currentDate]);
   // Calculate total income for different time periods
   const calculateIncome = () => {
     if (!income || !Array.isArray(income)) return 0;
 
     switch (currentName) {
-      case "Total":
+      case 'Total':
         return income.reduce((sum, item) => sum + (item.income || 0), 0);
-      
-      case "Daily": {
+
+      case 'Daily': {
         const targetDate = new Date(currentDate);
         targetDate.setHours(0, 0, 0, 0);
-        
+
         return income.reduce((sum, item) => {
           const itemDate = new Date(item.createdAt);
           itemDate.setHours(0, 0, 0, 0);
           return itemDate.getTime() === targetDate.getTime() ? sum + (item.income || 0) : sum;
         }, 0);
       }
-      
-      case "Weekly": {
+
+      case 'Weekly': {
         const weekStart = new Date(startDate);
         weekStart.setHours(0, 0, 0, 0);
         const weekEnd = new Date(weekStart);
         weekEnd.setDate(weekStart.getDate() + 6);
         weekEnd.setHours(23, 59, 59, 999);
-        
+
         return income.reduce((sum, item) => {
           const itemDate = new Date(item.createdAt);
           return itemDate >= weekStart && itemDate <= weekEnd ? sum + (item.income || 0) : sum;
         }, 0);
       }
-      
-      case "Monthly": {
+
+      case 'Monthly': {
         const targetMonth = currentDate.getMonth();
         const targetYear = currentDate.getFullYear();
-        
+
         return income.reduce((sum, item) => {
           const itemDate = new Date(item.createdAt);
-          return itemDate.getMonth() === targetMonth && 
-                 itemDate.getFullYear() === targetYear ? sum + (item.income || 0) : sum;
+          return itemDate.getMonth() === targetMonth && itemDate.getFullYear() === targetYear
+            ? sum + (item.income || 0)
+            : sum;
         }, 0);
       }
-      
-      case "Yearly": {
+
+      case 'Yearly': {
         const targetYear = currentYear;
-        
+
         return income.reduce((sum, item) => {
           const itemDate = new Date(item.createdAt);
           return itemDate.getFullYear() === targetYear ? sum + (item.income || 0) : sum;
         }, 0);
       }
-      
+
       default:
         return 0;
     }
@@ -81,25 +79,25 @@ function Totalincome() {
   // Calculate percentage change
   const calculatePercentageChange = () => {
     if (!income || !Array.isArray(income)) return 0;
-  
+
     const currentTotal = calculateIncome();
     let comparisonTotal = 0;
-  
+
     switch (currentName) {
-      case "Daily": {
+      case 'Daily': {
         const comparisonDate = new Date(currentDate);
         // Compare with next day if viewing a past date
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         const isViewingPastDate = currentDate < today;
-        
+
         if (isViewingPastDate) {
           comparisonDate.setDate(currentDate.getDate() + 1);
         } else {
           comparisonDate.setDate(currentDate.getDate() - 1);
         }
         comparisonDate.setHours(0, 0, 0, 0);
-        
+
         comparisonTotal = income.reduce((sum, item) => {
           const itemDate = new Date(item.createdAt);
           itemDate.setHours(0, 0, 0, 0);
@@ -107,58 +105,60 @@ function Totalincome() {
         }, 0);
         break;
       }
-      
-      case "Weekly": {
+
+      case 'Weekly': {
         const currentWeekStart = new Date(startDate);
         const comparisonWeekStart = new Date(startDate);
         const today = new Date();
         const isViewingPastWeek = currentWeekStart < today;
-        
+
         if (isViewingPastWeek) {
           comparisonWeekStart.setDate(currentWeekStart.getDate() + 7);
         } else {
           comparisonWeekStart.setDate(currentWeekStart.getDate() - 7);
         }
-        
+
         const comparisonWeekEnd = new Date(comparisonWeekStart);
         comparisonWeekEnd.setDate(comparisonWeekStart.getDate() + 6);
-        
+
         comparisonTotal = income.reduce((sum, item) => {
           const itemDate = new Date(item.createdAt);
-          return itemDate >= comparisonWeekStart && itemDate <= comparisonWeekEnd ? 
-                 sum + (item.income || 0) : sum;
+          return itemDate >= comparisonWeekStart && itemDate <= comparisonWeekEnd
+            ? sum + (item.income || 0)
+            : sum;
         }, 0);
         break;
       }
-      
-      case "Monthly": {
+
+      case 'Monthly': {
         const comparisonDate = new Date(currentDate);
         const today = new Date();
-        const isViewingPastMonth = 
-          currentDate.getFullYear() < today.getFullYear() || 
-          (currentDate.getFullYear() === today.getFullYear() && 
-           currentDate.getMonth() < today.getMonth());
-        
+        const isViewingPastMonth =
+          currentDate.getFullYear() < today.getFullYear() ||
+          (currentDate.getFullYear() === today.getFullYear() &&
+            currentDate.getMonth() < today.getMonth());
+
         if (isViewingPastMonth) {
           comparisonDate.setMonth(currentDate.getMonth() + 1);
         } else {
           comparisonDate.setMonth(currentDate.getMonth() - 1);
         }
-        
+
         comparisonTotal = income.reduce((sum, item) => {
           const itemDate = new Date(item.createdAt);
-          return itemDate.getMonth() === comparisonDate.getMonth() && 
-                 itemDate.getFullYear() === comparisonDate.getFullYear() ? 
-                 sum + (item.income || 0) : sum;
+          return itemDate.getMonth() === comparisonDate.getMonth() &&
+            itemDate.getFullYear() === comparisonDate.getFullYear()
+            ? sum + (item.income || 0)
+            : sum;
         }, 0);
         break;
       }
-      
-      case "Yearly": {
+
+      case 'Yearly': {
         const today = new Date();
         const isViewingPastYear = currentYear < today.getFullYear();
         const comparisonYear = isViewingPastYear ? currentYear + 1 : currentYear - 1;
-        
+
         comparisonTotal = income.reduce((sum, item) => {
           const itemDate = new Date(item.createdAt);
           return itemDate.getFullYear() === comparisonYear ? sum + (item.income || 0) : sum;
@@ -166,10 +166,10 @@ function Totalincome() {
         break;
       }
     }
-  
+
     // If either total is 0, return 0 to avoid division by zero
     if (currentTotal === 0 || comparisonTotal === 0) return 0;
-  
+
     // Calculate percentage change
     let percentageChange;
     if (currentTotal > comparisonTotal) {
@@ -178,7 +178,7 @@ function Totalincome() {
       percentageChange = ((comparisonTotal - currentTotal) / currentTotal) * 100;
       percentageChange = -percentageChange; // Make it negative if current is less than comparison
     }
-  
+
     // Cap the percentage at ±100
     return Math.max(Math.min(percentageChange, 100), -100);
   };
@@ -190,24 +190,28 @@ function Totalincome() {
 
   // Navigation handlers
   const handlePrevious = () => {
-    setCurrentIndex(prevIndex => prevIndex === 0 ? names.length - 1 : prevIndex - 1);
+    setCurrentIndex(prevIndex => (prevIndex === 0 ? names.length - 1 : prevIndex - 1));
   };
 
   const handleNext = () => {
-    setCurrentIndex(prevIndex => prevIndex === names.length - 1 ? 0 : prevIndex + 1);
+    setCurrentIndex(prevIndex => (prevIndex === names.length - 1 ? 0 : prevIndex + 1));
   };
 
   // Date navigation handlers
   const handlePreviousYear = () => {
     const newYear = currentYear - 1;
     setCurrentYear(newYear);
-    setStoredYears(prevYears => !prevYears.includes(newYear) ? [...prevYears, newYear] : prevYears);
+    setStoredYears(prevYears =>
+      !prevYears.includes(newYear) ? [...prevYears, newYear] : prevYears
+    );
   };
 
   const handleNextYear = () => {
     const newYear = currentYear + 1;
     setCurrentYear(newYear);
-    setStoredYears(prevYears => !prevYears.includes(newYear) ? [...prevYears, newYear] : prevYears);
+    setStoredYears(prevYears =>
+      !prevYears.includes(newYear) ? [...prevYears, newYear] : prevYears
+    );
   };
 
   const handlePreviousMonth = () => {
@@ -222,21 +226,23 @@ function Totalincome() {
     updateMonth(newDate);
   };
 
-  const updateMonth = (newDate:any) => {
+  const updateMonth = (newDate: any) => {
     setCurrentDate(newDate);
     const newMonthName = months[newDate.getMonth()];
-    setStoredMonths(prevMonths => !prevMonths.includes(newMonthName) ? [...prevMonths, newMonthName] : prevMonths);
+    setStoredMonths(prevMonths =>
+      !prevMonths.includes(newMonthName) ? [...prevMonths, newMonthName] : prevMonths
+    );
   };
 
-  const formatDateWeek = (date:any) => {
+  const formatDateWeek = (date: any) => {
     return date.toLocaleDateString('en-GB', {
       day: '2-digit',
       month: '2-digit',
-      year: 'numeric'
+      year: 'numeric',
     });
   };
 
-  const getFormattedWeek = (start:any) => {
+  const getFormattedWeek = (start: any) => {
     const end = new Date(start);
     end.setDate(start.getDate() + 6);
     return `${formatDateWeek(start)} - ${formatDateWeek(end)}`;
@@ -254,10 +260,12 @@ function Totalincome() {
     updateWeek(newStartDate);
   };
 
-  const updateWeek = (newStartDate:any) => {
+  const updateWeek = (newStartDate: any) => {
     setStartDate(newStartDate);
     const formattedWeek = getFormattedWeek(newStartDate);
-    setStoredWeeks((prevWeeks:any) => !prevWeeks.includes(formattedWeek) ? [...prevWeeks, formattedWeek] : prevWeeks);
+    setStoredWeeks((prevWeeks: any) =>
+      !prevWeeks.includes(formattedWeek) ? [...prevWeeks, formattedWeek] : prevWeeks
+    );
   };
 
   const handlePreviousdate = () => {
@@ -272,7 +280,7 @@ function Totalincome() {
     updateDate(newDate);
   };
 
-  const updateDate = (newDate:any) => {
+  const updateDate = (newDate: any) => {
     setCurrentDate(newDate);
     setStoredDates(prevDates => {
       if (!prevDates.some(date => date.toDateString() === newDate.toDateString())) {
@@ -302,7 +310,7 @@ function Totalincome() {
             ${currentAmount.toFixed(2)}
           </h1>
           <h1 className="text-base sm:text-lg custom-lg:text-2xl font-bold leading-none text-[#a398cf] flex items-center gap-3">
-            <ChevronDown className="font-extrabold" /> 
+            <ChevronDown className="font-extrabold" />
             {percentageChange.toFixed(1)}%
           </h1>
         </div>
@@ -322,18 +330,18 @@ function Totalincome() {
             </div>
           </div>
 
-          {currentName === "Daily" && (
+          {currentName === 'Daily' && (
             <div className="flex items-center flex-row-reverse text-[#7669b5]">
               <div className="flex items-center justify-center gap-1 sm:gap-2 custom-lg:gap-3">
                 <button onClick={handlePreviousdate}>
                   <ChevronLeft />
                 </button>
                 <span className="font-medium text-xl custom-lg:w-[11.4rem] text-center">
-                  {currentDate.toLocaleDateString('en-US', { 
+                  {currentDate.toLocaleDateString('en-US', {
                     weekday: 'short',
                     day: '2-digit',
                     month: '2-digit',
-                    year: 'numeric'
+                    year: 'numeric',
                   })}
                 </span>
                 <button onClick={handleNextdate}>
@@ -343,7 +351,7 @@ function Totalincome() {
             </div>
           )}
 
-          {currentName === "Weekly" && (
+          {currentName === 'Weekly' && (
             <div className="flex items-center flex-row-reverse text-[#7669b5]">
               <div className="flex items-center justify-center gap-1 sm:gap-2 custom-lg:gap-3">
                 <button onClick={handlePreviousWeek}>
@@ -359,7 +367,7 @@ function Totalincome() {
             </div>
           )}
 
-          {currentName === "Monthly" && (
+          {currentName === 'Monthly' && (
             <div className="flex items-center flex-row-reverse text-[#7669b5]">
               <div className="flex items-center justify-center gap-1 sm:gap-2 custom-lg:gap-3">
                 <button onClick={handlePreviousMonth}>
@@ -375,7 +383,7 @@ function Totalincome() {
             </div>
           )}
 
-          {currentName === "Yearly" && (
+          {currentName === 'Yearly' && (
             <div className="flex items-center flex-row-reverse text-[#7669b5]">
               <div className="flex items-center justify-center gap-1 sm:gap-2 custom-lg:gap-3">
                 <button onClick={handlePreviousYear}>

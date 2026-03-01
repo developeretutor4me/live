@@ -1,5 +1,5 @@
-import { BookingRequest } from "@/app/etutor/profile/components/Data";
-import useSWR from "swr";
+import { BookingRequest } from '@/app/etutor/profile/components/Data';
+import useSWR from 'swr';
 
 interface IncomingRequestsResponse {
   bookingRequests: BookingRequest[];
@@ -7,14 +7,14 @@ interface IncomingRequestsResponse {
 
 const fetcher = async <T>(url: string): Promise<T> => {
   const response = await fetch(url, {
-    method: "GET",
+    method: 'GET',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   });
 
   if (!response.ok) {
-    throw new Error("Failed to fetch data");
+    throw new Error('Failed to fetch data');
   }
 
   return response.json();
@@ -24,7 +24,7 @@ export const useIncomingRequests = (session: any) => {
   const shouldFetch = Boolean(session);
 
   const { data, error, isLoading } = useSWR<IncomingRequestsResponse>(
-    shouldFetch ? "/api/get-incoming-requests-from-student" : null,
+    shouldFetch ? '/api/get-incoming-requests-from-student' : null,
     fetcher
   );
 

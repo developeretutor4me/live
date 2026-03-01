@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp } from "lucide-react";
+import React, { useEffect, useState } from 'react';
+import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp } from 'lucide-react';
 
-const months = [
-  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-];
+const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-const names = ["Total", "Daily", "Weekly", "Monthly", "Yearly"];
+const names = ['Total', 'Daily', 'Weekly', 'Monthly', 'Yearly'];
 
 interface GeneralSubscriptionOverTimeProps {
   user: any[];
@@ -17,41 +14,41 @@ function GeneralSubscriptionOverTime({ user }: GeneralSubscriptionOverTimeProps)
   const [currentName, setCurrentName] = useState(names[0]);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [storedDates, setStoredDates] = useState([currentDate]);
-  const [startDate, setStartDate] = useState(new Date("2023-02-01"));
+  const [startDate, setStartDate] = useState(new Date('2023-02-01'));
   const [storedMonths, setStoredMonths] = useState([months[new Date().getMonth()]]);
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [storedYears, setStoredYears] = useState([new Date().getFullYear()]);
   const [subscriptionCount, setSubscriptionCount] = useState(0);
   const [percentageChange, setPercentageChange] = useState(0);
-  const [StoredWeeks, setStoredWeeks] = useState("")
+  const [StoredWeeks, setStoredWeeks] = useState('');
 
-// Function to count subscriptions for a given date range
-const countSubscriptions = (startDate: Date | null, endDate: Date | null) => {
-  return user.filter(u => {
-    if (!u.planType?.type || !u.planType.createdAt) return false;
-    
-    // Only count if plan type is Premium, Standard, or Payasyougo
-    const validPlanTypes = ['premium', 'standard', 'payasyougo'];
-    if (!validPlanTypes.includes(u.planType.type)) return false;
-    
-    const userDate = new Date(u.planType.createdAt);
-    
-    // If no date range specified (for total), just check plan type
-    if (!startDate || !endDate) return true;
-    
-    // Check if within date range and has valid plan type
-    return userDate >= startDate && userDate <= endDate;
-  }).length;
-};
+  // Function to count subscriptions for a given date range
+  const countSubscriptions = (startDate: Date | null, endDate: Date | null) => {
+    return user.filter(u => {
+      if (!u.planType?.type || !u.planType.createdAt) return false;
+
+      // Only count if plan type is Premium, Standard, or Payasyougo
+      const validPlanTypes = ['premium', 'standard', 'payasyougo'];
+      if (!validPlanTypes.includes(u.planType.type)) return false;
+
+      const userDate = new Date(u.planType.createdAt);
+
+      // If no date range specified (for total), just check plan type
+      if (!startDate || !endDate) return true;
+
+      // Check if within date range and has valid plan type
+      return userDate >= startDate && userDate <= endDate;
+    }).length;
+  };
   // Calculate counts and percentage change based on current view
   useEffect(() => {
     let start: Date | null = null;
     let end: Date | null = null;
     let previousStart: Date | null = null;
     let previousEnd: Date | null = null;
-  
+
     switch (currentName) {
-      case "Daily":
+      case 'Daily':
         start = new Date(currentDate.setHours(0, 0, 0, 0));
         end = new Date(currentDate.setHours(23, 59, 59, 999));
         previousStart = new Date(start);
@@ -59,8 +56,8 @@ const countSubscriptions = (startDate: Date | null, endDate: Date | null) => {
         previousStart.setDate(previousStart.getDate() - 1);
         previousEnd.setDate(previousEnd.getDate() - 1);
         break;
-  
-      case "Weekly":
+
+      case 'Weekly':
         start = new Date(startDate);
         end = new Date(startDate);
         end.setDate(end.getDate() + 6);
@@ -69,8 +66,8 @@ const countSubscriptions = (startDate: Date | null, endDate: Date | null) => {
         previousStart.setDate(previousStart.getDate() - 7);
         previousEnd.setDate(previousEnd.getDate() - 7);
         break;
-  
-      case "Monthly":
+
+      case 'Monthly':
         start = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
         end = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
         previousStart = new Date(start);
@@ -78,8 +75,8 @@ const countSubscriptions = (startDate: Date | null, endDate: Date | null) => {
         previousStart.setMonth(previousStart.getMonth() - 1);
         previousEnd.setMonth(previousEnd.getMonth() - 1);
         break;
-  
-      case "Yearly":
+
+      case 'Yearly':
         start = new Date(currentYear, 0, 1);
         end = new Date(currentYear, 11, 31);
         previousStart = new Date(start);
@@ -87,20 +84,20 @@ const countSubscriptions = (startDate: Date | null, endDate: Date | null) => {
         previousStart.setFullYear(previousStart.getFullYear() - 1);
         previousEnd.setFullYear(previousEnd.getFullYear() - 1);
         break;
-  
+
       default: // Total
         start = null;
         end = null;
         break;
     }
-  
+
     const currentCount = countSubscriptions(start, end);
     setSubscriptionCount(currentCount);
-  
+
     if (start && end && previousStart && previousEnd) {
       const previousCount = countSubscriptions(previousStart, previousEnd);
-      const change = previousCount === 0 ? 0 : 
-        ((currentCount - previousCount) / previousCount) * 100;
+      const change =
+        previousCount === 0 ? 0 : ((currentCount - previousCount) / previousCount) * 100;
       setPercentageChange(change);
     } else {
       setPercentageChange(0);
@@ -120,7 +117,7 @@ const countSubscriptions = (startDate: Date | null, endDate: Date | null) => {
 
   const updateYear = (newYear: number) => {
     setCurrentYear(newYear);
-    setStoredYears((prevYears) => {
+    setStoredYears(prevYears => {
       if (!prevYears.includes(newYear)) {
         return [...prevYears, newYear];
       }
@@ -143,7 +140,7 @@ const countSubscriptions = (startDate: Date | null, endDate: Date | null) => {
   const updateMonth = (newDate: Date) => {
     setCurrentDate(newDate);
     const newMonthName = months[newDate.getMonth()];
-    setStoredMonths((prevMonths) => {
+    setStoredMonths(prevMonths => {
       if (!prevMonths.includes(newMonthName)) {
         return [...prevMonths, newMonthName];
       }
@@ -152,8 +149,8 @@ const countSubscriptions = (startDate: Date | null, endDate: Date | null) => {
   };
 
   const formatDateWeek = (date: Date) => {
-    const day = date.getDate().toString().padStart(2, "0");
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
   };
@@ -179,7 +176,7 @@ const countSubscriptions = (startDate: Date | null, endDate: Date | null) => {
   const updateWeek = (newStartDate: Date) => {
     setStartDate(newStartDate);
     const formattedWeek = getFormattedWeek(newStartDate);
-    setStoredWeeks((prevWeeks:any) => {
+    setStoredWeeks((prevWeeks: any) => {
       if (!prevWeeks.includes(formattedWeek)) {
         return [...prevWeeks, formattedWeek];
       }
@@ -187,11 +184,11 @@ const countSubscriptions = (startDate: Date | null, endDate: Date | null) => {
     });
   };
 
-  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
   const formatDate = (date: Date) => {
-    const day = date.getDate().toString().padStart(2, "0");
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
   };
@@ -210,8 +207,8 @@ const countSubscriptions = (startDate: Date | null, endDate: Date | null) => {
 
   const updateDate = (newDate: Date) => {
     setCurrentDate(newDate);
-    setStoredDates((prevDates) => {
-      if (!prevDates.some((date) => date.toDateString() === newDate.toDateString())) {
+    setStoredDates(prevDates => {
+      if (!prevDates.some(date => date.toDateString() === newDate.toDateString())) {
         return [...prevDates, newDate];
       }
       return prevDates;
@@ -219,11 +216,11 @@ const countSubscriptions = (startDate: Date | null, endDate: Date | null) => {
   };
 
   const handlePrevious = () => {
-    setCurrentIndex((prevIndex) => prevIndex === 0 ? names.length - 1 : prevIndex - 1);
+    setCurrentIndex(prevIndex => (prevIndex === 0 ? names.length - 1 : prevIndex - 1));
   };
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => prevIndex === names.length - 1 ? 0 : prevIndex + 1);
+    setCurrentIndex(prevIndex => (prevIndex === names.length - 1 ? 0 : prevIndex + 1));
   };
 
   useEffect(() => {
@@ -242,16 +239,16 @@ const countSubscriptions = (startDate: Date | null, endDate: Date | null) => {
           </h1>
 
           <h1 className="text-base sm:text-lg custom-lg:text-2xl font-bold leading-none text-[#a398cf] flex items-center gap-3">
-          {currentName != "Total" && (
-            <>
-            {percentageChange > 0 ? (
-              <ChevronUp className="font-extrabold" />
-            ) : (
-              <ChevronDown className="font-extrabold" />
+            {currentName != 'Total' && (
+              <>
+                {percentageChange > 0 ? (
+                  <ChevronUp className="font-extrabold" />
+                ) : (
+                  <ChevronDown className="font-extrabold" />
+                )}
+                {Math.abs(percentageChange).toFixed(1)}%
+              </>
             )}
-            {Math.abs(percentageChange).toFixed(1)}%
-            </>
-          )}
           </h1>
         </div>
 
@@ -270,7 +267,7 @@ const countSubscriptions = (startDate: Date | null, endDate: Date | null) => {
             </div>
           </div>
 
-          {currentName === "Daily" && (
+          {currentName === 'Daily' && (
             <div className="flex items-center flex-row-reverse text-[#7669b5]">
               <div className="flex items-center justify-center gap-1 sm:gap-2 custom-lg:gap-3">
                 <button onClick={handlePreviousdate}>
@@ -286,7 +283,7 @@ const countSubscriptions = (startDate: Date | null, endDate: Date | null) => {
             </div>
           )}
 
-          {currentName === "Weekly" && (
+          {currentName === 'Weekly' && (
             <div className="flex items-center flex-row-reverse text-[#7669b5]">
               <div className="flex items-center justify-center gap-1 sm:gap-2 custom-lg:gap-3">
                 <button onClick={handlePreviousWeek}>
@@ -302,7 +299,7 @@ const countSubscriptions = (startDate: Date | null, endDate: Date | null) => {
             </div>
           )}
 
-          {currentName === "Monthly" && (
+          {currentName === 'Monthly' && (
             <div className="flex items-center flex-row-reverse text-[#7669b5]">
               <div className="flex items-center justify-center gap-1 sm:gap-2 custom-lg:gap-3">
                 <button onClick={handlePreviousMonth}>
@@ -318,7 +315,7 @@ const countSubscriptions = (startDate: Date | null, endDate: Date | null) => {
             </div>
           )}
 
-          {currentName === "Yearly" && (
+          {currentName === 'Yearly' && (
             <div className="flex items-center flex-row-reverse text-[#7669b5]">
               <div className="flex items-center justify-center gap-1 sm:gap-2 custom-lg:gap-3">
                 <button onClick={handlePreviousYear}>

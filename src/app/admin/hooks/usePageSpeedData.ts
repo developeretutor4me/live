@@ -1,7 +1,7 @@
 import useSWR from 'swr';
 
 // Fetcher function to get data from the Next.js API route
-const fetcher = async (url:any) => {
+const fetcher = async (url: any) => {
   const res = await fetch(url);
   if (!res.ok) {
     throw new Error('Failed to fetch PageSpeed data');

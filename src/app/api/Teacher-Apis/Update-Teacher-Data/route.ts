@@ -3,7 +3,7 @@ export const dynamic = 'force-dynamic';
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import {authOptions} from '@/app/auth/auth'; 
+import { authOptions } from '@/app/auth/auth';
 import { connectMongoDB } from '../../connection/connection';
 import Teacher from '../../models/Teacher';
 
@@ -12,10 +12,7 @@ export async function PUT(request: NextRequest) {
     const session = await getServerSession(authOptions);
 
     if (!session?.user?.id) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     const userId = session.user.id;
@@ -82,30 +79,26 @@ export async function PUT(request: NextRequest) {
             accountholder: body.bankDetails.accountholder,
             IBAN: body.bankDetails.IBAN,
             BIC: body.bankDetails.BIC,
-          }
-        }
+          },
+        },
       },
       { new: true, runValidators: true }
     );
 
     if (!updatedTeacher) {
-      return NextResponse.json(
-        { error: 'Teacher not found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: 'Teacher not found' }, { status: 404 });
     }
 
-    return NextResponse.json({
-      success: true,
-      data: updatedTeacher
-    }, { status: 200 });
-
+    return NextResponse.json(
+      {
+        success: true,
+        data: updatedTeacher,
+      },
+      { status: 200 }
+    );
   } catch (error) {
     console.error('Error updating teacher data:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
 
@@ -115,35 +108,28 @@ export async function GET() {
     const session = await getServerSession(authOptions);
 
     if (!session?.user?.id) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     await connectMongoDB();
 
     const teacherData = await Teacher.findOne({
-      user: session.user.id
+      user: session.user.id,
     }).populate('user', '-password -verification_token');
 
     if (!teacherData) {
-      return NextResponse.json(
-        { error: 'Teacher not found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: 'Teacher not found' }, { status: 404 });
     }
 
-    return NextResponse.json({
-      success: true,
-      data: teacherData
-    }, { status: 200 });
-
+    return NextResponse.json(
+      {
+        success: true,
+        data: teacherData,
+      },
+      { status: 200 }
+    );
   } catch (error) {
     console.error('Error fetching teacher data:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

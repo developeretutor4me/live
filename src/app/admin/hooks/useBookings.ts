@@ -13,11 +13,10 @@ export const useBookings = () => {
     revalidateOnFocus: true, // Re-fetch on window focus
   });
 
- 
   return {
     booking: data?.data,
-    isLoadingbooking:isLoading,
-    errorbooking:error,
+    isLoadingbooking: isLoading,
+    errorbooking: error,
     mutate, // Can be used to manually revalidate the data
   };
 };

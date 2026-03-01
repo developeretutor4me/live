@@ -1,9 +1,9 @@
-import React from "react";
-import level1 from "../../../../../public/level1.svg";
-import level2 from "../../../../../public/level2.svg";
-import level3 from "../../../../../public/level31.svg";
-import level4 from "../../../../../public/level4.svg";
-import Image from "next/image";
+import React from 'react';
+import level1 from '../../../../../public/level1.svg';
+import level2 from '../../../../../public/level2.svg';
+import level3 from '../../../../../public/level31.svg';
+import level4 from '../../../../../public/level4.svg';
+import Image from 'next/image';
 
 function Awards() {
   return (

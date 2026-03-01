@@ -52,7 +52,10 @@ const ParentStudentRelationshipSchema: Schema<IParentStudentRelationship> = new 
   }
 );
 
-
-
-const ParentStudentRelationship = mongoose.models.ParentStudentRelationship || mongoose.model<IParentStudentRelationship>('ParentStudentRelationship', ParentStudentRelationshipSchema);
+const ParentStudentRelationship =
+  mongoose.models.ParentStudentRelationship ||
+  mongoose.model<IParentStudentRelationship>(
+    'ParentStudentRelationship',
+    ParentStudentRelationshipSchema
+  );
 export default ParentStudentRelationship;
