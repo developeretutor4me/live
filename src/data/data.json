@@ -1,0 +1,32 @@
+{
+  "tutors": [
+    {
+      "id": 1,
+      "image": "../../public/assets/homepage/tutor1.png",
+      "name": "Julie",
+      "bookings": "60+Bookings",
+      "sessionPrice": "$30"
+    },
+    {
+      "id": 2,
+      "image": "../../public/assets/homepage/tutor2.png",
+      "name": "Koby",
+      "bookings": "100+Bookings",
+      "sessionPrice": "$45"
+    },
+    {
+      "id": 3,
+      "image": "../../public/assets/homepage/tutor3.png",
+      "name": "Henry",
+      "bookings": "70+Bookings",
+      "sessionPrice": "$40"
+    },
+    {
+      "id": 4,
+      "image": "../../public/assets/homepage/tutor4.png",
+      "name": "Scarlett",
+      "bookings": "46+Bookings",
+      "sessionPrice": "$30"
+    }
+  ]
+}

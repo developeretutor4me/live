@@ -1,0 +1,20 @@
+/* styles.css or in a <style> block */
+.scroll-hidden {
+    overflow: auto; /* Enable scrolling */
+  }
+  
+  /* Hide scrollbar for Webkit browsers (Chrome, Safari) */
+  .scroll-hidden::-webkit-scrollbar {
+    display: none; /* Hide scrollbar */
+  }
+  
+  /* Hide scrollbar for Internet Explorer and Edge */
+  .scroll-hidden {
+    -ms-overflow-style: none;
+  }
+  
+  /* Hide scrollbar for Firefox */
+  .scroll-hidden {
+    scrollbar-width: none;
+  }
+  

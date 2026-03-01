@@ -1,0 +1,15 @@
+.hero_soon{
+    background-image: url('../../../../../public/assets/signup/confirmation.png');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: cover;
+  
+    
+}
+@media screen and (max-width:900px) {
+    .hero_soon{
+        background-size: contain;
+    background-position: center;
+    }
+    
+}
