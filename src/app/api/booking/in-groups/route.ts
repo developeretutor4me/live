@@ -5,6 +5,8 @@ import mongoose from 'mongoose';
 import { connectMongoDB } from '../../connection/connection';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/auth/auth';
+import ParentModel from '../../models/Parent';
+import ParentStudentRelationship from '../../models/ParentStudentRelation';
 
 export async function POST(req: NextRequest) {
   await connectMongoDB();
@@ -14,7 +16,23 @@ export async function POST(req: NextRequest) {
     if (!session) {
       return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
     }
-    const userId = session?.user.id;
+
+    let userId = session.user.id;
+
+    // If the caller is a parent, use the linked student's User ID instead
+    if (session.user.role === 'parent') {
+      const parent = await ParentModel.findOne({ user: session.user.id });
+      if (parent) {
+        const relation = await ParentStudentRelationship.findOne({
+          parent: parent._id,
+          status: 'accepted',
+        }).populate({ path: 'student', populate: { path: 'user' } });
+
+        if (relation?.student?.user?._id) {
+          userId = relation.student.user._id.toString();
+        }
+      }
+    }
 
     const body = await req.json();
     const { teacherId, level, sessions } = body;

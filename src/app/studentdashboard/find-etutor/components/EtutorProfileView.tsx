@@ -10,8 +10,6 @@ import level8 from '../../../../../public/level-8.svg';
 import level9 from '../../../../../public/level-9.svg';
 import level10 from '../../../../../public/level-10.svg';
 import Image from 'next/image';
-import { Check, ChevronDown, ChevronUp } from 'lucide-react';
-import { options, memberships, durations } from '../../components/Data';
 
 interface EtutorProfileViewProps {
   tutor: any;
@@ -322,13 +320,25 @@ const EtutorProfileView = ({
       >
         {/* Booking card */}
         <div className="bg-[#A296CC] rounded-3xl p-10 ">
-          <h2 className="text-xl sm:text-5xl font-bold mb-4">
-            Book {tutor?.contactInformation.firstName}
+          <h2 className="text-xl sm:text-4xl font-bold mb-4 text-white">
+            {isTrialSessionLeft ? 'Current membership' : 'Current Packages'}
           </h2>
-          <p className="text-xs sm:text-md mb-4 text-[#564589] font-medium">
-            You can change your membership by selecting one of the two other plans listed below, or
-            visit the <span className="text-[#6949FF]">My Membership</span> page for more
-            information.
+          <div className="bg-[#685AAD] rounded-2xl px-5 py-4 mb-4">
+            <h3 className="text-2xl font-bold text-white">Pay As You Go</h3>
+            <p className="text-sm text-white/90">No commitment. Pay only when you book.</p>
+          </div>
+          <p className="text-sm sm:text-base mb-6 text-white">
+            {isTrialSessionLeft ? (
+              <>
+                Enjoy a free trial session to see if this etutor is the right fit.
+                <br />
+                <br />
+                If you like the experience, you'll find them saved in your{' '}
+                <span className="font-bold">My eTutor</span> section to book more.
+              </>
+            ) : (
+              <>Tailor your learning. Select the exact session duration you need and pay only as you book</>
+            )}
           </p>
           {/* drop downs */}
 
@@ -440,47 +450,23 @@ const EtutorProfileView = ({
             )}
           </div> */}
 
-          <p className="text-xs sm:text-lg mb-4">
-            You currently have the <span className="text-[#6949FF]">Pay As You Go</span> membership
-            plan. This free plan allows you to book an eTutor at any time, paying only the fees
-            listed for each session. No upfront costs or subscription fees
-          </p>
-
-          <div className="flex items-center mb-4">
-            <div className="bg-[#8653FF] rounded-full p-1 mr-2">
-              <Check size={20} color="white" className="font-bold" />
-            </div>
-            <span className="text-sm">Hear from 2/3 tutors like Lastname</span>
-          </div>
-
           <div className="bg-[#B9AFDB] p-6 rounded-3xl">
-            {isTrialSessionLeft ? (
-              <button
-                onClick={() => {
-                  bookingSectionShowHandler();
-                }}
-                className="w-full bg-[#8653FF] text-white py-2 sm:py-4 text-xl rounded-full mb-4 font-semibold"
-              >
-                Trial Session
-              </button>
-            ) : (
-              <button
-                className="w-full bg-[#8653FF] text-white py-2 sm:py-4 text-xl rounded-full mb-4 font-semibold"
-                onClick={() => {
-                  bookingSectionShowHandler();
-                }}
-              >
-                Book Session
-              </button>
-            )}
+            <button
+              onClick={() => {
+                bookingSectionShowHandler();
+              }}
+              className="w-full bg-[#8653FF] text-white py-2 sm:py-4 text-xl rounded-full mb-4 font-semibold"
+            >
+              {isTrialSessionLeft ? 'Book A Trial' : 'Book Session'}
+            </button>
 
             <button
               onClick={() => {
-                // bookingSectionShowHandler();
+                // message etutor handler
               }}
-              className="w-full bg-[#564589] text-white py-2 sm:py-4 text-xl rounded-full  font-semibold"
+              className="w-full bg-[#564589] text-white py-2 sm:py-4 text-xl rounded-full font-semibold"
             >
-              Your Packages
+              Message eTutor
             </button>
           </div>
         </div>

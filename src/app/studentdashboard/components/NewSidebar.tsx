@@ -3,7 +3,7 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import { useSession } from 'next-auth/react';
-import logo from '../../../../public/parentlogo.svg';
+import logo from '../../../../public/studentdashlogo.svg';
 import styles from '../DashboardGrid.module.css';
 
 interface SidebarItem {

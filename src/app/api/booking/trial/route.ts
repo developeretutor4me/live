@@ -4,6 +4,8 @@ import { getServerSession } from 'next-auth';
 import BookingModel from '../../models/Booking'; // Adjust path as necessary
 import { connectMongoDB } from '../../connection/connection';
 import { authOptions } from '@/app/auth/auth'; // Adjust path to your NextAuth options
+import ParentModel from '../../models/Parent';
+import ParentStudentRelationship from '../../models/ParentStudentRelation';
 
 export async function POST(req: NextRequest) {
   await connectMongoDB();
@@ -13,7 +15,23 @@ export async function POST(req: NextRequest) {
     if (!session) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
-    const studentId = session?.user.id;
+
+    let studentId = session.user.id;
+
+    // If the caller is a parent, use the linked student's User ID instead
+    if (session.user.role === 'parent') {
+      const parent = await ParentModel.findOne({ user: session.user.id });
+      if (parent) {
+        const relation = await ParentStudentRelationship.findOne({
+          parent: parent._id,
+          status: 'accepted',
+        }).populate({ path: 'student', populate: { path: 'user' } });
+
+        if (relation?.student?.user?._id) {
+          studentId = relation.student.user._id.toString();
+        }
+      }
+    }
 
     const { teacherId, level, date, time, timeZone, duration, subjects, studentnote } =
       await req.json();
