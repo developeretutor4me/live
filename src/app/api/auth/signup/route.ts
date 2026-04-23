@@ -66,7 +66,7 @@ export async function POST(req: NextRequest) {
       expiresIn: '1h',
     });
 
-    await sendVerificationEmail(savedUser.email, token).catch(error => {
+    await sendVerificationEmail(savedUser.email, token, student.firstName || '').catch(error => {
       console.error('Error sending verification email:', error);
     });
 

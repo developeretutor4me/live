@@ -343,7 +343,7 @@ const EtutorProfileView = ({
           {/* drop downs */}
 
           {/* membership drop down */}
-          <div className="bg-[#685AAD] py-3 sm:py-6 px-2 sm:px-4 rounded-xl font-sans relative mb-4">
+          <div className="hidden">
             {/* <button
               onClick={() => {
                 // setisTrialSession(false);
@@ -478,9 +478,8 @@ const EtutorProfileView = ({
           }}
           className="bg-[#A296CC] rounded-2xl p-6 hover:cursor-pointer"
         >
-          <h3 className="font-semibold mb-2 text-lg text-white">24/7 SUPPORT</h3>
-          <p className="text-sm text-[#473171]">Need help?</p>
-          <p className="text-sm text-[#473171]">Contact us</p>
+          <h3 className="font-semibold mb-2 text-lg text-white">Need assistance?</h3>
+          <p className="text-sm text-[#473171]">We're here to help</p>
         </div>
       </div>
     </div>

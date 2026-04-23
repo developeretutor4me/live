@@ -74,7 +74,7 @@ const UserSchema: Schema<IUser> = new Schema(
     subscriptionDateEnd: { type: String },
     stripeMonthlyPrice: { type: Number, default: 0 },
     TrialSessionLeft: { type: Number, default: 2 },
-    subscriptionIsActive: { type: Boolean, default: true },
+    subscriptionIsActive: { type: Boolean, default: false },
   },
   {
     timestamps: true,

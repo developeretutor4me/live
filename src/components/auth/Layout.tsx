@@ -6,15 +6,16 @@ import Navabr from './Navabr';
 interface LayoutProps {
   children: ReactNode;
   showFooter?: boolean;
+  hideSignUp?: boolean;
 }
 
-const Layout = ({ children, showFooter = true }: LayoutProps) => {
+const Layout = ({ children, showFooter = true, hideSignUp = false }: LayoutProps) => {
   return (
     <div
       className="bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: `url(${Authbackground.src})` }}
     >
-      <Navabr />
+      <Navabr hideSignUp={hideSignUp} />
 
       <div
         className={`flex items-center justify-center ${showFooter ? 'relative min-h-[calc(100vh-150px)]' : 'min-h-[calc(100vh-90px)]'}  px-4`}

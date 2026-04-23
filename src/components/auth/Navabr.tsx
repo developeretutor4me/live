@@ -3,7 +3,11 @@ import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import Logo from '../../../public/assets/signup/signuplogo.svg';
 
-const Navabr = () => {
+interface NavbarProps {
+  hideSignUp?: boolean;
+}
+
+const Navabr = ({ hideSignUp = false }: NavbarProps) => {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -38,23 +42,25 @@ const Navabr = () => {
         <button
           onClick={handleSignInClick}
           className={`text-[16px] xl:text-[20px] 2xl:text-[24px] 3xl:text-[24px] transition-colors duration-300 px-5 md:px-10 py-2 md:py-4 rounded-full ${
-            isSignInActive
+            isSignInActive || hideSignUp
               ? 'bg-[#8653FF] text-[#FFFFFF] rounded-full hover:bg-[#534988] font-extrabold'
               : 'text-[#8653FF] hover:text-[#9184F0] ont-medium'
           }`}
         >
           SIGN IN
         </button>
-        <button
-          onClick={handleSignUpClick}
-          className={`text-[16px] xl:text-[20px] 2xl:text-[24px] 3xl:text-[24px] transition-colors duration-300 px-5 md:px-10 py-2 md:py-4 rounded-full ${
-            isSignUpActive
-              ? 'bg-[#8653FF] text-[#FFFFFF] rounded-full hover:bg-[#534988] font-extrabold'
-              : 'text-[#8653FF] hover:text-[#9184F0] font-medium'
-          }`}
-        >
-          SIGN UP
-        </button>
+        {!hideSignUp && (
+          <button
+            onClick={handleSignUpClick}
+            className={`text-[16px] xl:text-[20px] 2xl:text-[24px] 3xl:text-[24px] transition-colors duration-300 px-5 md:px-10 py-2 md:py-4 rounded-full ${
+              isSignUpActive
+                ? 'bg-[#8653FF] text-[#FFFFFF] rounded-full hover:bg-[#534988] font-extrabold'
+                : 'text-[#8653FF] hover:text-[#9184F0] font-medium'
+            }`}
+          >
+            SIGN UP
+          </button>
+        )}
       </div>
     </div>
   );

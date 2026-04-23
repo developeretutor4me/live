@@ -117,11 +117,11 @@ const Page: React.FC = () => {
         firstNameResult,
         profilePictureResult,
       ] = await Promise.all([
-        apiClient.fetchParentData(session.user.id),
+        apiClient.fetchParentData(session.user.id).catch(() => null),
         apiClient.fetchUserData(session.user.id),
-        apiClient.fetchBookingRequests(),
-        apiClient.fetchFirstName(),
-        apiClient.fetchProfilePicture(),
+        apiClient.fetchBookingRequests().catch(() => []),
+        apiClient.fetchFirstName().catch(() => ''),
+        apiClient.fetchProfilePicture().catch(() => null),
       ]);
 
       setParentData(parentDataResult);

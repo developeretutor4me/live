@@ -117,11 +117,11 @@ const Page: React.FC = () => {
         firstNameResult,
         profilePictureResult,
       ] = await Promise.all([
-        apiClient.fetchParentData(session.user.id),
+        apiClient.fetchParentData(session.user.id).catch(() => null),
         apiClient.fetchUserData(session.user.id),
-        apiClient.fetchBookingRequests(),
-        apiClient.fetchFirstName(),
-        apiClient.fetchProfilePicture(),
+        apiClient.fetchBookingRequests().catch(() => []),
+        apiClient.fetchFirstName().catch(() => ''),
+        apiClient.fetchProfilePicture().catch(() => null),
       ]);
 
       setParentData(parentDataResult);
@@ -134,12 +134,6 @@ const Page: React.FC = () => {
         setIsTrialSessionLeft(true);
       } else {
         setIsTrialSessionLeft(false);
-        toast({
-          title: 'Trial Sessions Limit Reached',
-          description:
-            'You have already reached the trial sessions limit. There are no trial sessions left.',
-          variant: 'destructive',
-        });
       }
     } catch (error) {
       setError(error instanceof Error ? error.message : 'Failed to fetch user data');

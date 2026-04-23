@@ -6,6 +6,7 @@ import { connectMongoDB } from '../../connection/connection';
 import { authOptions } from '@/app/auth/auth'; // Adjust path to your NextAuth options
 import ParentModel from '../../models/Parent';
 import ParentStudentRelationship from '../../models/ParentStudentRelation';
+import UserModel from '../../models/User';
 
 export async function POST(req: NextRequest) {
   await connectMongoDB();
@@ -55,6 +56,12 @@ export async function POST(req: NextRequest) {
     });
 
     await newBooking.save();
+
+    // Decrement TrialSessionLeft on the student's User doc (only if > 0)
+    await UserModel.updateOne(
+      { _id: studentId, TrialSessionLeft: { $gt: 0 } },
+      { $inc: { TrialSessionLeft: -1 } }
+    );
 
     return NextResponse.json(
       { message: 'Booking request sent successfully', booking: newBooking },
