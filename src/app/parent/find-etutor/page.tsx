@@ -130,6 +130,8 @@ const Support: React.FC = () => {
 
       if (parentDataResult?.user?.TrialSessionLeft > 0) {
         setIsTrialSessionLeft(true);
+      } else {
+        setIsTrialSessionLeft(false);
       }
     } catch (error) {
       setError(error instanceof Error ? error.message : 'Failed to fetch user data');

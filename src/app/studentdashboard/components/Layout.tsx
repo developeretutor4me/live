@@ -286,56 +286,20 @@ const Layout: React.FC<LayoutProps> = ({
               <Menu size={24} />
             </button>
 
-            {/* <div
-              className={`${styles.etokiebox} mt-12 md:mt-0 custom-xl:w-[80%] md:max-w-[40rem]   max-w-[400px] w-full  flex  items-start flex-col custom-2xl:flex-row gap-2 sm:gap-6   absolute sm:static  `}
-            >
-              <div className=" flex flex-col space-y-3 py-4 px-3 sm:px-6  bg-purple-100  rounded-2xl w-[100%] sm:w-[24rem] bg-[#EDE8FA]">
-                <div className=" flex justify-between items-center bg-purple-300 rounded-full px-4 pl-6 py-[10px] bg-[#A296CC]">
-                  <div className="text-3xl font-bold text-white">{etokies}</div>
-                  <div className=" flex items-center justify-center">
-                    <Image loading="lazy" src={etokiicon} alt="" className="w-9 h-9" />
+            {(fetchedUserData?.TrialSessionLeft > 0 ||
+              fetchedUserData?.sessionsPerMonth > 0) && (
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 ml-2 sm:ml-4 mt-2 sm:mt-3">
+                {fetchedUserData?.TrialSessionLeft > 0 ? (
+                  <div className="bg-[#EDE8FA] rounded-lg font-bold px-4 sm:px-6 py-2 sm:py-3 text-center text-xs sm:text-sm text-[#685AAD] whitespace-nowrap">
+                    TRIAL&nbsp;SESSIONS&nbsp;LEFT:&nbsp;{fetchedUserData.TrialSessionLeft}
                   </div>
-                </div>
-
-                <div className="flex  space-x-6 mt-4 hover:cursor-pointer px-2 pt-2">
-                  <button
-                    onClick={() => {
-                      setActiveSidebarItem('Refer your Friends');
-                    }}
-                    className="flex-1 bg-[#685AAD] text-white py-[2px] px-4  rounded-md text-xs flex items-center justify-center gap-1 hover:cursor-pointer"
-                  >
-                    <Image
-                      loading="lazy"
-                      src={EPlusIcon}
-                      alt=""
-                      className="w-6 h-6 hover:cursor-pointer"
-                    />{' '}
-                    etokis
-                  </button>
-                  <button
-                    onClick={handleRedeem}
-                    onMouseEnter={() => {
-                      setredeem(true);
-                    }}
-                    onMouseLeave={() => {
-                      setredeem(false);
-                    }}
-                    className="flex-1 bg-[#8653FF] text-white py-[2px] px-4 rounded-md flex items-center justify-center gap-1 hover:cursor-pointer relative"
-                  >
-                    {radeemLoading ? 'wait...' : 'Redeem'}
-                    <Image loading="lazy" src={redeemIcon} alt="" className="w-6 h-6" />
-                    {redeem && (
-                      <div className="hover absolute w-[200px] sm:w-[280px] custom-lg:w-[340px] h-[88px] sm:h-[124px] custom-lg:h-[150px] top-8 custom-xl:top-0 left-20 custom-xl:left-40 ">
-                        <Image src={etokipopup} alt="" className="object-contain" />
-                      </div>
-                    )}
-                  </button>
-                </div>
+                ) : (
+                  <div className="bg-[#EDE8FA] rounded-lg font-bold px-4 sm:px-6 py-2 sm:py-3 text-center text-xs sm:text-sm text-[#685AAD] whitespace-nowrap">
+                    SESSIONS&nbsp;LEFT:&nbsp;{fetchedUserData?.sessionsPerMonth || 0}
+                  </div>
+                )}
               </div>
-              <div className="bg-[#EDE8FA] rounded-lg font-bold px-8 py-3 text-center text-base text-[#685AAD] ">
-                SESSIONS&nbsp;LEFT:&nbsp;{setsessionleft}
-              </div>
-            </div> */}
+            )}
 
             {activeSidebarItem !== 'Dashboard' && (
               <div

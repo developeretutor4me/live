@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import level1 from '../../../../../public/level-1.svg';
 import level2 from '../../../../../public/level-2.svg';
 import level3 from '../../../../../public/level-3.svg';
@@ -19,6 +20,8 @@ interface EtutorProfileViewProps {
   session: any;
   isTrialSessionLeft: boolean;
   bookingSectionShowHandler: () => void;
+  userData?: any;
+  membershipRoute?: string;
 }
 
 const EtutorProfileView = ({
@@ -27,6 +30,8 @@ const EtutorProfileView = ({
   session,
   isTrialSessionLeft,
   bookingSectionShowHandler,
+  userData,
+  membershipRoute = '/parent/membership',
   // sessionData,
   // session,
   // parentdata,
@@ -49,8 +54,26 @@ const EtutorProfileView = ({
   // durations,
   // isDurationOpen,
 }: EtutorProfileViewProps) => {
+  const router = useRouter();
   const [sessionExists, setSessionExists] = useState(false);
   const [ismemberOpen, setIsmemberOpen] = useState(false);
+
+  const planName = userData?.planType?.type && userData.planType.type !== 'no membership'
+    ? userData.planType.type
+    : 'Pay As You Go';
+  const planSubtitle = userData?.planType?.type && userData.planType.type !== 'no membership'
+    ? `${userData.sessionsPerMonth || 0} sessions/month available.`
+    : 'No commitment. Pay only when you book.';
+  const hasSessions = (userData?.sessionsPerMonth || 0) > 0;
+  const canBook = isTrialSessionLeft || hasSessions;
+
+  const handleBookClick = () => {
+    if (canBook) {
+      bookingSectionShowHandler();
+    } else {
+      router.push(membershipRoute);
+    }
+  };
 
   useEffect(() => {
     async function checkSession() {
@@ -326,8 +349,8 @@ const EtutorProfileView = ({
             {isTrialSessionLeft ? 'Current membership' : 'Current Packages'}
           </h2>
           <div className="bg-[#685AAD] rounded-2xl px-5 py-4 mb-4">
-            <h3 className="text-2xl font-bold text-white">Pay As You Go</h3>
-            <p className="text-sm text-white/90">No commitment. Pay only when you book.</p>
+            <h3 className="text-2xl font-bold text-white capitalize">{planName}</h3>
+            <p className="text-sm text-white/90">{planSubtitle}</p>
           </div>
           <p className="text-sm sm:text-base mb-6 text-white">
             {isTrialSessionLeft ? (
@@ -454,9 +477,7 @@ const EtutorProfileView = ({
 
           <div className="bg-[#B9AFDB] p-6 rounded-3xl">
             <button
-              onClick={() => {
-                bookingSectionShowHandler();
-              }}
+              onClick={handleBookClick}
               className="w-full bg-[#8653FF] text-white py-2 sm:py-4 text-xl rounded-full mb-4 font-semibold"
             >
               {isTrialSessionLeft ? 'Book A Trial' : 'Book Session'}

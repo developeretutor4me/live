@@ -37,6 +37,21 @@ export async function POST(req: NextRequest) {
     const { teacherId, level, date, time, timeZone, duration, subjects, studentnote } =
       await req.json();
 
+    // Validate the student still has trial sessions left
+    const bookingUser = await UserModel.findById(studentId);
+    if (!bookingUser) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    }
+    if ((bookingUser.TrialSessionLeft || 0) <= 0) {
+      return NextResponse.json(
+        {
+          error: 'No trial sessions left. Please subscribe to a membership plan to book sessions.',
+          requiresSubscription: true,
+        },
+        { status: 403 }
+      );
+    }
+
     const newBooking = new BookingModel({
       student: studentId,
       teacher: teacherId,

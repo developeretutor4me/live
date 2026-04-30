@@ -274,6 +274,8 @@ const Page: React.FC = () => {
           session={session}
           isTrialSessionLeft={isTrialSessionLeft}
           bookingSectionShowHandler={bookingSectionShowHandler}
+          userData={fetchedUserData}
+          membershipRoute="/studentdashboard/membership"
         />
       )}
       {showBooking && !showEtutorProfile && (

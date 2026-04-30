@@ -128,9 +128,11 @@ const Support: React.FC = () => {
       setFirstName(firstNameResult || '');
       setProfilePicture(profilePictureResult?.profilePicture || null);
 
-      // if (parentDataResult?.user?.TrialSessionLeft > 0) {
-      //   setIsTrialSessionLeft(true);
-      // }
+      if (userDataResult?.TrialSessionLeft > 0) {
+        setIsTrialSessionLeft(true);
+      } else {
+        setIsTrialSessionLeft(false);
+      }
     } catch (error) {
       setError(error instanceof Error ? error.message : 'Failed to fetch user data');
     } finally {

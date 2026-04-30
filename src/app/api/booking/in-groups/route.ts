@@ -7,6 +7,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/auth/auth';
 import ParentModel from '../../models/Parent';
 import ParentStudentRelationship from '../../models/ParentStudentRelation';
+import UserModel from '../../models/User';
 
 export async function POST(req: NextRequest) {
   await connectMongoDB();
@@ -57,6 +58,27 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Validate the student has enough sessions in their plan
+    const bookingUser = await UserModel.findById(userId);
+    if (!bookingUser) {
+      return NextResponse.json(
+        { success: false, message: 'User not found' },
+        { status: 404 }
+      );
+    }
+
+    const requestedCount = sessions.length;
+    if ((bookingUser.sessionsPerMonth || 0) < requestedCount) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'No sessions left. Please subscribe to a membership plan to book sessions.',
+          requiresSubscription: true,
+        },
+        { status: 403 }
+      );
+    }
+
     console.log('sessions', sessions);
     console.log('teacherId', teacherId);
     console.log('level', level);
@@ -96,6 +118,11 @@ export async function POST(req: NextRequest) {
       });
 
       const savedGroupBooking = await groupBooking.save();
+
+      // Decrement sessions in user's plan
+      await UserModel.findByIdAndUpdate(userId, {
+        $inc: { sessionsPerMonth: -bookingIds.length },
+      });
 
       return NextResponse.json(
         {

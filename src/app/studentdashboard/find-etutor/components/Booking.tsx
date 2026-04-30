@@ -120,7 +120,7 @@ const Booking = ({
         date: formatDateForAPI(bookingRequestsList[0].date),
         time: bookingRequestsList[0].time,
         timeZone: bookingRequestsList[0].timeZone,
-        duration: '30 min',
+        duration: '40 min',
         studentnote: bookingRequestsList[0].studentNote,
         subjects: selectedSubjects,
       };
